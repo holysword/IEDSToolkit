@@ -32,25 +32,29 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PackageForm));
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageRealtime = new System.Windows.Forms.TabPage();
-            this.listViewRealTime = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.gridControlRealTime = new DevExpress.XtraGrid.GridControl();
+            this.gridViewRealTime = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tabPageCommonParam = new System.Windows.Forms.TabPage();
-            this.listViewCommonParam = new System.Windows.Forms.ListView();
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.gridControlCommonParam = new DevExpress.XtraGrid.GridControl();
+            this.gridViewCommonParam = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tabPageAdvancedParam = new System.Windows.Forms.TabPage();
-            this.listViewAdvancedParam = new System.Windows.Forms.ListView();
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.gridControlAdvancedParam = new DevExpress.XtraGrid.GridControl();
+            this.gridViewAdvancedParam = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn7 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn8 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn9 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tabPageMaintenance = new System.Windows.Forms.TabPage();
-            this.listViewMaintenance = new System.Windows.Forms.ListView();
-            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.gridControlMaintenance = new DevExpress.XtraGrid.GridControl();
+            this.gridViewMaintenance = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn10 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn11 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn12 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tabPageEvents = new System.Windows.Forms.TabPage();
             this.tabControlEvents = new System.Windows.Forms.TabControl();
             this.tabPageOscillo = new System.Windows.Forms.TabPage();
@@ -63,9 +67,17 @@
             this.timerDock = new System.Windows.Forms.Timer(this.components);
             this.tabControlMain.SuspendLayout();
             this.tabPageRealtime.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlRealTime)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewRealTime)).BeginInit();
             this.tabPageCommonParam.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlCommonParam)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewCommonParam)).BeginInit();
             this.tabPageAdvancedParam.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlAdvancedParam)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewAdvancedParam)).BeginInit();
             this.tabPageMaintenance.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlMaintenance)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewMaintenance)).BeginInit();
             this.tabPageEvents.SuspendLayout();
             this.tabPageOscillo.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -93,7 +105,7 @@
             // 
             // tabPageRealtime
             // 
-            this.tabPageRealtime.Controls.Add(this.listViewRealTime);
+            this.tabPageRealtime.Controls.Add(this.gridControlRealTime);
             this.tabPageRealtime.Location = new System.Drawing.Point(4, 36);
             this.tabPageRealtime.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageRealtime.Name = "tabPageRealtime";
@@ -103,39 +115,80 @@
             this.tabPageRealtime.Text = "实时数据";
             this.tabPageRealtime.UseVisualStyleBackColor = true;
             // 
-            // listViewRealTime
+            // gridControlRealTime
             // 
-            this.listViewRealTime.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3});
-            this.listViewRealTime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewRealTime.FullRowSelect = true;
-            this.listViewRealTime.Location = new System.Drawing.Point(3, 4);
-            this.listViewRealTime.MultiSelect = false;
-            this.listViewRealTime.Name = "listViewRealTime";
-            this.listViewRealTime.Size = new System.Drawing.Size(978, 610);
-            this.listViewRealTime.TabIndex = 0;
-            this.listViewRealTime.UseCompatibleStateImageBehavior = false;
-            this.listViewRealTime.View = System.Windows.Forms.View.Details;
+            this.gridControlRealTime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControlRealTime.Location = new System.Drawing.Point(3, 4);
+            this.gridControlRealTime.MainView = this.gridViewRealTime;
+            this.gridControlRealTime.Name = "gridControlRealTime";
+            this.gridControlRealTime.Size = new System.Drawing.Size(978, 610);
+            this.gridControlRealTime.TabIndex = 1;
+            this.gridControlRealTime.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridViewRealTime});
             // 
-            // columnHeader1
+            // gridViewRealTime
             // 
-            this.columnHeader1.Text = "序号";
+            this.gridViewRealTime.ColumnPanelRowHeight = 28;
+            this.gridViewRealTime.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn1,
+            this.gridColumn2,
+            this.gridColumn3});
+            this.gridViewRealTime.GridControl = this.gridControlRealTime;
+            this.gridViewRealTime.GroupCount = 1;
+            this.gridViewRealTime.GroupFormat = "[#image]{1} {2}";
+            this.gridViewRealTime.GroupRowHeight = 24;
+            this.gridViewRealTime.Name = "gridViewRealTime";
+            this.gridViewRealTime.OptionsCustomization.AllowFilter = false;
+            this.gridViewRealTime.OptionsCustomization.AllowSort = false;
+            this.gridViewRealTime.OptionsView.ColumnAutoWidth = false;
+            this.gridViewRealTime.OptionsView.ShowGroupPanel = false;
+            this.gridViewRealTime.RowHeight = 24;
+            this.gridViewRealTime.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gridColumn1, DevExpress.Data.ColumnSortOrder.Ascending)});
             // 
-            // columnHeader2
+            // gridColumn1
             // 
-            this.columnHeader2.Text = "变量名称";
-            this.columnHeader2.Width = 200;
+            this.gridColumn1.FieldName = "Message_Name";
+            this.gridColumn1.Name = "gridColumn1";
+            this.gridColumn1.OptionsColumn.AllowEdit = false;
+            this.gridColumn1.OptionsColumn.AllowMove = false;
+            this.gridColumn1.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
+            this.gridColumn1.OptionsColumn.ReadOnly = true;
+            this.gridColumn1.Visible = true;
+            this.gridColumn1.VisibleIndex = 0;
+            this.gridColumn1.Width = 200;
             // 
-            // columnHeader3
+            // gridColumn2
             // 
-            this.columnHeader3.Text = "变量值";
-            this.columnHeader3.Width = 200;
+            this.gridColumn2.AppearanceCell.BackColor = System.Drawing.Color.Azure;
+            this.gridColumn2.AppearanceCell.Options.UseBackColor = true;
+            this.gridColumn2.Caption = "变量名称";
+            this.gridColumn2.FieldName = "Var_Desc";
+            this.gridColumn2.Name = "gridColumn2";
+            this.gridColumn2.OptionsColumn.AllowEdit = false;
+            this.gridColumn2.OptionsColumn.AllowMove = false;
+            this.gridColumn2.OptionsColumn.ReadOnly = true;
+            this.gridColumn2.Visible = true;
+            this.gridColumn2.VisibleIndex = 0;
+            this.gridColumn2.Width = 200;
+            // 
+            // gridColumn3
+            // 
+            this.gridColumn3.AppearanceCell.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.gridColumn3.AppearanceCell.Options.UseBackColor = true;
+            this.gridColumn3.Caption = "变量值";
+            this.gridColumn3.FieldName = "Var_Value";
+            this.gridColumn3.Name = "gridColumn3";
+            this.gridColumn3.OptionsColumn.AllowEdit = false;
+            this.gridColumn3.OptionsColumn.AllowMove = false;
+            this.gridColumn3.OptionsColumn.ReadOnly = true;
+            this.gridColumn3.Visible = true;
+            this.gridColumn3.VisibleIndex = 1;
+            this.gridColumn3.Width = 200;
             // 
             // tabPageCommonParam
             // 
-            this.tabPageCommonParam.Controls.Add(this.listViewCommonParam);
+            this.tabPageCommonParam.Controls.Add(this.gridControlCommonParam);
             this.tabPageCommonParam.Location = new System.Drawing.Point(4, 36);
             this.tabPageCommonParam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageCommonParam.Name = "tabPageCommonParam";
@@ -145,81 +198,163 @@
             this.tabPageCommonParam.Text = "普通定值";
             this.tabPageCommonParam.UseVisualStyleBackColor = true;
             // 
-            // listViewCommonParam
+            // gridControlCommonParam
             // 
-            this.listViewCommonParam.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader4,
-            this.columnHeader5,
-            this.columnHeader6});
-            this.listViewCommonParam.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewCommonParam.FullRowSelect = true;
-            this.listViewCommonParam.Location = new System.Drawing.Point(3, 4);
-            this.listViewCommonParam.MultiSelect = false;
-            this.listViewCommonParam.Name = "listViewCommonParam";
-            this.listViewCommonParam.Size = new System.Drawing.Size(978, 610);
-            this.listViewCommonParam.TabIndex = 1;
-            this.listViewCommonParam.UseCompatibleStateImageBehavior = false;
-            this.listViewCommonParam.View = System.Windows.Forms.View.Details;
+            this.gridControlCommonParam.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControlCommonParam.Location = new System.Drawing.Point(3, 4);
+            this.gridControlCommonParam.MainView = this.gridViewCommonParam;
+            this.gridControlCommonParam.Name = "gridControlCommonParam";
+            this.gridControlCommonParam.Size = new System.Drawing.Size(978, 610);
+            this.gridControlCommonParam.TabIndex = 2;
+            this.gridControlCommonParam.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridViewCommonParam});
             // 
-            // columnHeader4
+            // gridViewCommonParam
             // 
-            this.columnHeader4.Text = "序号";
+            this.gridViewCommonParam.ColumnPanelRowHeight = 28;
+            this.gridViewCommonParam.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn4,
+            this.gridColumn5,
+            this.gridColumn6});
+            this.gridViewCommonParam.GridControl = this.gridControlCommonParam;
+            this.gridViewCommonParam.GroupCount = 1;
+            this.gridViewCommonParam.GroupFormat = "[#image]{1} {2}";
+            this.gridViewCommonParam.GroupRowHeight = 24;
+            this.gridViewCommonParam.Name = "gridViewCommonParam";
+            this.gridViewCommonParam.OptionsCustomization.AllowFilter = false;
+            this.gridViewCommonParam.OptionsCustomization.AllowSort = false;
+            this.gridViewCommonParam.OptionsView.ColumnAutoWidth = false;
+            this.gridViewCommonParam.OptionsView.ShowGroupPanel = false;
+            this.gridViewCommonParam.RowHeight = 24;
+            this.gridViewCommonParam.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gridColumn4, DevExpress.Data.ColumnSortOrder.Ascending)});
             // 
-            // columnHeader5
+            // gridColumn4
             // 
-            this.columnHeader5.Text = "定值名称";
-            this.columnHeader5.Width = 200;
+            this.gridColumn4.FieldName = "Message_Name";
+            this.gridColumn4.Name = "gridColumn4";
+            this.gridColumn4.OptionsColumn.AllowEdit = false;
+            this.gridColumn4.OptionsColumn.AllowMove = false;
+            this.gridColumn4.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
+            this.gridColumn4.OptionsColumn.ReadOnly = true;
+            this.gridColumn4.Visible = true;
+            this.gridColumn4.VisibleIndex = 0;
+            this.gridColumn4.Width = 200;
             // 
-            // columnHeader6
+            // gridColumn5
             // 
-            this.columnHeader6.Text = "整定值";
-            this.columnHeader6.Width = 200;
+            this.gridColumn5.AppearanceCell.BackColor = System.Drawing.Color.Azure;
+            this.gridColumn5.AppearanceCell.Options.UseBackColor = true;
+            this.gridColumn5.Caption = "定值名称";
+            this.gridColumn5.FieldName = "Var_Desc";
+            this.gridColumn5.Name = "gridColumn5";
+            this.gridColumn5.OptionsColumn.AllowEdit = false;
+            this.gridColumn5.OptionsColumn.AllowMove = false;
+            this.gridColumn5.OptionsColumn.ReadOnly = true;
+            this.gridColumn5.Visible = true;
+            this.gridColumn5.VisibleIndex = 0;
+            this.gridColumn5.Width = 200;
+            // 
+            // gridColumn6
+            // 
+            this.gridColumn6.AppearanceCell.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.gridColumn6.AppearanceCell.Options.UseBackColor = true;
+            this.gridColumn6.Caption = "整定值";
+            this.gridColumn6.FieldName = "Var_Value";
+            this.gridColumn6.Name = "gridColumn6";
+            this.gridColumn6.OptionsColumn.AllowEdit = false;
+            this.gridColumn6.OptionsColumn.AllowMove = false;
+            this.gridColumn6.OptionsColumn.ReadOnly = true;
+            this.gridColumn6.Visible = true;
+            this.gridColumn6.VisibleIndex = 1;
+            this.gridColumn6.Width = 200;
             // 
             // tabPageAdvancedParam
             // 
-            this.tabPageAdvancedParam.Controls.Add(this.listViewAdvancedParam);
+            this.tabPageAdvancedParam.Controls.Add(this.gridControlAdvancedParam);
             this.tabPageAdvancedParam.Location = new System.Drawing.Point(4, 36);
             this.tabPageAdvancedParam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageAdvancedParam.Name = "tabPageAdvancedParam";
             this.tabPageAdvancedParam.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageAdvancedParam.Size = new System.Drawing.Size(984, 618);
             this.tabPageAdvancedParam.TabIndex = 2;
-            this.tabPageAdvancedParam.Text = "工厂定值";
+            this.tabPageAdvancedParam.Text = "工程定值";
             this.tabPageAdvancedParam.UseVisualStyleBackColor = true;
             // 
-            // listViewAdvancedParam
+            // gridControlAdvancedParam
             // 
-            this.listViewAdvancedParam.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader7,
-            this.columnHeader8,
-            this.columnHeader9});
-            this.listViewAdvancedParam.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewAdvancedParam.FullRowSelect = true;
-            this.listViewAdvancedParam.Location = new System.Drawing.Point(3, 4);
-            this.listViewAdvancedParam.MultiSelect = false;
-            this.listViewAdvancedParam.Name = "listViewAdvancedParam";
-            this.listViewAdvancedParam.Size = new System.Drawing.Size(978, 610);
-            this.listViewAdvancedParam.TabIndex = 2;
-            this.listViewAdvancedParam.UseCompatibleStateImageBehavior = false;
-            this.listViewAdvancedParam.View = System.Windows.Forms.View.Details;
+            this.gridControlAdvancedParam.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControlAdvancedParam.Location = new System.Drawing.Point(3, 4);
+            this.gridControlAdvancedParam.MainView = this.gridViewAdvancedParam;
+            this.gridControlAdvancedParam.Name = "gridControlAdvancedParam";
+            this.gridControlAdvancedParam.Size = new System.Drawing.Size(978, 610);
+            this.gridControlAdvancedParam.TabIndex = 3;
+            this.gridControlAdvancedParam.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridViewAdvancedParam});
             // 
-            // columnHeader7
+            // gridViewAdvancedParam
             // 
-            this.columnHeader7.Text = "序号";
+            this.gridViewAdvancedParam.ColumnPanelRowHeight = 28;
+            this.gridViewAdvancedParam.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn7,
+            this.gridColumn8,
+            this.gridColumn9});
+            this.gridViewAdvancedParam.GridControl = this.gridControlAdvancedParam;
+            this.gridViewAdvancedParam.GroupCount = 1;
+            this.gridViewAdvancedParam.GroupFormat = "[#image]{1} {2}";
+            this.gridViewAdvancedParam.GroupRowHeight = 24;
+            this.gridViewAdvancedParam.Name = "gridViewAdvancedParam";
+            this.gridViewAdvancedParam.OptionsCustomization.AllowFilter = false;
+            this.gridViewAdvancedParam.OptionsCustomization.AllowSort = false;
+            this.gridViewAdvancedParam.OptionsView.ColumnAutoWidth = false;
+            this.gridViewAdvancedParam.OptionsView.ShowGroupPanel = false;
+            this.gridViewAdvancedParam.RowHeight = 24;
+            this.gridViewAdvancedParam.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gridColumn7, DevExpress.Data.ColumnSortOrder.Ascending)});
             // 
-            // columnHeader8
+            // gridColumn7
             // 
-            this.columnHeader8.Text = "定值名称";
-            this.columnHeader8.Width = 200;
+            this.gridColumn7.FieldName = "Message_Name";
+            this.gridColumn7.Name = "gridColumn7";
+            this.gridColumn7.OptionsColumn.AllowEdit = false;
+            this.gridColumn7.OptionsColumn.AllowMove = false;
+            this.gridColumn7.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
+            this.gridColumn7.OptionsColumn.ReadOnly = true;
+            this.gridColumn7.Visible = true;
+            this.gridColumn7.VisibleIndex = 0;
+            this.gridColumn7.Width = 200;
             // 
-            // columnHeader9
+            // gridColumn8
             // 
-            this.columnHeader9.Text = "整定值";
-            this.columnHeader9.Width = 200;
+            this.gridColumn8.AppearanceCell.BackColor = System.Drawing.Color.Azure;
+            this.gridColumn8.AppearanceCell.Options.UseBackColor = true;
+            this.gridColumn8.Caption = "定值名称";
+            this.gridColumn8.FieldName = "Var_Desc";
+            this.gridColumn8.Name = "gridColumn8";
+            this.gridColumn8.OptionsColumn.AllowEdit = false;
+            this.gridColumn8.OptionsColumn.AllowMove = false;
+            this.gridColumn8.OptionsColumn.ReadOnly = true;
+            this.gridColumn8.Visible = true;
+            this.gridColumn8.VisibleIndex = 0;
+            this.gridColumn8.Width = 200;
+            // 
+            // gridColumn9
+            // 
+            this.gridColumn9.AppearanceCell.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.gridColumn9.AppearanceCell.Options.UseBackColor = true;
+            this.gridColumn9.Caption = "整定值";
+            this.gridColumn9.FieldName = "Var_Value";
+            this.gridColumn9.Name = "gridColumn9";
+            this.gridColumn9.OptionsColumn.AllowEdit = false;
+            this.gridColumn9.OptionsColumn.AllowMove = false;
+            this.gridColumn9.OptionsColumn.ReadOnly = true;
+            this.gridColumn9.Visible = true;
+            this.gridColumn9.VisibleIndex = 1;
+            this.gridColumn9.Width = 200;
             // 
             // tabPageMaintenance
             // 
-            this.tabPageMaintenance.Controls.Add(this.listViewMaintenance);
+            this.tabPageMaintenance.Controls.Add(this.gridControlMaintenance);
             this.tabPageMaintenance.Location = new System.Drawing.Point(4, 36);
             this.tabPageMaintenance.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageMaintenance.Name = "tabPageMaintenance";
@@ -229,35 +364,76 @@
             this.tabPageMaintenance.Text = "维护信息";
             this.tabPageMaintenance.UseVisualStyleBackColor = true;
             // 
-            // listViewMaintenance
+            // gridControlMaintenance
             // 
-            this.listViewMaintenance.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader10,
-            this.columnHeader11,
-            this.columnHeader12});
-            this.listViewMaintenance.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewMaintenance.FullRowSelect = true;
-            this.listViewMaintenance.Location = new System.Drawing.Point(3, 4);
-            this.listViewMaintenance.MultiSelect = false;
-            this.listViewMaintenance.Name = "listViewMaintenance";
-            this.listViewMaintenance.Size = new System.Drawing.Size(978, 610);
-            this.listViewMaintenance.TabIndex = 2;
-            this.listViewMaintenance.UseCompatibleStateImageBehavior = false;
-            this.listViewMaintenance.View = System.Windows.Forms.View.Details;
+            this.gridControlMaintenance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControlMaintenance.Location = new System.Drawing.Point(3, 4);
+            this.gridControlMaintenance.MainView = this.gridViewMaintenance;
+            this.gridControlMaintenance.Name = "gridControlMaintenance";
+            this.gridControlMaintenance.Size = new System.Drawing.Size(978, 610);
+            this.gridControlMaintenance.TabIndex = 4;
+            this.gridControlMaintenance.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridViewMaintenance});
             // 
-            // columnHeader10
+            // gridViewMaintenance
             // 
-            this.columnHeader10.Text = "序号";
+            this.gridViewMaintenance.ColumnPanelRowHeight = 28;
+            this.gridViewMaintenance.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn10,
+            this.gridColumn11,
+            this.gridColumn12});
+            this.gridViewMaintenance.GridControl = this.gridControlMaintenance;
+            this.gridViewMaintenance.GroupCount = 1;
+            this.gridViewMaintenance.GroupFormat = "[#image]{1} {2}";
+            this.gridViewMaintenance.GroupRowHeight = 24;
+            this.gridViewMaintenance.Name = "gridViewMaintenance";
+            this.gridViewMaintenance.OptionsCustomization.AllowFilter = false;
+            this.gridViewMaintenance.OptionsCustomization.AllowSort = false;
+            this.gridViewMaintenance.OptionsView.ColumnAutoWidth = false;
+            this.gridViewMaintenance.OptionsView.ShowGroupPanel = false;
+            this.gridViewMaintenance.RowHeight = 24;
+            this.gridViewMaintenance.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gridColumn10, DevExpress.Data.ColumnSortOrder.Ascending)});
             // 
-            // columnHeader11
+            // gridColumn10
             // 
-            this.columnHeader11.Text = "指标名称";
-            this.columnHeader11.Width = 200;
+            this.gridColumn10.FieldName = "Message_Name";
+            this.gridColumn10.Name = "gridColumn10";
+            this.gridColumn10.OptionsColumn.AllowEdit = false;
+            this.gridColumn10.OptionsColumn.AllowMove = false;
+            this.gridColumn10.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
+            this.gridColumn10.OptionsColumn.ReadOnly = true;
+            this.gridColumn10.Visible = true;
+            this.gridColumn10.VisibleIndex = 0;
+            this.gridColumn10.Width = 200;
             // 
-            // columnHeader12
+            // gridColumn11
             // 
-            this.columnHeader12.Text = "指标值";
-            this.columnHeader12.Width = 200;
+            this.gridColumn11.AppearanceCell.BackColor = System.Drawing.Color.Azure;
+            this.gridColumn11.AppearanceCell.Options.UseBackColor = true;
+            this.gridColumn11.Caption = "指标名称";
+            this.gridColumn11.FieldName = "Var_Desc";
+            this.gridColumn11.Name = "gridColumn11";
+            this.gridColumn11.OptionsColumn.AllowEdit = false;
+            this.gridColumn11.OptionsColumn.AllowMove = false;
+            this.gridColumn11.OptionsColumn.ReadOnly = true;
+            this.gridColumn11.Visible = true;
+            this.gridColumn11.VisibleIndex = 0;
+            this.gridColumn11.Width = 200;
+            // 
+            // gridColumn12
+            // 
+            this.gridColumn12.AppearanceCell.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.gridColumn12.AppearanceCell.Options.UseBackColor = true;
+            this.gridColumn12.Caption = "指标值";
+            this.gridColumn12.FieldName = "Var_Value";
+            this.gridColumn12.Name = "gridColumn12";
+            this.gridColumn12.OptionsColumn.AllowEdit = false;
+            this.gridColumn12.OptionsColumn.AllowMove = false;
+            this.gridColumn12.OptionsColumn.ReadOnly = true;
+            this.gridColumn12.Visible = true;
+            this.gridColumn12.VisibleIndex = 1;
+            this.gridColumn12.Width = 200;
             // 
             // tabPageEvents
             // 
@@ -376,9 +552,17 @@
             this.Load += new System.EventHandler(this.PackageForm_Load);
             this.tabControlMain.ResumeLayout(false);
             this.tabPageRealtime.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlRealTime)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewRealTime)).EndInit();
             this.tabPageCommonParam.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlCommonParam)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewCommonParam)).EndInit();
             this.tabPageAdvancedParam.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlAdvancedParam)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewAdvancedParam)).EndInit();
             this.tabPageMaintenance.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlMaintenance)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewMaintenance)).EndInit();
             this.tabPageEvents.ResumeLayout(false);
             this.tabPageOscillo.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -401,24 +585,28 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxIEDType;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListView listViewRealTime;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ListView listViewCommonParam;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.ColumnHeader columnHeader6;
-        private System.Windows.Forms.ListView listViewAdvancedParam;
-        private System.Windows.Forms.ColumnHeader columnHeader7;
-        private System.Windows.Forms.ColumnHeader columnHeader8;
-        private System.Windows.Forms.ColumnHeader columnHeader9;
-        private System.Windows.Forms.ListView listViewMaintenance;
-        private System.Windows.Forms.ColumnHeader columnHeader10;
-        private System.Windows.Forms.ColumnHeader columnHeader11;
-        private System.Windows.Forms.ColumnHeader columnHeader12;
         private System.Windows.Forms.TabControl tabControlEvents;
         private System.Windows.Forms.TabControl tabControlOscillo;
         private System.Windows.Forms.Timer timerDock;
+        private DevExpress.XtraGrid.GridControl gridControlRealTime;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewRealTime;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
+        private DevExpress.XtraGrid.GridControl gridControlCommonParam;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewCommonParam;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
+        private DevExpress.XtraGrid.GridControl gridControlAdvancedParam;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewAdvancedParam;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn8;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn9;
+        private DevExpress.XtraGrid.GridControl gridControlMaintenance;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewMaintenance;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn10;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn11;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn12;
     }
 }

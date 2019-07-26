@@ -16,6 +16,7 @@ namespace IEDSToolkit
     {
         public String FileName;
 
+        private DataSet iedFile = new DataSet();
         private List<Chart> chartList = new List<Chart>();
 
         public PackageForm()
@@ -34,31 +35,42 @@ namespace IEDSToolkit
             XmlNode root = doc.SelectSingleNode("Data");
             this.textBoxIEDType.Text = root.Attributes["Name"].Value;
             this.textBoxCreateTime.Text = root.Attributes["CreateTime"].Value;
+            
+            iedFile.ReadXml(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\IED\\" + this.textBoxIEDType.Text + ".xml");
 
             XmlNode DataNode = root.SelectSingleNode("RealTime");
             if (DataNode != null)
             {
-                this.listViewRealTime.BeginUpdate();
+                ((System.ComponentModel.ISupportInitialize)(this.gridControlRealTime)).BeginInit();
+                ((System.ComponentModel.ISupportInitialize)(this.gridViewRealTime)).BeginInit();
 
+                DataTable varTable = new DataTable();
+                varTable.Columns.Add(new DataColumn("Message_Name", typeof(string)));
+                varTable.Columns.Add(new DataColumn("Var_Desc", typeof(string)));
+                varTable.Columns.Add(new DataColumn("Var_Value", typeof(string)));
+
+                int messageIndex = 1;
                 foreach (XmlNode message in DataNode.ChildNodes)
-                {
-                    ListViewGroup groupMessage = new ListViewGroup();
-                    groupMessage.Header = message.Attributes["Name"].Value;
-                    this.listViewRealTime.Groups.Add(groupMessage);
-
+                {   
                     foreach (XmlNode var in message.ChildNodes)
-                    {
-                        ListViewItem itemVar = new ListViewItem();
-                        itemVar.Text = (groupMessage.Items.Count + 1).ToString();
-                        itemVar.SubItems.Add(var.Attributes["Name"].Value);
-                        itemVar.SubItems.Add(var.Attributes["Value"].Value);
-                        itemVar.Group = groupMessage;
+                    {                      
+                        DataRow varRow = varTable.NewRow();
+                        varRow["Message_Name"] = messageIndex.ToString("00") + ". " + message.Attributes["Name"].Value;
+                        varRow["Var_Desc"] = var.Attributes["Name"].Value;
+                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(var.Attributes["Name"].Value);
 
-                        this.listViewRealTime.Items.Add(itemVar);
+                        varTable.Rows.Add(varRow);
                     }
+
+                    messageIndex++;
                 }
 
-                this.listViewRealTime.EndUpdate();
+                this.gridControlRealTime.DataSource = varTable;
+
+                this.gridViewRealTime.OptionsBehavior.AutoExpandAllGroups = true;
+
+                ((System.ComponentModel.ISupportInitialize)(this.gridControlRealTime)).EndInit();
+                ((System.ComponentModel.ISupportInitialize)(this.gridViewRealTime)).EndInit();
             }
             else
                 tabPageRealtime.Parent = null;
@@ -66,27 +78,36 @@ namespace IEDSToolkit
             DataNode = root.SelectSingleNode("CommonParam");
             if (DataNode != null)
             {
-                this.listViewCommonParam.BeginUpdate();
+                ((System.ComponentModel.ISupportInitialize)(this.gridControlCommonParam)).BeginInit();
+                ((System.ComponentModel.ISupportInitialize)(this.gridViewCommonParam)).BeginInit();
 
+                DataTable varTable = new DataTable();
+                varTable.Columns.Add(new DataColumn("Message_Name", typeof(string)));
+                varTable.Columns.Add(new DataColumn("Var_Desc", typeof(string)));
+                varTable.Columns.Add(new DataColumn("Var_Value", typeof(string)));
+
+                int messageIndex = 1;
                 foreach (XmlNode message in DataNode.ChildNodes)
                 {
-                    ListViewGroup groupMessage = new ListViewGroup();
-                    groupMessage.Header = message.Attributes["Name"].Value;
-                    this.listViewCommonParam.Groups.Add(groupMessage);
-
                     foreach (XmlNode var in message.ChildNodes)
                     {
-                        ListViewItem itemVar = new ListViewItem();
-                        itemVar.Text = (groupMessage.Items.Count + 1).ToString();
-                        itemVar.SubItems.Add(var.Attributes["Name"].Value);
-                        itemVar.SubItems.Add(var.Attributes["Value"].Value);
-                        itemVar.Group = groupMessage;
+                        DataRow varRow = varTable.NewRow();
+                        varRow["Message_Name"] = messageIndex.ToString("00") + ". " + message.Attributes["Name"].Value;
+                        varRow["Var_Desc"] = var.Attributes["Name"].Value;
+                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(var.Attributes["Name"].Value);
 
-                        this.listViewCommonParam.Items.Add(itemVar);
+                        varTable.Rows.Add(varRow);
                     }
+
+                    messageIndex++;
                 }
 
-                this.listViewCommonParam.EndUpdate();
+                this.gridControlCommonParam.DataSource = varTable;
+
+                this.gridViewCommonParam.OptionsBehavior.AutoExpandAllGroups = true;
+
+                ((System.ComponentModel.ISupportInitialize)(this.gridControlCommonParam)).EndInit();
+                ((System.ComponentModel.ISupportInitialize)(this.gridViewCommonParam)).EndInit();
             }
             else
                 tabPageCommonParam.Parent = null;
@@ -94,27 +115,36 @@ namespace IEDSToolkit
             DataNode = root.SelectSingleNode("AdvancedParam");
             if (DataNode != null)
             {
-                this.listViewAdvancedParam.BeginUpdate();
+                ((System.ComponentModel.ISupportInitialize)(this.gridControlAdvancedParam)).BeginInit();
+                ((System.ComponentModel.ISupportInitialize)(this.gridViewAdvancedParam)).BeginInit();
 
+                DataTable varTable = new DataTable();
+                varTable.Columns.Add(new DataColumn("Message_Name", typeof(string)));
+                varTable.Columns.Add(new DataColumn("Var_Desc", typeof(string)));
+                varTable.Columns.Add(new DataColumn("Var_Value", typeof(string)));
+
+                int messageIndex = 1;
                 foreach (XmlNode message in DataNode.ChildNodes)
                 {
-                    ListViewGroup groupMessage = new ListViewGroup();
-                    groupMessage.Header = message.Attributes["Name"].Value;
-                    this.listViewAdvancedParam.Groups.Add(groupMessage);
-
                     foreach (XmlNode var in message.ChildNodes)
                     {
-                        ListViewItem itemVar = new ListViewItem();
-                        itemVar.Text = (groupMessage.Items.Count + 1).ToString();
-                        itemVar.SubItems.Add(var.Attributes["Name"].Value);
-                        itemVar.SubItems.Add(var.Attributes["Value"].Value);
-                        itemVar.Group = groupMessage;
+                        DataRow varRow = varTable.NewRow();
+                        varRow["Message_Name"] = messageIndex.ToString("00") + ". " + message.Attributes["Name"].Value;
+                        varRow["Var_Desc"] = var.Attributes["Name"].Value;
+                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(var.Attributes["Name"].Value);
 
-                        this.listViewAdvancedParam.Items.Add(itemVar);
+                        varTable.Rows.Add(varRow);
                     }
+
+                    messageIndex++;
                 }
 
-                this.listViewAdvancedParam.EndUpdate();
+                this.gridControlAdvancedParam.DataSource = varTable;
+
+                this.gridViewAdvancedParam.OptionsBehavior.AutoExpandAllGroups = true;
+
+                ((System.ComponentModel.ISupportInitialize)(this.gridControlAdvancedParam)).EndInit();
+                ((System.ComponentModel.ISupportInitialize)(this.gridViewAdvancedParam)).EndInit();
             }
             else
                 tabPageAdvancedParam.Parent = null;
@@ -122,27 +152,36 @@ namespace IEDSToolkit
             DataNode = root.SelectSingleNode("Maintenance");
             if (DataNode != null)
             {
-                this.listViewMaintenance.BeginUpdate();
+                ((System.ComponentModel.ISupportInitialize)(this.gridControlMaintenance)).BeginInit();
+                ((System.ComponentModel.ISupportInitialize)(this.gridViewMaintenance)).BeginInit();
 
+                DataTable varTable = new DataTable();
+                varTable.Columns.Add(new DataColumn("Message_Name", typeof(string)));
+                varTable.Columns.Add(new DataColumn("Var_Desc", typeof(string)));
+                varTable.Columns.Add(new DataColumn("Var_Value", typeof(string)));
+
+                int messageIndex = 1;
                 foreach (XmlNode message in DataNode.ChildNodes)
                 {
-                    ListViewGroup groupMessage = new ListViewGroup();
-                    groupMessage.Header = message.Attributes["Name"].Value;
-                    this.listViewMaintenance.Groups.Add(groupMessage);
-
                     foreach (XmlNode var in message.ChildNodes)
                     {
-                        ListViewItem itemVar = new ListViewItem();
-                        itemVar.Text = (groupMessage.Items.Count + 1).ToString();
-                        itemVar.SubItems.Add(var.Attributes["Name"].Value);
-                        itemVar.SubItems.Add(var.Attributes["Value"].Value);
-                        itemVar.Group = groupMessage;
+                        DataRow varRow = varTable.NewRow();
+                        varRow["Message_Name"] = messageIndex.ToString("00") + ". " + message.Attributes["Name"].Value;
+                        varRow["Var_Desc"] = var.Attributes["Name"].Value;
+                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(var.Attributes["Name"].Value);
 
-                        this.listViewMaintenance.Items.Add(itemVar);
+                        varTable.Rows.Add(varRow);
                     }
+
+                    messageIndex++;
                 }
 
-                this.listViewMaintenance.EndUpdate();
+                this.gridControlMaintenance.DataSource = varTable;
+
+                this.gridViewMaintenance.OptionsBehavior.AutoExpandAllGroups = true;
+
+                ((System.ComponentModel.ISupportInitialize)(this.gridControlMaintenance)).EndInit();
+                ((System.ComponentModel.ISupportInitialize)(this.gridViewMaintenance)).EndInit();
             }
             else
                 tabPageMaintenance.Parent = null;
@@ -152,7 +191,8 @@ namespace IEDSToolkit
             {
                 var digits = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
                 String LastType = "";
-                ListView listViewEvent = null;
+                DevExpress.XtraGrid.GridControl gridControlEvent = null;
+                DataTable varTable = null;
                 foreach (XmlNode message in DataNode.ChildNodes)
                 {
                     String EventType = message.Attributes["Name"].Value;
@@ -162,49 +202,37 @@ namespace IEDSToolkit
                     {
                         TabPage tabPageEvent = new TabPage();
                         tabPageEvent.Text = EventType;
+                        tabControlEvents.Controls.Add(tabPageEvent);
 
-                        listViewEvent = new ListView();
-                        listViewEvent.View = View.Details;
-                        listViewEvent.Dock = DockStyle.Fill;
+                        gridControlEvent = CreateEventGridControl();
+                        tabPageEvent.Controls.Add(gridControlEvent);
 
-                        ColumnHeader columnHeader = new ColumnHeader();
-                        columnHeader.Text = "序号";
-                        listViewEvent.Columns.Add(columnHeader);
+                        varTable = new DataTable();
+                        varTable.Columns.Add(new DataColumn("Message_Name", typeof(string)));
+                        varTable.Columns.Add(new DataColumn("Var_Desc", typeof(string)));
+                        varTable.Columns.Add(new DataColumn("Var_Value", typeof(string)));
 
-                        columnHeader = new ColumnHeader();
-                        columnHeader.Text = "变量名称";
-                        columnHeader.Width = 200;
-                        listViewEvent.Columns.Add(columnHeader);
-
-                        columnHeader = new ColumnHeader();
-                        columnHeader.Text = "变量值";
-                        columnHeader.Width = 200;
-                        listViewEvent.Columns.Add(columnHeader);
-
-                        listViewEvent.Parent = tabPageEvent;
-
-                        tabPageEvent.Parent = tabControlEvents;
+                        gridControlEvent.DataSource = varTable;
+                        ((DevExpress.XtraGrid.Views.Grid.GridView)(gridControlEvent.MainView)).OptionsBehavior.AutoExpandAllGroups = true;
                     }
+
                     LastType = EventType;
 
-                    listViewEvent.BeginUpdate();
-
-                    ListViewGroup groupMessage = new ListViewGroup();
-                    groupMessage.Header = "记录" + (listViewEvent.Groups.Count + 1);
-                    listViewEvent.Groups.Add(groupMessage);
+                    ((System.ComponentModel.ISupportInitialize)(gridControlEvent)).BeginInit();
+                    ((System.ComponentModel.ISupportInitialize)(gridControlEvent.MainView)).BeginInit();
 
                     foreach (XmlNode var in message.ChildNodes)
                     {
-                        ListViewItem itemVar = new ListViewItem();
-                        itemVar.Text = (groupMessage.Items.Count + 1).ToString();
-                        itemVar.SubItems.Add(var.Attributes["Name"].Value.TrimEnd(digits));
-                        itemVar.SubItems.Add(var.Attributes["Value"].Value);
-                        itemVar.Group = groupMessage;
+                        DataRow varRow = varTable.NewRow();
+                        varRow["Message_Name"] = "记录" + (Convert.ToInt32(message.Attributes["Name"].Value.Replace(EventType, ""))).ToString("00");
+                        varRow["Var_Desc"] = var.Attributes["Name"].Value.TrimEnd(digits);
+                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(var.Attributes["Name"].Value.TrimEnd(digits));
 
-                        listViewEvent.Items.Add(itemVar);
+                        varTable.Rows.Add(varRow);                        
                     }
 
-                    listViewEvent.EndUpdate();
+                    ((System.ComponentModel.ISupportInitialize)(gridControlEvent)).EndInit();
+                    ((System.ComponentModel.ISupportInitialize)(gridControlEvent.MainView)).EndInit();
                 }
             }
             else
@@ -370,13 +398,120 @@ namespace IEDSToolkit
 
             this.ResumeLayout(false);            
         }
-        
+
+        private string GetVarUnit(string VarDesc)
+        {
+            String unit = "";
+            DataRow[] rows = iedFile.Tables["Var"].Select("Desc = '" + VarDesc + "'");
+            if (rows.Length > 0)
+                unit = rows[0]["Unit"].ToString();
+            return unit;
+        }
+
+        private DevExpress.XtraGrid.GridControl CreateEventGridControl()
+        {
+            DevExpress.XtraGrid.GridControl gridControlEvent = new DevExpress.XtraGrid.GridControl();
+            DevExpress.XtraGrid.Views.Grid.GridView gridViewEvent = new DevExpress.XtraGrid.Views.Grid.GridView();
+            DevExpress.XtraGrid.Columns.GridColumn gridColumn110 = new DevExpress.XtraGrid.Columns.GridColumn();
+            DevExpress.XtraGrid.Columns.GridColumn gridColumn111 = new DevExpress.XtraGrid.Columns.GridColumn();
+            DevExpress.XtraGrid.Columns.GridColumn gridColumn112 = new DevExpress.XtraGrid.Columns.GridColumn();
+
+            ((System.ComponentModel.ISupportInitialize)(gridControlEvent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(gridViewEvent)).BeginInit();
+
+            // 
+            // gridControlMaintenance
+            // 
+            gridControlEvent.Dock = System.Windows.Forms.DockStyle.Fill;
+            gridControlEvent.Location = new System.Drawing.Point(3, 4);
+            gridControlEvent.MainView = gridViewEvent;
+            //gridControlEvent.Name = "gridControlEvent";
+            gridControlEvent.Size = new System.Drawing.Size(978, 610);
+            gridControlEvent.TabIndex = 4;
+            gridControlEvent.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            gridViewEvent});
+            // 
+            // gridViewMaintenance
+            // 
+            gridViewEvent.ColumnPanelRowHeight = 28;
+            gridViewEvent.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            gridColumn110,
+            gridColumn111,
+            gridColumn112});
+            gridViewEvent.GridControl = gridControlEvent;
+            gridViewEvent.GroupCount = 1;
+            gridViewEvent.GroupFormat = "[#image]{1} {2}";
+            gridViewEvent.GroupRowHeight = 24;
+            //gridViewEvent.Name = "gridViewEvent";
+            gridViewEvent.OptionsCustomization.AllowFilter = false;
+            gridViewEvent.OptionsCustomization.AllowSort = false;
+            gridViewEvent.OptionsView.ColumnAutoWidth = false;
+            gridViewEvent.OptionsView.ShowGroupPanel = false;
+            gridViewEvent.RowHeight = 24;
+            gridViewEvent.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(gridColumn110, DevExpress.Data.ColumnSortOrder.Ascending)});
+            // 
+            // gridColumn10
+            // 
+            gridColumn110.FieldName = "Message_Name";
+            //gridColumn110.Name = "gridColumn110";
+            gridColumn110.OptionsColumn.AllowEdit = false;
+            gridColumn110.OptionsColumn.AllowMove = false;
+            gridColumn110.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
+            gridColumn110.OptionsColumn.ReadOnly = true;
+            gridColumn110.Visible = true;
+            gridColumn110.VisibleIndex = 0;
+            gridColumn110.Width = 200;
+            // 
+            // gridColumn11
+            // 
+            gridColumn111.AppearanceCell.BackColor = System.Drawing.Color.Azure;
+            gridColumn111.AppearanceCell.Options.UseBackColor = true;
+            gridColumn111.Caption = "变量名称";
+            gridColumn111.FieldName = "Var_Desc";
+            //gridColumn111.Name = "gridColumn111";
+            gridColumn111.OptionsColumn.AllowEdit = false;
+            gridColumn111.OptionsColumn.AllowMove = false;
+            gridColumn111.OptionsColumn.ReadOnly = true;
+            gridColumn111.Visible = true;
+            gridColumn111.VisibleIndex = 0;
+            gridColumn111.Width = 200;
+            // 
+            // gridColumn12
+            // 
+            gridColumn112.AppearanceCell.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            gridColumn112.AppearanceCell.Options.UseBackColor = true;
+            gridColumn112.Caption = "变量值";
+            gridColumn112.FieldName = "Var_Value";
+            //gridColumn112.Name = "gridColumn112";
+            gridColumn112.OptionsColumn.AllowEdit = false;
+            gridColumn112.OptionsColumn.AllowMove = false;
+            gridColumn112.OptionsColumn.ReadOnly = true;
+            gridColumn112.Visible = true;
+            gridColumn112.VisibleIndex = 1;
+            gridColumn112.Width = 200;
+
+            ((System.ComponentModel.ISupportInitialize)(gridControlEvent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(gridViewEvent)).EndInit();
+
+            return gridControlEvent;
+        }
+
         public void PrintContent()
         {
-            //PrintListView plv = new PrintListView();
-            //plv.MYListView = this.listViewRealTime;
-            //plv.IsPreview = true;
-            //plv.DoPrint();
+            switch (this.tabControlMain.SelectedIndex)
+            {
+                case 0: this.gridControlRealTime.ShowPrintPreview(); break;
+                case 1: this.gridControlCommonParam.ShowPrintPreview(); break;
+                case 2: this.gridControlAdvancedParam.ShowPrintPreview(); break;
+                case 3: this.gridControlMaintenance.ShowPrintPreview(); break;
+                case 4:
+                    {
+                        ((DevExpress.XtraGrid.GridControl)(this.tabControlEvents.SelectedTab.Controls[0])).ShowPrintPreview();
+                        break;
+                    }
+                default: break;
+            }
         }
 
         private void timerDock_Tick(object sender, EventArgs e)
