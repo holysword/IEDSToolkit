@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("IEDSToolkit")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("智秀工具箱")]
+[assembly: AssemblyDescription("智秀工具箱")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("苏州万龙电气集团股份有限公司")]
 [assembly: AssemblyProduct("IEDSToolkit")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("Copyright © 2019 - 2020 苏州万龙电气集团股份有限公司")]
+[assembly: AssemblyTrademark("万龙电气")]
 [assembly: AssemblyCulture("")]
 
 //将 ComVisible 设置为 false 将使此程序集中的类型

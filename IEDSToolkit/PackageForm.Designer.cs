@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PackageForm));
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageRealtime = new System.Windows.Forms.TabPage();
@@ -64,7 +63,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxIEDType = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.timerDock = new System.Windows.Forms.Timer(this.components);
+            this.timerDock = new System.Windows.Forms.Timer();
             this.tabControlMain.SuspendLayout();
             this.tabPageRealtime.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlRealTime)).BeginInit();
@@ -499,7 +498,7 @@
             this.textBoxCreateTime.Location = new System.Drawing.Point(444, 16);
             this.textBoxCreateTime.Name = "textBoxCreateTime";
             this.textBoxCreateTime.ReadOnly = true;
-            this.textBoxCreateTime.Size = new System.Drawing.Size(315, 23);
+            this.textBoxCreateTime.Size = new System.Drawing.Size(258, 23);
             this.textBoxCreateTime.TabIndex = 3;
             // 
             // label2

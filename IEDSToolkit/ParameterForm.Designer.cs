@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ParameterForm));
             this.gridControl = new DevExpress.XtraGrid.GridControl();
             this.gridViewMain = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -42,26 +41,34 @@
             this.文件FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.textBoxCreateTime = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxIEDType = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit)).BeginInit();
             this.menuStrip.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // gridControl
             // 
             this.gridControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControl.Location = new System.Drawing.Point(0, 25);
+            this.gridControl.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.gridControl.Location = new System.Drawing.Point(9, 66);
             this.gridControl.MainView = this.gridViewMain;
+            this.gridControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gridControl.Name = "gridControl";
             this.gridControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemSpinEdit,
             this.repositoryItemComboBox,
             this.repositoryItemCheckEdit});
-            this.gridControl.Size = new System.Drawing.Size(679, 492);
+            this.gridControl.Size = new System.Drawing.Size(838, 655);
             this.gridControl.TabIndex = 0;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewMain});
@@ -76,7 +83,7 @@
             this.gridViewMain.GridControl = this.gridControl;
             this.gridViewMain.GroupCount = 1;
             this.gridViewMain.GroupFormat = "[#image]{1} {2}";
-            this.gridViewMain.GroupRowHeight = 24;
+            this.gridViewMain.GroupRowHeight = 28;
             this.gridViewMain.Name = "gridViewMain";
             this.gridViewMain.OptionsCustomization.AllowFilter = false;
             this.gridViewMain.OptionsCustomization.AllowSort = false;
@@ -150,11 +157,13 @@
             // 
             // menuStrip
             // 
+            this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.文件FToolStripMenuItem});
-            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Location = new System.Drawing.Point(9, 11);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(679, 25);
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
+            this.menuStrip.Size = new System.Drawing.Size(68, 27);
             this.menuStrip.TabIndex = 1;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -188,16 +197,69 @@
             // 
             this.defaultLookAndFeel1.LookAndFeel.SkinName = "Office 2010 Silver";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.textBoxCreateTime);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.textBoxIEDType);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(9, 11);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(838, 55);
+            this.panel1.TabIndex = 2;
+            // 
+            // textBoxCreateTime
+            // 
+            this.textBoxCreateTime.BackColor = System.Drawing.SystemColors.Window;
+            this.textBoxCreateTime.Location = new System.Drawing.Point(449, 16);
+            this.textBoxCreateTime.Name = "textBoxCreateTime";
+            this.textBoxCreateTime.ReadOnly = true;
+            this.textBoxCreateTime.Size = new System.Drawing.Size(258, 23);
+            this.textBoxCreateTime.TabIndex = 7;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(375, 19);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(68, 17);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "更新时间：";
+            // 
+            // textBoxIEDType
+            // 
+            this.textBoxIEDType.BackColor = System.Drawing.SystemColors.Window;
+            this.textBoxIEDType.Location = new System.Drawing.Point(87, 16);
+            this.textBoxIEDType.Name = "textBoxIEDType";
+            this.textBoxIEDType.ReadOnly = true;
+            this.textBoxIEDType.Size = new System.Drawing.Size(258, 23);
+            this.textBoxIEDType.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(68, 17);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "设备类型：";
+            // 
             // ParameterForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(679, 517);
+            this.ClientSize = new System.Drawing.Size(856, 732);
             this.Controls.Add(this.gridControl);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip);
+            this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "ParameterForm";
+            this.Padding = new System.Windows.Forms.Padding(9, 11, 9, 11);
             this.TabText = "定值文件";
             this.Text = "定值文件";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ParameterForm_FormClosing);
@@ -209,6 +271,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -229,5 +293,10 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit repositoryItemSpinEdit;
         private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repositoryItemComboBox;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox textBoxCreateTime;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBoxIEDType;
+        private System.Windows.Forms.Label label1;
     }
 }

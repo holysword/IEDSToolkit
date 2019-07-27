@@ -24,7 +24,11 @@ namespace IEDSToolkit
         }
         public void PrintContent()
         {
-            this.gridControl.ShowPrintPreview();
+            //this.gridControl.ShowPrintPreview();
+            DevGridReport devGridReport = new DevGridReport(this.gridControl
+                , "定值文件 - [" + this.TabText + "]"
+                , "设备类型：" + this.textBoxIEDType.Text + "\t更新时间：" + this.textBoxCreateTime.Text);
+            devGridReport.Preview();
         }
         private void LoadParameterFile()
         {
@@ -40,12 +44,15 @@ namespace IEDSToolkit
                 {
                     MessageBox.Show("定值文件加载错误！");
                     return;
-                }
+                }                
 
                 if (iedFile.Tables.Count == 0)
                 {
                     String IEDType = deviceTable.Rows[0]["Name"].ToString();
                     iedFile.ReadXml(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\IED\\" + IEDType + ".xml");
+
+                    this.textBoxIEDType.Text = IEDType;
+                    this.textBoxCreateTime.Text = deviceTable.Rows[0]["UpdateTime"].ToString();
                 }
 
                 varTable.Columns.Add(new DataColumn("Message_Name", typeof(string)));
@@ -100,12 +107,15 @@ namespace IEDSToolkit
 
         private void SaveParameterFile()
         {
+            deviceTable.Rows[0]["UpdateTime"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            this.textBoxCreateTime.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
             DataSet saveData = paramFile.Copy();
             saveData.Tables["Var"].Columns.Remove("Message_Name");
             saveData.Tables["Var"].Columns.Remove("Var_Desc");
             saveData.Tables["Var"].Columns.Remove("Var_Obj");
             saveData.Tables["Var"].Columns.Remove("Tables");
-            saveData.Tables["Var"].Columns.Remove("Modify");
+            saveData.Tables["Var"].Columns.Remove("Modify");         
 
             using (MemoryStream ms = new MemoryStream())
             {
@@ -174,6 +184,9 @@ namespace IEDSToolkit
 
         private void gridViewMain_CustomDrawGroupRow(object sender, DevExpress.XtraGrid.Views.Base.RowObjectCustomDrawEventArgs e)
         {
+            if (e.RowHandle >= 0)
+                return;
+
             int childCount = this.gridViewMain.GetChildRowCount(e.RowHandle);
             for (int i = 0; i < childCount; i++)
             {
@@ -186,6 +199,11 @@ namespace IEDSToolkit
 
                     break;
                 }
+            }
+            
+            if (Math.Abs(e.RowHandle) % 2 == 0 && e.Appearance.BackColor != Color.Red)
+            {
+                e.Appearance.BackColor = Color.WhiteSmoke;
             }            
         }
 

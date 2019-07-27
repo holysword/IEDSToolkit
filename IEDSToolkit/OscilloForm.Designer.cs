@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OscilloForm));
             this.listViewFile = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.timerDock = new System.Windows.Forms.Timer(this.components);
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.timerDock = new System.Windows.Forms.Timer();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,15 +72,22 @@
             this.chart.Size = new System.Drawing.Size(478, 362);
             this.chart.TabIndex = 1;
             this.chart.Text = "chart1";
+            title1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            title1.Name = "TitleFile";
+            title1.Text = "故障录波0";
+            title1.Visible = false;
+            title2.Alignment = System.Drawing.ContentAlignment.MiddleLeft;
+            title2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title2.Name = "TitleParam";
+            title2.Text = "记录时间";
+            title2.Visible = false;
+            this.chart.Titles.Add(title1);
+            this.chart.Titles.Add(title2);
             // 
             // timerDock
             // 
             this.timerDock.Enabled = true;
             this.timerDock.Tick += new System.EventHandler(this.timerDock_Tick);
-            // 
-            // printDocument1
-            // 
-            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
             // 
             // OscilloForm
             // 
@@ -108,6 +115,5 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Timer timerDock;
-        private System.Drawing.Printing.PrintDocument printDocument1;
     }
 }

@@ -16,6 +16,8 @@ namespace IEDSToolkit
     public partial class OscilloForm : WeifenLuo.WinFormsUI.Docking.DockContent, AnalyzeFormInterface
     {
         public String FileName;
+
+        private int FileType = 0;
         public OscilloForm()
         {
             InitializeComponent();
@@ -23,23 +25,38 @@ namespace IEDSToolkit
         
         public void PrintContent()
         {
-            //CaptureScreen();
-            //printDocument1.Print();
+            if (FileType == 8)
+                chart.Titles[0].Text = "起动录波文件 - [" + this.TabText + "]";
+            else
+                chart.Titles[0].Text = "故障录波文件 - [" + this.TabText + "]";
+
+            chart.Titles[1].Text = "";
+            foreach (ListViewItem item in listViewFile.Items)
+            {
+                chart.Titles[1].Text += item.SubItems[0].Text + "：" + item.SubItems[1].Text + "     ";
+            }
+
+            chart.Printing.PrintDocument.PrintPage += PrintDocument_PrintPage;
+            chart.Printing.PrintDocument.DefaultPageSettings.Landscape = true;            
             chart.Printing.PageSetup();
-            chart.Printing.PrintPreview();
+
+            chart.Titles[0].Visible = true;
+            chart.Titles[1].Visible = true;
+
+            PrintPreviewDialog ppd = new PrintPreviewDialog();
+            ppd.Document = this.chart.Printing.PrintDocument;
+            (ppd as Form).WindowState = FormWindowState.Maximized;
+            ppd.ShowDialog();
+            //chart.Printing.PrintPreview();         
         }
 
-        Bitmap memoryImage;
-        private void CaptureScreen()
-        {
-            Graphics myGraphics = this.CreateGraphics();
-            Size s = this.Size;
-            memoryImage = new Bitmap(s.Width, s.Height, myGraphics);
-            Graphics memoryGraphics = Graphics.FromImage(memoryImage);
-            memoryGraphics.CopyFromScreen(
-           this.Location.X, this.Location.Y, 0, 0, s);
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {            
+            //chart.Printing.PrintPaint(e.Graphics, e.MarginBounds);
+            chart.Titles[0].Visible = false;
+            chart.Titles[1].Visible = false;
         }
-
+        
         private void OscilloForm_Load(object sender, EventArgs e)
         {
             this.SuspendLayout();
@@ -59,7 +76,7 @@ namespace IEDSToolkit
                 }
 
                 float Ratio = CommonUtility.Byte2Float(buffer, FileData.Length - 4);
-                int FileType = FileData[0];
+                FileType = FileData[0];
 
                 int TotalPoints = 0;
                 int RunningPoint = 0;
@@ -281,11 +298,6 @@ namespace IEDSToolkit
             }
             catch
             { }
-        }
-
-        private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
-        {
-            e.Graphics.DrawImage(memoryImage, 0, 0);
-        }
+        }        
     }
 }

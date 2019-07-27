@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -224,7 +225,7 @@ namespace IEDSToolkit
                     foreach (XmlNode var in message.ChildNodes)
                     {
                         DataRow varRow = varTable.NewRow();
-                        varRow["Message_Name"] = "记录" + (Convert.ToInt32(message.Attributes["Name"].Value.Replace(EventType, ""))).ToString("00");
+                        varRow["Message_Name"] = "记录" + (Convert.ToInt32(message.Attributes["Name"].Value.Replace(EventType, "")) + 1).ToString("00");
                         varRow["Var_Desc"] = var.Attributes["Name"].Value.TrimEnd(digits);
                         varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(var.Attributes["Name"].Value.TrimEnd(digits));
 
@@ -260,7 +261,22 @@ namespace IEDSToolkit
                     tabPageFile.SuspendLayout();
 
                     Chart chart = new Chart();
+                    chart.Name = tabPageFile.Text;
                     ((System.ComponentModel.ISupportInitialize)(chart)).BeginInit();
+
+                    System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+                    System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+                    title1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+                    //title1.Name = "TitleFile";
+                    title1.Text = "故障录波0";
+                    title1.Visible = false;
+                    title2.Alignment = System.Drawing.ContentAlignment.MiddleLeft;
+                    title2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                    //title2.Name = "TitleParam";
+                    title2.Text = "记录时间";
+                    title2.Visible = false;
+                    chart.Titles.Add(title1);
+                    chart.Titles.Add(title2);
 
                     ChartArea chartArea1 = new ChartArea();
                     chartArea1.Name = "ChartArea1";
@@ -499,19 +515,97 @@ namespace IEDSToolkit
 
         public void PrintContent()
         {
-            switch (this.tabControlMain.SelectedIndex)
+            switch (this.tabControlMain.SelectedTab.Name)
             {
-                case 0: this.gridControlRealTime.ShowPrintPreview(); break;
-                case 1: this.gridControlCommonParam.ShowPrintPreview(); break;
-                case 2: this.gridControlAdvancedParam.ShowPrintPreview(); break;
-                case 3: this.gridControlMaintenance.ShowPrintPreview(); break;
-                case 4:
+                case "tabPageRealtime":
                     {
-                        ((DevExpress.XtraGrid.GridControl)(this.tabControlEvents.SelectedTab.Controls[0])).ShowPrintPreview();
+                        DevGridReport devGridReport = new DevGridReport(this.gridControlRealTime
+                                        , "打包文件 - [" + this.TabText + "] - " + this.tabControlMain.SelectedTab.Text
+                                        , "设备类型：" + this.textBoxIEDType.Text + "\t创建时间：" + this.textBoxCreateTime.Text);
+                        devGridReport.Preview();
+                        break;
+                    }
+                case "tabPageCommonParam":
+                    {
+                        DevGridReport devGridReport = new DevGridReport(this.gridControlCommonParam
+                                        , "打包文件 - [" + this.TabText + "] - " + this.tabControlMain.SelectedTab.Text
+                                        , "设备类型：" + this.textBoxIEDType.Text + "\t创建时间：" + this.textBoxCreateTime.Text);
+                        devGridReport.Preview();
+                        break;
+                    }
+                case "tabPageAdvancedParam":
+                    {
+                        DevGridReport devGridReport = new DevGridReport(this.gridControlAdvancedParam
+                                        , "打包文件 - [" + this.TabText + "] - " + this.tabControlMain.SelectedTab.Text
+                                        , "设备类型：" + this.textBoxIEDType.Text + "\t创建时间：" + this.textBoxCreateTime.Text);
+                        devGridReport.Preview();
+                        break;
+                    }
+                case "tabPageMaintenance":
+                    {
+                        DevGridReport devGridReport = new DevGridReport(this.gridControlMaintenance
+                                        , "打包文件 - [" + this.TabText + "] - " + this.tabControlMain.SelectedTab.Text
+                                        , "设备类型：" + this.textBoxIEDType.Text + "\t创建时间：" + this.textBoxCreateTime.Text);
+                        devGridReport.Preview();
+                        break;
+                    }
+                case "tabPageEvents":
+                    {                        
+                        DevGridReport devGridReport = new DevGridReport(((DevExpress.XtraGrid.GridControl)(this.tabControlEvents.SelectedTab.Controls[0]))
+                                        , "打包文件 - [" + this.TabText + "] - " + this.tabControlEvents.SelectedTab.Text
+                                        , "设备类型：" + this.textBoxIEDType.Text + "\t创建时间：" + this.textBoxCreateTime.Text);
+                        devGridReport.Preview();
+                        break;
+                    }
+                case "tabPageOscillo":
+                    {
+                        TabPage tabPageFile = tabControlOscillo.SelectedTab;
+                        ListView listViewFile = null;
+                        foreach (Control control in tabPageFile.Controls)
+                        {
+                            if (control.GetType().Name == "Chart")
+                                printingChart = (Chart)control;
+                            else if (control.GetType().Name == "ListView") 
+                                listViewFile = (ListView)control;
+                        }
+
+                        if (listViewFile == null || printingChart == null)
+                            break;
+
+                        printingChart.Titles[0].Text = "打包文件 - [" + this.TabText + "] - " + tabPageFile.Text;
+
+                        printingChart.Titles[1].Text = "设备类型：" + this.textBoxIEDType.Text + "     ";
+                        foreach (ListViewItem item in listViewFile.Items)
+                        {
+                            printingChart.Titles[1].Text += item.SubItems[0].Text + "：" + item.SubItems[1].Text + "     ";
+                        }
+
+                        printingChart.Printing.PrintDocument.PrintPage += PrintDocument_PrintPage;
+                        printingChart.Printing.PrintDocument.DefaultPageSettings.Landscape = true;
+                        printingChart.Printing.PageSetup();
+
+                        printingChart.Titles[0].Visible = true;
+                        printingChart.Titles[1].Visible = true;
+
+                        PrintPreviewDialog ppd = new PrintPreviewDialog();
+                        ppd.Document = printingChart.Printing.PrintDocument;
+                        (ppd as Form).WindowState = FormWindowState.Maximized;
+                        ppd.ShowDialog();
+
                         break;
                     }
                 default: break;
             }
+        }
+
+        private Chart printingChart = null;
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            if (printingChart != null)
+            {
+                printingChart.Titles[0].Visible = false;
+                printingChart.Titles[1].Visible = false;
+            }            
         }
 
         private void timerDock_Tick(object sender, EventArgs e)

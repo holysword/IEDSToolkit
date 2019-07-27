@@ -341,6 +341,9 @@
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
 		<row><td>Component1</td><td>{40FEFB14-0942-472F-A2F0-50EF870B310F}</td><td>INSTALLDIR</td><td>2</td><td/><td>File1</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT</td><td>{2B64988D-AB77-4D13-A5FF-D7D3A808360C}</td><td>IED</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{A79420B0-7DED-4EA9-AA87-6D2F0C7A9340}</td><td>IED</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{3FD05448-99CD-4039-A3E7-24276420DAD5}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>IS_ININSTALL_SHORTCUT</td><td>{CB16540C-68DE-46D6-A2D1-DFB7AD5649C1}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
@@ -1050,7 +1053,12 @@
 	<table name="CreateFolder">
 		<col key="yes" def="s72">Directory_</col>
 		<col key="yes" def="s72">Component_</col>
+		<row><td>IED</td><td>ISX_DEFAULTCOMPONENT</td></row>
+		<row><td>IED</td><td>ISX_DEFAULTCOMPONENT1</td></row>
 		<row><td>INSTALLDIR</td><td>Component1</td></row>
+		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT</td></row>
+		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT1</td></row>
+		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 		<row><td>INSTALLDIR</td><td>IS_ININSTALL_SHORTCUT</td></row>
 	</table>
 
@@ -1142,6 +1150,7 @@
 		<row><td>FavoritesFolder</td><td>TARGETDIR</td><td>.:FAVORI~1|Favorites</td><td/><td>0</td><td/></row>
 		<row><td>FontsFolder</td><td>TARGETDIR</td><td>.:Fonts</td><td/><td>0</td><td/></row>
 		<row><td>GlobalAssemblyCache</td><td>TARGETDIR</td><td>.:Global~1|GlobalAssemblyCache</td><td/><td>0</td><td/></row>
+		<row><td>IED</td><td>INSTALLDIR</td><td>IED</td><td/><td>0</td><td/></row>
 		<row><td>IEDSTOOLKIT</td><td>WANLONGJITUAN</td><td>IEDSTO~1|IEDSToolkit</td><td/><td>0</td><td/></row>
 		<row><td>IEDTOOLKIT</td><td>DIRECTORY</td><td>IEDTOO~1|IEDToolkit</td><td/><td>0</td><td/></row>
 		<row><td>IEDTOOLKIT1</td><td>WANLONGJITUAN</td><td>IEDTOO~1|IEDToolkit</td><td/><td>0</td><td/></row>
@@ -1153,6 +1162,7 @@
 		<row><td>LocalAppDataFolder</td><td>TARGETDIR</td><td>.:LocalA~1|LocalAppData</td><td/><td>0</td><td/></row>
 		<row><td>MY_PRODUCT_NAME</td><td>DIRECTORY</td><td>MYPROD~1|My Product Name</td><td/><td>0</td><td/></row>
 		<row><td>MyPicturesFolder</td><td>TARGETDIR</td><td>.:MyPict~1|MyPictures</td><td/><td>0</td><td/></row>
+		<row><td>NEW_FOLDER_1</td><td>TARGETDIR</td><td>NEW_FOLDER_1</td><td/><td>0</td><td/></row>
 		<row><td>NetHoodFolder</td><td>TARGETDIR</td><td>.:NetHood</td><td/><td>0</td><td/></row>
 		<row><td>PersonalFolder</td><td>TARGETDIR</td><td>.:Personal</td><td/><td>0</td><td/></row>
 		<row><td>PrimaryVolumePath</td><td>TARGETDIR</td><td>.:Primar~1|PrimaryVolumePath</td><td/><td>0</td><td/></row>
@@ -1868,6 +1878,9 @@
 		<col key="yes" def="s38">Feature_</col>
 		<col key="yes" def="s72">Component_</col>
 		<row><td>AlwaysInstall</td><td>Component1</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT1</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 		<row><td>AlwaysInstall</td><td>IS_ININSTALL_SHORTCUT</td></row>
 	</table>
 
@@ -1883,7 +1896,18 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
+		<row><td>File.xml</td><td>ISX_DEFAULTCOMPONENT2</td><td>万华.xml</td><td>0</td><td/><td/><td/><td>1</td><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\万华.xml</td><td>1</td><td/></row>
 		<row><td>File1</td><td>Component1</td><td>IEDSToolkit.主输出</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;IEDSToolkit&gt;|Built</td><td>3</td><td/></row>
+		<row><td>exp_2019_07_15_10_01_13.dat</td><td>ISX_DEFAULTCOMPONENT2</td><td>EXP_20~1.DAT|Exp_2019-07-15 10_01_13.dat</td><td>0</td><td/><td/><td/><td>1</td><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\Exp_2019-07-15 10_01_13.dat</td><td>1</td><td/></row>
+		<row><td>exp_2019_07_16_11_22_32.dat</td><td>ISX_DEFAULTCOMPONENT2</td><td>EXP_20~1.DAT|Exp_2019-07-16 11_22_32.dat</td><td>0</td><td/><td/><td/><td>1</td><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\Exp_2019-07-16 11_22_32.dat</td><td>1</td><td/></row>
+		<row><td>exp_2019_07_17_09_29_33.dat</td><td>ISX_DEFAULTCOMPONENT2</td><td>EXP_20~1.DAT|Exp_2019-07-17 09_29_33.dat</td><td>0</td><td/><td/><td/><td>1</td><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\Exp_2019-07-17 09_29_33.dat</td><td>1</td><td/></row>
+		<row><td>osc_2018_07_18_17_01_35.dat</td><td>ISX_DEFAULTCOMPONENT2</td><td>OSC_20~1.DAT|Osc_2018-07-18 17_01_35.dat</td><td>0</td><td/><td/><td/><td>1</td><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\Osc_2018-07-18 17_01_35.dat</td><td>1</td><td/></row>
+		<row><td>osc_2018_07_18_17_06_17.dat</td><td>ISX_DEFAULTCOMPONENT2</td><td>OSC_20~1.DAT|Osc_2018-07-18 17_06_17.dat</td><td>0</td><td/><td/><td/><td>1</td><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\Osc_2018-07-18 17_06_17.dat</td><td>1</td><td/></row>
+		<row><td>osc_2018_07_19_09_22_24.dat</td><td>ISX_DEFAULTCOMPONENT2</td><td>OSC_20~1.DAT|Osc_2018-07-19 09_22_24.dat</td><td>0</td><td/><td/><td/><td>1</td><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\Osc_2018-07-19 09_22_24.dat</td><td>1</td><td/></row>
+		<row><td>osc_2018_07_19_09_22_53.dat</td><td>ISX_DEFAULTCOMPONENT2</td><td>OSC_20~1.DAT|Osc_2018-07-19 09_22_53.dat</td><td>0</td><td/><td/><td/><td>1</td><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\Osc_2018-07-19 09_22_53.dat</td><td>1</td><td/></row>
+		<row><td>st570.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>st570.xml</td><td>0</td><td/><td/><td/><td>1</td><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IED\st570.xml</td><td>1</td><td/></row>
+		<row><td>st570l.xml</td><td>ISX_DEFAULTCOMPONENT1</td><td>st570l.xml</td><td>0</td><td/><td/><td/><td>1</td><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IED\st570l.xml</td><td>1</td><td/></row>
+		<row><td>st570l.xml1</td><td>ISX_DEFAULTCOMPONENT2</td><td>st570l.xml</td><td>0</td><td/><td/><td/><td>1</td><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\st570l.xml</td><td>1</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -2027,6 +2051,9 @@
 		<col def="S0">HTTPLocation</col>
 		<col def="S0">Miscellaneous</col>
 		<row><td>Component1</td><td/><td/><td>_802E26C9_5465_494F_9058_124ABE5B2B02_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_C3FCABB6_6E7B_469C_BB2D_12DC17F308D5_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_5486A8B6_5327_44FD_988F_DE7CB288820F_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_414C458D_482C_4050_8FF3_80295C5EB939_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>IS_ININSTALL_SHORTCUT</td><td/><td/><td>_C7D59A76_81F2_48FA_81CD_8FDFEF14533D_FILTER</td><td/><td/><td/><td/></row>
 	</table>
 
@@ -2584,7 +2611,7 @@
 		<col def="I2">Order</col>
 		<col def="I2">ISSetupLocation</col>
 		<col def="S255">ISReleaseFlags</col>
-		<row><td>_DB43AE91_0B47_4DA2_9257_EA8A9B1E82F6_</td><td>Microsoft .NET Framework 4.5.2 Web.prq</td><td/><td/><td/></row>
+		<row><td>_C004AB67_9FA8_4229_BCFF_42314622355B_</td><td>Microsoft .NET Framework 4.5.2 Full.prq</td><td/><td/><td/></row>
 	</table>
 
 	<table name="ISSetupType">
@@ -3845,15 +3872,21 @@
 		<row><td>ARPPRODUCTICON.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\setupicon.ico</td><td>0</td></row>
 		<row><td>UNINST_Uninstall_I_9F1616163D6040799575BD3257FB4FC3.exe</td><td/><td>C:\Program Files (x86)\InstallShield\2015LE\Redist\Language Independent\OS Independent\uninstall.ico</td><td>0</td></row>
 		<row><td>_06F199F312944E9C9A1D89B2C6A20729.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
+		<row><td>_123D7AA725124E969D39DF4AC2AAB648.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_2FF264F5541948BB8357DBB60DBA2574.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_3EE6547A0D8F4C8AAE03A43E6D33B23B.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_4648E687216845FC9F5BAAB0F145480D.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_6399E47C97CF49D596F93566D39D230D.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
+		<row><td>_76B4B35885DE4DC48C355CE8D90F5FDD.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
+		<row><td>_7B27EF185A8D4A1AA8483A3343848E03.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_850923142E4846A1AA8DF0E9279A777C.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
+		<row><td>_8ECD4DBFA7A34F1B820D4D590A21D817.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
+		<row><td>_9204313265344FC2906CB9143E46F6E6.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_A06171DA3C9B4FCCB2A1FBF8C6831C60.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_A641977B16BC48A0982386D95ECCA8DD.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_B84B26A77804439D91659EB75AEACA45.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_E5328848B3C1425FAB7A15E4FFC00563.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
+		<row><td>_F1A1EA928893459E959645D4F9FE1DCD.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_F62ED38C0A1B4E8C93B2390CF392C2BD.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_F91F3BBD6E1249AF9666A1DB37EC6114.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 	</table>
@@ -3988,7 +4021,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{DAB2D456-90A0-46F5-8921-0C0668DD32DB}</td></row>
 		<row><td>ISUSSignature</td><td>{875272FF-46A4-403F-A785-A05AC7966A26}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewProject,viewISToday,viewShortcuts,viewAppFiles,viewObjects,viewRelease,viewCustomActions,viewSystemSearch</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewProject,viewISToday,viewShortcuts,viewAppFiles,viewObjects,viewRelease,viewCustomActions,viewSystemSearch,viewUpdateService,viewUpgradePaths</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
