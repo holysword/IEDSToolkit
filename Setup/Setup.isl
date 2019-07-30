@@ -2645,7 +2645,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>2052</td><td>苏州万龙电气集团股份有限公司</td><td>0</td><td/><td>-1951973367</td></row>
+		<row><td>COMPANY_NAME</td><td>2052</td><td>苏州万龙电气集团股份有限公司</td><td>0</td><td/><td>-341356882</td></row>
 		<row><td>DN_AlwaysInstall</td><td>2052</td><td>始终安装</td><td>0</td><td/><td>-1951982136</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>2052</td><td>系统颜色设置不足以运行 [ProductName]。</td><td>0</td><td/><td>-1951982136</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL</td><td>1033</td><td>Microsoft .NET Framework 4.5 Full package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>-1951959576</td></row>
@@ -3750,8 +3750,8 @@
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>2052</td><td>对于运行 [ProductName] 内存量不足。</td><td>0</td><td/><td>-1951982136</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>2052</td><td>对于运行 [ProductName] 屏幕分辨率不足。</td><td>0</td><td/><td>-1951982136</td></row>
 		<row><td>ID_STRING1</td><td>2052</td><td/><td>0</td><td/><td>-1951982136</td></row>
-		<row><td>ID_STRING2</td><td>2052</td><td>http://www.wanlongjituan.com</td><td>0</td><td/><td>-1951928472</td></row>
-		<row><td>ID_STRING3</td><td>2052</td><td>苏州万龙电气集团股份有限公司</td><td>0</td><td/><td>-1951936664</td></row>
+		<row><td>ID_STRING2</td><td>2052</td><td>http://www.苏州万龙电气集团股份有限公司.com</td><td>0</td><td/><td>-341356882</td></row>
+		<row><td>ID_STRING3</td><td>2052</td><td>苏州万龙电气集团股份有限公司</td><td>0</td><td/><td>-341356882</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>IEDSToolkit</td><td>0</td><td/><td>-1951952887</td></row>
 		<row><td>ID_STRING4</td><td>2052</td><td>IEDSToolkit</td><td>0</td><td/><td>-1951952887</td></row>
 		<row><td>ID_STRING5</td><td>1033</td><td>智秀工具箱</td><td>0</td><td/><td>-1951983543</td></row>
@@ -3885,6 +3885,8 @@
 		<row><td>_A06171DA3C9B4FCCB2A1FBF8C6831C60.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_A641977B16BC48A0982386D95ECCA8DD.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_B84B26A77804439D91659EB75AEACA45.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
+		<row><td>_D86AB88383DA42B2ADE00CA2A99CA603.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
+		<row><td>_DEBADF2AE3004865BB2562C4C04A6281.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_E5328848B3C1425FAB7A15E4FFC00563.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_F1A1EA928893459E959645D4F9FE1DCD.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_F62ED38C0A1B4E8C93B2390CF392C2BD.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
@@ -4079,6 +4081,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 	<table name="LaunchCondition">
 		<col key="yes" def="s255">Condition</col>
 		<col def="l255">Description</col>
+		<row><td>(Not Version9X) And (Not ((VersionNT&gt;=400 And VersionNT&lt;=501) Or (VersionNT=600 And MsiNTProductType=1)))</td><td>##IDPROP_EXPRESS_LAUNCH_CONDITION_OS##</td></row>
 		<row><td>DOTNETVERSION45FULL&gt;="#1"</td><td>##IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL##</td></row>
 	</table>
 

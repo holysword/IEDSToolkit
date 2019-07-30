@@ -1,6 +1,6 @@
 ﻿namespace IEDSToolkit
 {
-    partial class PackageForm
+    partial class IEDCommForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,20 +29,32 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PackageForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IEDCommForm));
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.设备ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemParamMng = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemNewFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemLoadFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolStripMenuItemWizard = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemCheck = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemPackage = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolStripMenuItemClose = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlMain = new System.Windows.Forms.TabControl();
-            this.tabPageRealtime = new System.Windows.Forms.TabPage();
-            this.gridControlRealTime = new DevExpress.XtraGrid.GridControl();
-            this.gridViewRealTime = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tabPageCommonParam = new System.Windows.Forms.TabPage();
             this.gridControlCommonParam = new DevExpress.XtraGrid.GridControl();
+            this.contextMenuStripGridControl = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemDownload = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.gridViewCommonParam = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnValue = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnRefValue = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemSpinEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
+            this.repositoryItemComboBox = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
+            this.repositoryItemCheckEdit = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.tabPageAdvancedParam = new System.Windows.Forms.TabPage();
             this.gridControlAdvancedParam = new DevExpress.XtraGrid.GridControl();
             this.gridViewAdvancedParam = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -60,19 +72,28 @@
             this.tabPageOscillo = new System.Windows.Forms.TabPage();
             this.tabControlOscillo = new System.Windows.Forms.TabControl();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.textBoxCreateTime = new System.Windows.Forms.TextBox();
+            this.textBoxParamFile = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBoxIEDType = new System.Windows.Forms.TextBox();
+            this.textBoxConnectState = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.timerDock = new System.Windows.Forms.Timer(this.components);
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.ToolStripMenuItemAction = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemToDevice = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemToFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonRefreshAll = new System.Windows.Forms.Button();
             this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.timerRefresh = new System.Windows.Forms.Timer(this.components);
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.menuStrip.SuspendLayout();
             this.tabControlMain.SuspendLayout();
-            this.tabPageRealtime.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControlRealTime)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridViewRealTime)).BeginInit();
             this.tabPageCommonParam.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlCommonParam)).BeginInit();
+            this.contextMenuStripGridControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewCommonParam)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit)).BeginInit();
             this.tabPageAdvancedParam.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlAdvancedParam)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewAdvancedParam)).BeginInit();
@@ -82,11 +103,101 @@
             this.tabPageEvents.SuspendLayout();
             this.tabPageOscillo.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // menuStrip
+            // 
+            this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.设备ToolStripMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(12, 258);
+            this.menuStrip.MdiWindowListItem = this.设备ToolStripMenuItem;
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
+            this.menuStrip.Size = new System.Drawing.Size(70, 27);
+            this.menuStrip.TabIndex = 2;
+            this.menuStrip.Text = "menuStrip1";
+            // 
+            // 设备ToolStripMenuItem
+            // 
+            this.设备ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItemParamMng,
+            this.ToolStripMenuItemPackage,
+            this.toolStripMenuItem1,
+            this.ToolStripMenuItemClose});
+            this.设备ToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Replace;
+            this.设备ToolStripMenuItem.MergeIndex = 0;
+            this.设备ToolStripMenuItem.Name = "设备ToolStripMenuItem";
+            this.设备ToolStripMenuItem.Size = new System.Drawing.Size(61, 21);
+            this.设备ToolStripMenuItem.Text = "设备(&D)";
+            // 
+            // ToolStripMenuItemParamMng
+            // 
+            this.ToolStripMenuItemParamMng.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItemNewFile,
+            this.ToolStripMenuItemLoadFile,
+            this.toolStripMenuItem3,
+            this.ToolStripMenuItemWizard,
+            this.ToolStripMenuItemCheck});
+            this.ToolStripMenuItemParamMng.Name = "ToolStripMenuItemParamMng";
+            this.ToolStripMenuItemParamMng.Size = new System.Drawing.Size(139, 22);
+            this.ToolStripMenuItemParamMng.Text = "定值管理";
+            // 
+            // ToolStripMenuItemNewFile
+            // 
+            this.ToolStripMenuItemNewFile.Name = "ToolStripMenuItemNewFile";
+            this.ToolStripMenuItemNewFile.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItemNewFile.Text = "新建定值文件";
+            this.ToolStripMenuItemNewFile.Click += new System.EventHandler(this.ToolStripMenuItemNewFile_Click);
+            // 
+            // ToolStripMenuItemLoadFile
+            // 
+            this.ToolStripMenuItemLoadFile.Name = "ToolStripMenuItemLoadFile";
+            this.ToolStripMenuItemLoadFile.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItemLoadFile.Text = "加载定值文件";
+            this.ToolStripMenuItemLoadFile.Click += new System.EventHandler(this.ToolStripMenuItemLoadFile_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(145, 6);
+            // 
+            // ToolStripMenuItemWizard
+            // 
+            this.ToolStripMenuItemWizard.Name = "ToolStripMenuItemWizard";
+            this.ToolStripMenuItemWizard.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItemWizard.Text = "定值整定向导";
+            this.ToolStripMenuItemWizard.Click += new System.EventHandler(this.ToolStripMenuItemWizard_Click);
+            // 
+            // ToolStripMenuItemCheck
+            // 
+            this.ToolStripMenuItemCheck.Name = "ToolStripMenuItemCheck";
+            this.ToolStripMenuItemCheck.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItemCheck.Text = "安全性检查";
+            this.ToolStripMenuItemCheck.Click += new System.EventHandler(this.ToolStripMenuItemCheck_Click);
+            // 
+            // ToolStripMenuItemPackage
+            // 
+            this.ToolStripMenuItemPackage.Name = "ToolStripMenuItemPackage";
+            this.ToolStripMenuItemPackage.Size = new System.Drawing.Size(139, 22);
+            this.ToolStripMenuItemPackage.Text = "数据打包(&P)";
+            this.ToolStripMenuItemPackage.Click += new System.EventHandler(this.ToolStripMenuItemPackage_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(136, 6);
+            // 
+            // ToolStripMenuItemClose
+            // 
+            this.ToolStripMenuItemClose.Name = "ToolStripMenuItemClose";
+            this.ToolStripMenuItemClose.Size = new System.Drawing.Size(139, 22);
+            this.ToolStripMenuItemClose.Text = "关闭连接";
+            this.ToolStripMenuItemClose.Click += new System.EventHandler(this.ToolStripMenuItemClose_Click);
             // 
             // tabControlMain
             // 
-            this.tabControlMain.Controls.Add(this.tabPageRealtime);
             this.tabControlMain.Controls.Add(this.tabPageCommonParam);
             this.tabControlMain.Controls.Add(this.tabPageAdvancedParam);
             this.tabControlMain.Controls.Add(this.tabPageMaintenance);
@@ -100,120 +211,62 @@
             this.tabControlMain.Multiline = true;
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(708, 392);
+            this.tabControlMain.Size = new System.Drawing.Size(811, 444);
             this.tabControlMain.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabControlMain.TabIndex = 0;
-            // 
-            // tabPageRealtime
-            // 
-            this.tabPageRealtime.Controls.Add(this.gridControlRealTime);
-            this.tabPageRealtime.Location = new System.Drawing.Point(4, 36);
-            this.tabPageRealtime.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPageRealtime.Name = "tabPageRealtime";
-            this.tabPageRealtime.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPageRealtime.Size = new System.Drawing.Size(700, 352);
-            this.tabPageRealtime.TabIndex = 0;
-            this.tabPageRealtime.Text = "实时数据";
-            this.tabPageRealtime.UseVisualStyleBackColor = true;
-            // 
-            // gridControlRealTime
-            // 
-            this.gridControlRealTime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControlRealTime.Location = new System.Drawing.Point(3, 4);
-            this.gridControlRealTime.MainView = this.gridViewRealTime;
-            this.gridControlRealTime.Name = "gridControlRealTime";
-            this.gridControlRealTime.Size = new System.Drawing.Size(694, 344);
-            this.gridControlRealTime.TabIndex = 1;
-            this.gridControlRealTime.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridViewRealTime});
-            // 
-            // gridViewRealTime
-            // 
-            this.gridViewRealTime.ColumnPanelRowHeight = 28;
-            this.gridViewRealTime.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.gridColumn1,
-            this.gridColumn2,
-            this.gridColumn3});
-            this.gridViewRealTime.GridControl = this.gridControlRealTime;
-            this.gridViewRealTime.GroupCount = 1;
-            this.gridViewRealTime.GroupFormat = "[#image]{1} {2}";
-            this.gridViewRealTime.GroupRowHeight = 24;
-            this.gridViewRealTime.Name = "gridViewRealTime";
-            this.gridViewRealTime.OptionsCustomization.AllowFilter = false;
-            this.gridViewRealTime.OptionsCustomization.AllowSort = false;
-            this.gridViewRealTime.OptionsMenu.EnableColumnMenu = false;
-            this.gridViewRealTime.OptionsMenu.EnableFooterMenu = false;
-            this.gridViewRealTime.OptionsMenu.EnableGroupPanelMenu = false;
-            this.gridViewRealTime.OptionsMenu.ShowDateTimeGroupIntervalItems = false;
-            this.gridViewRealTime.OptionsMenu.ShowGroupSortSummaryItems = false;
-            this.gridViewRealTime.OptionsView.ColumnAutoWidth = false;
-            this.gridViewRealTime.OptionsView.ShowGroupPanel = false;
-            this.gridViewRealTime.RowHeight = 24;
-            this.gridViewRealTime.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
-            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gridColumn1, DevExpress.Data.ColumnSortOrder.Ascending)});
-            // 
-            // gridColumn1
-            // 
-            this.gridColumn1.FieldName = "Message_Name";
-            this.gridColumn1.Name = "gridColumn1";
-            this.gridColumn1.OptionsColumn.AllowEdit = false;
-            this.gridColumn1.OptionsColumn.AllowMove = false;
-            this.gridColumn1.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
-            this.gridColumn1.OptionsColumn.ReadOnly = true;
-            this.gridColumn1.Visible = true;
-            this.gridColumn1.VisibleIndex = 0;
-            this.gridColumn1.Width = 200;
-            // 
-            // gridColumn2
-            // 
-            this.gridColumn2.AppearanceCell.BackColor = System.Drawing.Color.Azure;
-            this.gridColumn2.AppearanceCell.Options.UseBackColor = true;
-            this.gridColumn2.Caption = "变量名称";
-            this.gridColumn2.FieldName = "Var_Desc";
-            this.gridColumn2.Name = "gridColumn2";
-            this.gridColumn2.OptionsColumn.AllowEdit = false;
-            this.gridColumn2.OptionsColumn.AllowMove = false;
-            this.gridColumn2.OptionsColumn.ReadOnly = true;
-            this.gridColumn2.Visible = true;
-            this.gridColumn2.VisibleIndex = 0;
-            this.gridColumn2.Width = 200;
-            // 
-            // gridColumn3
-            // 
-            this.gridColumn3.AppearanceCell.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.gridColumn3.AppearanceCell.Options.UseBackColor = true;
-            this.gridColumn3.Caption = "变量值";
-            this.gridColumn3.FieldName = "Var_Value";
-            this.gridColumn3.Name = "gridColumn3";
-            this.gridColumn3.OptionsColumn.AllowEdit = false;
-            this.gridColumn3.OptionsColumn.AllowMove = false;
-            this.gridColumn3.OptionsColumn.ReadOnly = true;
-            this.gridColumn3.Visible = true;
-            this.gridColumn3.VisibleIndex = 1;
-            this.gridColumn3.Width = 200;
+            this.tabControlMain.TabIndex = 3;
+            this.tabControlMain.SelectedIndexChanged += new System.EventHandler(this.tabControlMain_SelectedIndexChanged);
             // 
             // tabPageCommonParam
             // 
             this.tabPageCommonParam.Controls.Add(this.gridControlCommonParam);
+            this.tabPageCommonParam.Controls.Add(this.menuStrip);
             this.tabPageCommonParam.Location = new System.Drawing.Point(4, 36);
             this.tabPageCommonParam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageCommonParam.Name = "tabPageCommonParam";
             this.tabPageCommonParam.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPageCommonParam.Size = new System.Drawing.Size(700, 352);
+            this.tabPageCommonParam.Size = new System.Drawing.Size(803, 404);
             this.tabPageCommonParam.TabIndex = 1;
             this.tabPageCommonParam.Text = "普通定值";
             this.tabPageCommonParam.UseVisualStyleBackColor = true;
             // 
             // gridControlCommonParam
             // 
+            this.gridControlCommonParam.ContextMenuStrip = this.contextMenuStripGridControl;
             this.gridControlCommonParam.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridControlCommonParam.Location = new System.Drawing.Point(3, 4);
             this.gridControlCommonParam.MainView = this.gridViewCommonParam;
             this.gridControlCommonParam.Name = "gridControlCommonParam";
-            this.gridControlCommonParam.Size = new System.Drawing.Size(694, 344);
+            this.gridControlCommonParam.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemSpinEdit,
+            this.repositoryItemComboBox,
+            this.repositoryItemCheckEdit});
+            this.gridControlCommonParam.Size = new System.Drawing.Size(797, 396);
             this.gridControlCommonParam.TabIndex = 2;
             this.gridControlCommonParam.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewCommonParam});
+            // 
+            // contextMenuStripGridControl
+            // 
+            this.contextMenuStripGridControl.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemDownload,
+            this.toolStripMenuItemUpload});
+            this.contextMenuStripGridControl.Name = "contextMenuStripGridControl";
+            this.contextMenuStripGridControl.Size = new System.Drawing.Size(185, 70);
+            this.contextMenuStripGridControl.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripGridControl_Opening);
+            // 
+            // toolStripMenuItemDownload
+            // 
+            this.toolStripMenuItemDownload.Name = "toolStripMenuItemDownload";
+            this.toolStripMenuItemDownload.Size = new System.Drawing.Size(184, 22);
+            this.toolStripMenuItemDownload.Text = "当前值更新定值文件";
+            this.toolStripMenuItemDownload.Click += new System.EventHandler(this.toolStripMenuItemDownload_Click);
+            // 
+            // toolStripMenuItemUpload
+            // 
+            this.toolStripMenuItemUpload.Name = "toolStripMenuItemUpload";
+            this.toolStripMenuItemUpload.Size = new System.Drawing.Size(184, 22);
+            this.toolStripMenuItemUpload.Text = "参考值整定到设备";
+            this.toolStripMenuItemUpload.Click += new System.EventHandler(this.toolStripMenuItemUpload_Click);
             // 
             // gridViewCommonParam
             // 
@@ -221,11 +274,12 @@
             this.gridViewCommonParam.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gridColumn4,
             this.gridColumn5,
-            this.gridColumn6});
+            this.gridColumnValue,
+            this.gridColumnRefValue});
             this.gridViewCommonParam.GridControl = this.gridControlCommonParam;
             this.gridViewCommonParam.GroupCount = 1;
             this.gridViewCommonParam.GroupFormat = "[#image]{1} {2}";
-            this.gridViewCommonParam.GroupRowHeight = 24;
+            this.gridViewCommonParam.GroupRowHeight = 28;
             this.gridViewCommonParam.Name = "gridViewCommonParam";
             this.gridViewCommonParam.OptionsCustomization.AllowFilter = false;
             this.gridViewCommonParam.OptionsCustomization.AllowSort = false;
@@ -239,6 +293,12 @@
             this.gridViewCommonParam.RowHeight = 24;
             this.gridViewCommonParam.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gridColumn4, DevExpress.Data.ColumnSortOrder.Ascending)});
+            this.gridViewCommonParam.CustomDrawCell += new DevExpress.XtraGrid.Views.Base.RowCellCustomDrawEventHandler(this.gridViewCommonParam_CustomDrawCell);
+            this.gridViewCommonParam.CustomDrawGroupRow += new DevExpress.XtraGrid.Views.Base.RowObjectCustomDrawEventHandler(this.gridViewCommonParam_CustomDrawGroupRow);
+            this.gridViewCommonParam.CustomRowCellEditForEditing += new DevExpress.XtraGrid.Views.Grid.CustomRowCellEditEventHandler(this.gridViewCommonParam_CustomRowCellEditForEditing);
+            this.gridViewCommonParam.GroupRowExpanding += new DevExpress.XtraGrid.Views.Base.RowAllowEventHandler(this.gridViewCommonParam_GroupRowExpanding);
+            this.gridViewCommonParam.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gridViewCommonParam_CellValueChanged);
+            this.gridViewCommonParam.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.gridViewCommonParam_ValidatingEditor);
             // 
             // gridColumn4
             // 
@@ -248,8 +308,6 @@
             this.gridColumn4.OptionsColumn.AllowMove = false;
             this.gridColumn4.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn4.OptionsColumn.ReadOnly = true;
-            this.gridColumn4.Visible = true;
-            this.gridColumn4.VisibleIndex = 0;
             this.gridColumn4.Width = 200;
             // 
             // gridColumn5
@@ -257,7 +315,7 @@
             this.gridColumn5.AppearanceCell.BackColor = System.Drawing.Color.Azure;
             this.gridColumn5.AppearanceCell.Options.UseBackColor = true;
             this.gridColumn5.Caption = "定值名称";
-            this.gridColumn5.FieldName = "Var_Desc";
+            this.gridColumn5.FieldName = "Desc";
             this.gridColumn5.Name = "gridColumn5";
             this.gridColumn5.OptionsColumn.AllowEdit = false;
             this.gridColumn5.OptionsColumn.AllowMove = false;
@@ -266,19 +324,52 @@
             this.gridColumn5.VisibleIndex = 0;
             this.gridColumn5.Width = 200;
             // 
-            // gridColumn6
+            // gridColumnValue
             // 
-            this.gridColumn6.AppearanceCell.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.gridColumn6.AppearanceCell.Options.UseBackColor = true;
-            this.gridColumn6.Caption = "整定值";
-            this.gridColumn6.FieldName = "Var_Value";
-            this.gridColumn6.Name = "gridColumn6";
-            this.gridColumn6.OptionsColumn.AllowEdit = false;
-            this.gridColumn6.OptionsColumn.AllowMove = false;
-            this.gridColumn6.OptionsColumn.ReadOnly = true;
-            this.gridColumn6.Visible = true;
-            this.gridColumn6.VisibleIndex = 1;
-            this.gridColumn6.Width = 200;
+            this.gridColumnValue.AppearanceCell.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.gridColumnValue.AppearanceCell.Options.UseBackColor = true;
+            this.gridColumnValue.Caption = "当前值";
+            this.gridColumnValue.FieldName = "Value";
+            this.gridColumnValue.Name = "gridColumnValue";
+            this.gridColumnValue.OptionsColumn.AllowMove = false;
+            this.gridColumnValue.Visible = true;
+            this.gridColumnValue.VisibleIndex = 1;
+            this.gridColumnValue.Width = 200;
+            // 
+            // gridColumnRefValue
+            // 
+            this.gridColumnRefValue.AppearanceCell.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.gridColumnRefValue.AppearanceCell.Options.UseBackColor = true;
+            this.gridColumnRefValue.Caption = "参考值";
+            this.gridColumnRefValue.FieldName = "RefValue";
+            this.gridColumnRefValue.Name = "gridColumnRefValue";
+            this.gridColumnRefValue.OptionsColumn.AllowEdit = false;
+            this.gridColumnRefValue.OptionsColumn.AllowMove = false;
+            this.gridColumnRefValue.OptionsColumn.ReadOnly = true;
+            this.gridColumnRefValue.Visible = true;
+            this.gridColumnRefValue.VisibleIndex = 2;
+            this.gridColumnRefValue.Width = 200;
+            // 
+            // repositoryItemSpinEdit
+            // 
+            this.repositoryItemSpinEdit.AutoHeight = false;
+            this.repositoryItemSpinEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.repositoryItemSpinEdit.Name = "repositoryItemSpinEdit";
+            // 
+            // repositoryItemComboBox
+            // 
+            this.repositoryItemComboBox.AutoHeight = false;
+            this.repositoryItemComboBox.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemComboBox.Name = "repositoryItemComboBox";
+            this.repositoryItemComboBox.ShowDropDown = DevExpress.XtraEditors.Controls.ShowDropDown.Never;
+            this.repositoryItemComboBox.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            // 
+            // repositoryItemCheckEdit
+            // 
+            this.repositoryItemCheckEdit.AutoHeight = false;
+            this.repositoryItemCheckEdit.Name = "repositoryItemCheckEdit";
             // 
             // tabPageAdvancedParam
             // 
@@ -287,7 +378,7 @@
             this.tabPageAdvancedParam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageAdvancedParam.Name = "tabPageAdvancedParam";
             this.tabPageAdvancedParam.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPageAdvancedParam.Size = new System.Drawing.Size(700, 352);
+            this.tabPageAdvancedParam.Size = new System.Drawing.Size(803, 404);
             this.tabPageAdvancedParam.TabIndex = 2;
             this.tabPageAdvancedParam.Text = "工程定值";
             this.tabPageAdvancedParam.UseVisualStyleBackColor = true;
@@ -298,7 +389,7 @@
             this.gridControlAdvancedParam.Location = new System.Drawing.Point(3, 4);
             this.gridControlAdvancedParam.MainView = this.gridViewAdvancedParam;
             this.gridControlAdvancedParam.Name = "gridControlAdvancedParam";
-            this.gridControlAdvancedParam.Size = new System.Drawing.Size(694, 344);
+            this.gridControlAdvancedParam.Size = new System.Drawing.Size(797, 396);
             this.gridControlAdvancedParam.TabIndex = 3;
             this.gridControlAdvancedParam.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewAdvancedParam});
@@ -313,7 +404,7 @@
             this.gridViewAdvancedParam.GridControl = this.gridControlAdvancedParam;
             this.gridViewAdvancedParam.GroupCount = 1;
             this.gridViewAdvancedParam.GroupFormat = "[#image]{1} {2}";
-            this.gridViewAdvancedParam.GroupRowHeight = 24;
+            this.gridViewAdvancedParam.GroupRowHeight = 28;
             this.gridViewAdvancedParam.Name = "gridViewAdvancedParam";
             this.gridViewAdvancedParam.OptionsCustomization.AllowFilter = false;
             this.gridViewAdvancedParam.OptionsCustomization.AllowSort = false;
@@ -327,6 +418,7 @@
             this.gridViewAdvancedParam.RowHeight = 24;
             this.gridViewAdvancedParam.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gridColumn7, DevExpress.Data.ColumnSortOrder.Ascending)});
+            this.gridViewAdvancedParam.CustomDrawGroupRow += new DevExpress.XtraGrid.Views.Base.RowObjectCustomDrawEventHandler(this.gridViewCommonParam_CustomDrawGroupRow);
             // 
             // gridColumn7
             // 
@@ -345,7 +437,7 @@
             this.gridColumn8.AppearanceCell.BackColor = System.Drawing.Color.Azure;
             this.gridColumn8.AppearanceCell.Options.UseBackColor = true;
             this.gridColumn8.Caption = "定值名称";
-            this.gridColumn8.FieldName = "Var_Desc";
+            this.gridColumn8.FieldName = "Desc";
             this.gridColumn8.Name = "gridColumn8";
             this.gridColumn8.OptionsColumn.AllowEdit = false;
             this.gridColumn8.OptionsColumn.AllowMove = false;
@@ -359,7 +451,7 @@
             this.gridColumn9.AppearanceCell.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.gridColumn9.AppearanceCell.Options.UseBackColor = true;
             this.gridColumn9.Caption = "整定值";
-            this.gridColumn9.FieldName = "Var_Value";
+            this.gridColumn9.FieldName = "Value";
             this.gridColumn9.Name = "gridColumn9";
             this.gridColumn9.OptionsColumn.AllowEdit = false;
             this.gridColumn9.OptionsColumn.AllowMove = false;
@@ -375,7 +467,7 @@
             this.tabPageMaintenance.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageMaintenance.Name = "tabPageMaintenance";
             this.tabPageMaintenance.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPageMaintenance.Size = new System.Drawing.Size(700, 352);
+            this.tabPageMaintenance.Size = new System.Drawing.Size(803, 404);
             this.tabPageMaintenance.TabIndex = 3;
             this.tabPageMaintenance.Text = "维护信息";
             this.tabPageMaintenance.UseVisualStyleBackColor = true;
@@ -386,7 +478,7 @@
             this.gridControlMaintenance.Location = new System.Drawing.Point(3, 4);
             this.gridControlMaintenance.MainView = this.gridViewMaintenance;
             this.gridControlMaintenance.Name = "gridControlMaintenance";
-            this.gridControlMaintenance.Size = new System.Drawing.Size(694, 344);
+            this.gridControlMaintenance.Size = new System.Drawing.Size(797, 396);
             this.gridControlMaintenance.TabIndex = 4;
             this.gridControlMaintenance.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewMaintenance});
@@ -401,7 +493,7 @@
             this.gridViewMaintenance.GridControl = this.gridControlMaintenance;
             this.gridViewMaintenance.GroupCount = 1;
             this.gridViewMaintenance.GroupFormat = "[#image]{1} {2}";
-            this.gridViewMaintenance.GroupRowHeight = 24;
+            this.gridViewMaintenance.GroupRowHeight = 28;
             this.gridViewMaintenance.Name = "gridViewMaintenance";
             this.gridViewMaintenance.OptionsCustomization.AllowFilter = false;
             this.gridViewMaintenance.OptionsCustomization.AllowSort = false;
@@ -415,6 +507,7 @@
             this.gridViewMaintenance.RowHeight = 24;
             this.gridViewMaintenance.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gridColumn10, DevExpress.Data.ColumnSortOrder.Ascending)});
+            this.gridViewMaintenance.CustomDrawGroupRow += new DevExpress.XtraGrid.Views.Base.RowObjectCustomDrawEventHandler(this.gridViewCommonParam_CustomDrawGroupRow);
             // 
             // gridColumn10
             // 
@@ -433,7 +526,7 @@
             this.gridColumn11.AppearanceCell.BackColor = System.Drawing.Color.Azure;
             this.gridColumn11.AppearanceCell.Options.UseBackColor = true;
             this.gridColumn11.Caption = "指标名称";
-            this.gridColumn11.FieldName = "Var_Desc";
+            this.gridColumn11.FieldName = "Desc";
             this.gridColumn11.Name = "gridColumn11";
             this.gridColumn11.OptionsColumn.AllowEdit = false;
             this.gridColumn11.OptionsColumn.AllowMove = false;
@@ -447,7 +540,7 @@
             this.gridColumn12.AppearanceCell.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.gridColumn12.AppearanceCell.Options.UseBackColor = true;
             this.gridColumn12.Caption = "指标值";
-            this.gridColumn12.FieldName = "Var_Value";
+            this.gridColumn12.FieldName = "Value";
             this.gridColumn12.Name = "gridColumn12";
             this.gridColumn12.OptionsColumn.AllowEdit = false;
             this.gridColumn12.OptionsColumn.AllowMove = false;
@@ -463,7 +556,7 @@
             this.tabPageEvents.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageEvents.Name = "tabPageEvents";
             this.tabPageEvents.Padding = new System.Windows.Forms.Padding(8);
-            this.tabPageEvents.Size = new System.Drawing.Size(984, 618);
+            this.tabPageEvents.Size = new System.Drawing.Size(803, 404);
             this.tabPageEvents.TabIndex = 4;
             this.tabPageEvents.Text = "事件记录";
             this.tabPageEvents.UseVisualStyleBackColor = true;
@@ -475,7 +568,7 @@
             this.tabControlEvents.Location = new System.Drawing.Point(8, 8);
             this.tabControlEvents.Name = "tabControlEvents";
             this.tabControlEvents.SelectedIndex = 0;
-            this.tabControlEvents.Size = new System.Drawing.Size(968, 602);
+            this.tabControlEvents.Size = new System.Drawing.Size(787, 388);
             this.tabControlEvents.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlEvents.TabIndex = 0;
             // 
@@ -486,7 +579,7 @@
             this.tabPageOscillo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageOscillo.Name = "tabPageOscillo";
             this.tabPageOscillo.Padding = new System.Windows.Forms.Padding(8);
-            this.tabPageOscillo.Size = new System.Drawing.Size(984, 618);
+            this.tabPageOscillo.Size = new System.Drawing.Size(803, 404);
             this.tabPageOscillo.TabIndex = 5;
             this.tabPageOscillo.Text = "录波文件";
             this.tabPageOscillo.UseVisualStyleBackColor = true;
@@ -498,48 +591,53 @@
             this.tabControlOscillo.Location = new System.Drawing.Point(8, 8);
             this.tabControlOscillo.Name = "tabControlOscillo";
             this.tabControlOscillo.SelectedIndex = 0;
-            this.tabControlOscillo.Size = new System.Drawing.Size(968, 602);
+            this.tabControlOscillo.Size = new System.Drawing.Size(787, 388);
             this.tabControlOscillo.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlOscillo.TabIndex = 1;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.textBoxCreateTime);
+            this.panel1.Controls.Add(this.textBoxParamFile);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.textBoxIEDType);
+            this.panel1.Controls.Add(this.textBoxConnectState);
             this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.menuStrip1);
+            this.panel1.Controls.Add(this.buttonRefreshAll);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(8, 8);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(708, 55);
-            this.panel1.TabIndex = 1;
+            this.panel1.Size = new System.Drawing.Size(811, 55);
+            this.panel1.TabIndex = 4;
             // 
-            // textBoxCreateTime
+            // textBoxParamFile
             // 
-            this.textBoxCreateTime.BackColor = System.Drawing.SystemColors.Window;
-            this.textBoxCreateTime.Location = new System.Drawing.Point(444, 16);
-            this.textBoxCreateTime.Name = "textBoxCreateTime";
-            this.textBoxCreateTime.ReadOnly = true;
-            this.textBoxCreateTime.Size = new System.Drawing.Size(258, 23);
-            this.textBoxCreateTime.TabIndex = 3;
+            this.textBoxParamFile.BackColor = System.Drawing.SystemColors.Window;
+            this.textBoxParamFile.Location = new System.Drawing.Point(305, 16);
+            this.textBoxParamFile.Name = "textBoxParamFile";
+            this.textBoxParamFile.ReadOnly = true;
+            this.textBoxParamFile.Size = new System.Drawing.Size(383, 23);
+            this.textBoxParamFile.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(370, 19);
+            this.label2.Location = new System.Drawing.Point(231, 19);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(68, 17);
             this.label2.TabIndex = 2;
-            this.label2.Text = "创建时间：";
+            this.label2.Text = "定值文件：";
             // 
-            // textBoxIEDType
+            // textBoxConnectState
             // 
-            this.textBoxIEDType.BackColor = System.Drawing.SystemColors.Window;
-            this.textBoxIEDType.Location = new System.Drawing.Point(87, 16);
-            this.textBoxIEDType.Name = "textBoxIEDType";
-            this.textBoxIEDType.ReadOnly = true;
-            this.textBoxIEDType.Size = new System.Drawing.Size(258, 23);
-            this.textBoxIEDType.TabIndex = 1;
+            this.textBoxConnectState.BackColor = System.Drawing.Color.Red;
+            this.textBoxConnectState.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxConnectState.ForeColor = System.Drawing.Color.White;
+            this.textBoxConnectState.Location = new System.Drawing.Point(87, 19);
+            this.textBoxConnectState.Name = "textBoxConnectState";
+            this.textBoxConnectState.ReadOnly = true;
+            this.textBoxConnectState.Size = new System.Drawing.Size(84, 16);
+            this.textBoxConnectState.TabIndex = 1;
+            this.textBoxConnectState.Text = "未连接";
             // 
             // label1
             // 
@@ -548,40 +646,105 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(68, 17);
             this.label1.TabIndex = 0;
-            this.label1.Text = "设备类型：";
+            this.label1.Text = "连接状态：";
             // 
-            // timerDock
+            // menuStrip1
             // 
-            this.timerDock.Enabled = true;
-            this.timerDock.Tick += new System.EventHandler(this.timerDock_Tick);
+            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItemAction});
+            this.menuStrip1.Location = new System.Drawing.Point(691, 14);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(102, 25);
+            this.menuStrip1.TabIndex = 6;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // ToolStripMenuItemAction
+            // 
+            this.ToolStripMenuItemAction.AutoSize = false;
+            this.ToolStripMenuItemAction.BackColor = System.Drawing.Color.Lime;
+            this.ToolStripMenuItemAction.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItemToDevice,
+            this.ToolStripMenuItemToFile});
+            this.ToolStripMenuItemAction.Enabled = false;
+            this.ToolStripMenuItemAction.Name = "ToolStripMenuItemAction";
+            this.ToolStripMenuItemAction.Size = new System.Drawing.Size(94, 21);
+            this.ToolStripMenuItemAction.Text = "操作";
+            // 
+            // ToolStripMenuItemToDevice
+            // 
+            this.ToolStripMenuItemToDevice.Name = "ToolStripMenuItemToDevice";
+            this.ToolStripMenuItemToDevice.Size = new System.Drawing.Size(220, 22);
+            this.ToolStripMenuItemToDevice.Text = "定值文件参考值整定到设备";
+            this.ToolStripMenuItemToDevice.Click += new System.EventHandler(this.ToolStripMenuItemToDevice_Click);
+            // 
+            // ToolStripMenuItemToFile
+            // 
+            this.ToolStripMenuItemToFile.Name = "ToolStripMenuItemToFile";
+            this.ToolStripMenuItemToFile.Size = new System.Drawing.Size(220, 22);
+            this.ToolStripMenuItemToFile.Text = "设备当前值更新定值文件";
+            this.ToolStripMenuItemToFile.Click += new System.EventHandler(this.ToolStripMenuItemToFile_Click);
+            // 
+            // buttonRefreshAll
+            // 
+            this.buttonRefreshAll.BackColor = System.Drawing.Color.Aqua;
+            this.buttonRefreshAll.Location = new System.Drawing.Point(177, 16);
+            this.buttonRefreshAll.Name = "buttonRefreshAll";
+            this.buttonRefreshAll.Size = new System.Drawing.Size(75, 23);
+            this.buttonRefreshAll.TabIndex = 7;
+            this.buttonRefreshAll.Text = "刷新所有";
+            this.buttonRefreshAll.UseVisualStyleBackColor = false;
+            this.buttonRefreshAll.Visible = false;
+            this.buttonRefreshAll.Click += new System.EventHandler(this.buttonRefreshAll_Click);
             // 
             // defaultLookAndFeel1
             // 
             this.defaultLookAndFeel1.LookAndFeel.SkinName = "Office 2010 Silver";
             // 
-            // PackageForm
+            // timerRefresh
+            // 
+            this.timerRefresh.Interval = 1000;
+            this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.DefaultExt = "xml";
+            this.openFileDialog.Filter = "定值文件|*.xml";
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.DefaultExt = "xml";
+            this.saveFileDialog.Filter = "定值文件|*.xml";
+            // 
+            // IEDCommForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(724, 463);
+            this.ClientSize = new System.Drawing.Size(827, 515);
             this.Controls.Add(this.tabControlMain);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "PackageForm";
+            this.Name = "IEDCommForm";
             this.Padding = new System.Windows.Forms.Padding(8);
             this.ShowInTaskbar = false;
-            this.TabText = "打包数据文件";
-            this.Text = "打包数据文件";
-            this.Load += new System.EventHandler(this.PackageForm_Load);
+            this.TabText = "IEDCommForm";
+            this.Text = "IEDCommForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.IEDCommForm_FormClosing);
+            this.Load += new System.EventHandler(this.IEDCommForm_Load);
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.tabControlMain.ResumeLayout(false);
-            this.tabPageRealtime.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridControlRealTime)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridViewRealTime)).EndInit();
             this.tabPageCommonParam.ResumeLayout(false);
+            this.tabPageCommonParam.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlCommonParam)).EndInit();
+            this.contextMenuStripGridControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridViewCommonParam)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit)).EndInit();
             this.tabPageAdvancedParam.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridControlAdvancedParam)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewAdvancedParam)).EndInit();
@@ -592,47 +755,68 @@
             this.tabPageOscillo.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem 设备ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemParamMng;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemNewFile;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemLoadFile;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemWizard;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCheck;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemPackage;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemClose;
         private System.Windows.Forms.TabControl tabControlMain;
-        private System.Windows.Forms.TabPage tabPageRealtime;
         private System.Windows.Forms.TabPage tabPageCommonParam;
-        private System.Windows.Forms.TabPage tabPageAdvancedParam;
-        private System.Windows.Forms.TabPage tabPageMaintenance;
-        private System.Windows.Forms.TabPage tabPageEvents;
-        private System.Windows.Forms.TabPage tabPageOscillo;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox textBoxCreateTime;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBoxIEDType;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TabControl tabControlEvents;
-        private System.Windows.Forms.TabControl tabControlOscillo;
-        private System.Windows.Forms.Timer timerDock;
-        private DevExpress.XtraGrid.GridControl gridControlRealTime;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridViewRealTime;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
         private DevExpress.XtraGrid.GridControl gridControlCommonParam;
         private DevExpress.XtraGrid.Views.Grid.GridView gridViewCommonParam;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnValue;
+        private System.Windows.Forms.TabPage tabPageAdvancedParam;
         private DevExpress.XtraGrid.GridControl gridControlAdvancedParam;
         private DevExpress.XtraGrid.Views.Grid.GridView gridViewAdvancedParam;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn8;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn9;
+        private System.Windows.Forms.TabPage tabPageMaintenance;
         private DevExpress.XtraGrid.GridControl gridControlMaintenance;
         private DevExpress.XtraGrid.Views.Grid.GridView gridViewMaintenance;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn10;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn11;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn12;
+        private System.Windows.Forms.TabPage tabPageEvents;
+        private System.Windows.Forms.TabControl tabControlEvents;
+        private System.Windows.Forms.TabPage tabPageOscillo;
+        private System.Windows.Forms.TabControl tabControlOscillo;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox textBoxConnectState;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBoxParamFile;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemAction;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemToDevice;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemToFile;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnRefValue;
+        private System.Windows.Forms.Button buttonRefreshAll;
         private DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeel1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit repositoryItemSpinEdit;
+        private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repositoryItemComboBox;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit;
+        private System.Windows.Forms.Timer timerRefresh;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripGridControl;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDownload;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemUpload;
     }
 }

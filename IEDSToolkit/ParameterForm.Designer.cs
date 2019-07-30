@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ParameterForm));
             this.gridControl = new DevExpress.XtraGrid.GridControl();
             this.gridViewMain = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -41,7 +42,7 @@
             this.文件FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel();
+            this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.textBoxCreateTime = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -87,6 +88,11 @@
             this.gridViewMain.Name = "gridViewMain";
             this.gridViewMain.OptionsCustomization.AllowFilter = false;
             this.gridViewMain.OptionsCustomization.AllowSort = false;
+            this.gridViewMain.OptionsMenu.EnableColumnMenu = false;
+            this.gridViewMain.OptionsMenu.EnableFooterMenu = false;
+            this.gridViewMain.OptionsMenu.EnableGroupPanelMenu = false;
+            this.gridViewMain.OptionsMenu.ShowDateTimeGroupIntervalItems = false;
+            this.gridViewMain.OptionsMenu.ShowGroupSortSummaryItems = false;
             this.gridViewMain.OptionsView.ColumnAutoWidth = false;
             this.gridViewMain.OptionsView.ShowGroupPanel = false;
             this.gridViewMain.RowHeight = 24;

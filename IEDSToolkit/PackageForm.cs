@@ -461,6 +461,11 @@ namespace IEDSToolkit
             //gridViewEvent.Name = "gridViewEvent";
             gridViewEvent.OptionsCustomization.AllowFilter = false;
             gridViewEvent.OptionsCustomization.AllowSort = false;
+            gridViewEvent.OptionsMenu.EnableColumnMenu = false;
+            gridViewEvent.OptionsMenu.EnableFooterMenu = false;
+            gridViewEvent.OptionsMenu.EnableGroupPanelMenu = false;
+            gridViewEvent.OptionsMenu.ShowDateTimeGroupIntervalItems = false;
+            gridViewEvent.OptionsMenu.ShowGroupSortSummaryItems = false;
             gridViewEvent.OptionsView.ColumnAutoWidth = false;
             gridViewEvent.OptionsView.ShowGroupPanel = false;
             gridViewEvent.RowHeight = 24;

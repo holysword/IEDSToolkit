@@ -15,6 +15,13 @@ namespace IEDSToolkit
         public MainForm()
         {
             InitializeComponent();
+
+            Application.Idle += new EventHandler(UpdateMenuState);
+        }
+
+        public void UpdateMenuState(Object sender, EventArgs e)
+        {
+            this.PrintToolStripMenuItem.Enabled = this.ActiveMdiChild != null;
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -63,6 +70,15 @@ namespace IEDSToolkit
                 oscilloForm.FileName = this.openFileDialogOscillo.FileName;
                 oscilloForm.Show(dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
             }
+        }
+
+        
+        private void ToolStripMenuItemConnect_Click(object sender, EventArgs e)
+        {
+            IEDCommForm iedCommForm = new IEDCommForm();
+            iedCommForm.MdiParent = this;
+            iedCommForm.IEDType = ((ToolStripMenuItem)sender).Text;
+            iedCommForm.Show(dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);                        
         }
     }
 }

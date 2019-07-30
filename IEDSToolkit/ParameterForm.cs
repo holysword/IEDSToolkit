@@ -236,7 +236,10 @@ namespace IEDSToolkit
                         if (varTable.Rows[e.RowHandle]["Tables"] != DBNull.Value)
                             rows = (DataRow[])varTable.Rows[e.RowHandle]["Tables"];
                         else
+                        {
                             rows = iedFile.Tables["T"].Select("Var_Id = '" + varRow["Var_Id"] + "'");
+                            varTable.Rows[e.RowHandle]["Tables"] = rows;
+                        }                            
 
                         this.repositoryItemComboBox.Items.Clear();
                         foreach (DataRow table in rows)
