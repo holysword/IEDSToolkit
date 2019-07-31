@@ -72,19 +72,21 @@
             this.tabPageOscillo = new System.Windows.Forms.TabPage();
             this.tabControlOscillo = new System.Windows.Forms.TabControl();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonToFile = new System.Windows.Forms.Button();
+            this.buttonToDevice = new System.Windows.Forms.Button();
             this.textBoxParamFile = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxConnectState = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.ToolStripMenuItemAction = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemToDevice = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemToFile = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonRefreshAll = new System.Windows.Forms.Button();
             this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.panelProgress = new System.Windows.Forms.Panel();
+            this.labelInfo = new System.Windows.Forms.Label();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.menuStrip.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageCommonParam.SuspendLayout();
@@ -103,7 +105,7 @@
             this.tabPageEvents.SuspendLayout();
             this.tabPageOscillo.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.panelProgress.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -206,12 +208,12 @@
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.HotTrack = true;
             this.tabControlMain.ItemSize = new System.Drawing.Size(80, 32);
-            this.tabControlMain.Location = new System.Drawing.Point(8, 63);
+            this.tabControlMain.Location = new System.Drawing.Point(8, 61);
             this.tabControlMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabControlMain.Multiline = true;
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(811, 444);
+            this.tabControlMain.Size = new System.Drawing.Size(811, 446);
             this.tabControlMain.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlMain.TabIndex = 3;
             this.tabControlMain.SelectedIndexChanged += new System.EventHandler(this.tabControlMain_SelectedIndexChanged);
@@ -224,7 +226,7 @@
             this.tabPageCommonParam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageCommonParam.Name = "tabPageCommonParam";
             this.tabPageCommonParam.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPageCommonParam.Size = new System.Drawing.Size(803, 404);
+            this.tabPageCommonParam.Size = new System.Drawing.Size(803, 406);
             this.tabPageCommonParam.TabIndex = 1;
             this.tabPageCommonParam.Text = "普通定值";
             this.tabPageCommonParam.UseVisualStyleBackColor = true;
@@ -240,7 +242,7 @@
             this.repositoryItemSpinEdit,
             this.repositoryItemComboBox,
             this.repositoryItemCheckEdit});
-            this.gridControlCommonParam.Size = new System.Drawing.Size(797, 396);
+            this.gridControlCommonParam.Size = new System.Drawing.Size(797, 398);
             this.gridControlCommonParam.TabIndex = 2;
             this.gridControlCommonParam.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewCommonParam});
@@ -251,21 +253,21 @@
             this.toolStripMenuItemDownload,
             this.toolStripMenuItemUpload});
             this.contextMenuStripGridControl.Name = "contextMenuStripGridControl";
-            this.contextMenuStripGridControl.Size = new System.Drawing.Size(185, 70);
+            this.contextMenuStripGridControl.Size = new System.Drawing.Size(185, 48);
             this.contextMenuStripGridControl.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripGridControl_Opening);
             // 
             // toolStripMenuItemDownload
             // 
             this.toolStripMenuItemDownload.Name = "toolStripMenuItemDownload";
             this.toolStripMenuItemDownload.Size = new System.Drawing.Size(184, 22);
-            this.toolStripMenuItemDownload.Text = "当前值更新定值文件";
+            this.toolStripMenuItemDownload.Text = "参考值整定到设备";
             this.toolStripMenuItemDownload.Click += new System.EventHandler(this.toolStripMenuItemDownload_Click);
             // 
             // toolStripMenuItemUpload
             // 
             this.toolStripMenuItemUpload.Name = "toolStripMenuItemUpload";
             this.toolStripMenuItemUpload.Size = new System.Drawing.Size(184, 22);
-            this.toolStripMenuItemUpload.Text = "参考值整定到设备";
+            this.toolStripMenuItemUpload.Text = "当前值更新定值文件";
             this.toolStripMenuItemUpload.Click += new System.EventHandler(this.toolStripMenuItemUpload_Click);
             // 
             // gridViewCommonParam
@@ -378,7 +380,7 @@
             this.tabPageAdvancedParam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageAdvancedParam.Name = "tabPageAdvancedParam";
             this.tabPageAdvancedParam.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPageAdvancedParam.Size = new System.Drawing.Size(803, 404);
+            this.tabPageAdvancedParam.Size = new System.Drawing.Size(803, 399);
             this.tabPageAdvancedParam.TabIndex = 2;
             this.tabPageAdvancedParam.Text = "工程定值";
             this.tabPageAdvancedParam.UseVisualStyleBackColor = true;
@@ -389,7 +391,7 @@
             this.gridControlAdvancedParam.Location = new System.Drawing.Point(3, 4);
             this.gridControlAdvancedParam.MainView = this.gridViewAdvancedParam;
             this.gridControlAdvancedParam.Name = "gridControlAdvancedParam";
-            this.gridControlAdvancedParam.Size = new System.Drawing.Size(797, 396);
+            this.gridControlAdvancedParam.Size = new System.Drawing.Size(797, 391);
             this.gridControlAdvancedParam.TabIndex = 3;
             this.gridControlAdvancedParam.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewAdvancedParam});
@@ -467,7 +469,7 @@
             this.tabPageMaintenance.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageMaintenance.Name = "tabPageMaintenance";
             this.tabPageMaintenance.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPageMaintenance.Size = new System.Drawing.Size(803, 404);
+            this.tabPageMaintenance.Size = new System.Drawing.Size(803, 399);
             this.tabPageMaintenance.TabIndex = 3;
             this.tabPageMaintenance.Text = "维护信息";
             this.tabPageMaintenance.UseVisualStyleBackColor = true;
@@ -478,7 +480,7 @@
             this.gridControlMaintenance.Location = new System.Drawing.Point(3, 4);
             this.gridControlMaintenance.MainView = this.gridViewMaintenance;
             this.gridControlMaintenance.Name = "gridControlMaintenance";
-            this.gridControlMaintenance.Size = new System.Drawing.Size(797, 396);
+            this.gridControlMaintenance.Size = new System.Drawing.Size(797, 391);
             this.gridControlMaintenance.TabIndex = 4;
             this.gridControlMaintenance.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewMaintenance});
@@ -556,7 +558,7 @@
             this.tabPageEvents.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageEvents.Name = "tabPageEvents";
             this.tabPageEvents.Padding = new System.Windows.Forms.Padding(8);
-            this.tabPageEvents.Size = new System.Drawing.Size(803, 404);
+            this.tabPageEvents.Size = new System.Drawing.Size(803, 399);
             this.tabPageEvents.TabIndex = 4;
             this.tabPageEvents.Text = "事件记录";
             this.tabPageEvents.UseVisualStyleBackColor = true;
@@ -568,7 +570,7 @@
             this.tabControlEvents.Location = new System.Drawing.Point(8, 8);
             this.tabControlEvents.Name = "tabControlEvents";
             this.tabControlEvents.SelectedIndex = 0;
-            this.tabControlEvents.Size = new System.Drawing.Size(787, 388);
+            this.tabControlEvents.Size = new System.Drawing.Size(787, 383);
             this.tabControlEvents.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlEvents.TabIndex = 0;
             // 
@@ -579,7 +581,7 @@
             this.tabPageOscillo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageOscillo.Name = "tabPageOscillo";
             this.tabPageOscillo.Padding = new System.Windows.Forms.Padding(8);
-            this.tabPageOscillo.Size = new System.Drawing.Size(803, 404);
+            this.tabPageOscillo.Size = new System.Drawing.Size(803, 399);
             this.tabPageOscillo.TabIndex = 5;
             this.tabPageOscillo.Text = "录波文件";
             this.tabPageOscillo.UseVisualStyleBackColor = true;
@@ -591,28 +593,57 @@
             this.tabControlOscillo.Location = new System.Drawing.Point(8, 8);
             this.tabControlOscillo.Name = "tabControlOscillo";
             this.tabControlOscillo.SelectedIndex = 0;
-            this.tabControlOscillo.Size = new System.Drawing.Size(787, 388);
+            this.tabControlOscillo.Size = new System.Drawing.Size(787, 383);
             this.tabControlOscillo.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlOscillo.TabIndex = 1;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.buttonToFile);
+            this.panel1.Controls.Add(this.buttonToDevice);
             this.panel1.Controls.Add(this.textBoxParamFile);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.textBoxConnectState);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.menuStrip1);
             this.panel1.Controls.Add(this.buttonRefreshAll);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(8, 8);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(811, 55);
+            this.panel1.Size = new System.Drawing.Size(811, 53);
             this.panel1.TabIndex = 4;
+            // 
+            // buttonToFile
+            // 
+            this.buttonToFile.AutoSize = true;
+            this.buttonToFile.BackColor = System.Drawing.Color.Transparent;
+            this.buttonToFile.Enabled = false;
+            this.buttonToFile.Image = global::IEDSToolkit.Properties.Resources.upload_31_466666666667px_1122580_easyicon_net;
+            this.buttonToFile.Location = new System.Drawing.Point(716, 8);
+            this.buttonToFile.Name = "buttonToFile";
+            this.buttonToFile.Size = new System.Drawing.Size(37, 38);
+            this.buttonToFile.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.buttonToFile, "设备当前值更新定值文件");
+            this.buttonToFile.UseVisualStyleBackColor = false;
+            this.buttonToFile.Click += new System.EventHandler(this.buttonToFile_Click);
+            // 
+            // buttonToDevice
+            // 
+            this.buttonToDevice.AutoSize = true;
+            this.buttonToDevice.BackColor = System.Drawing.Color.Transparent;
+            this.buttonToDevice.Enabled = false;
+            this.buttonToDevice.Image = global::IEDSToolkit.Properties.Resources.download_31_466666666667px_1122612_easyicon_net;
+            this.buttonToDevice.Location = new System.Drawing.Point(673, 8);
+            this.buttonToDevice.Name = "buttonToDevice";
+            this.buttonToDevice.Size = new System.Drawing.Size(37, 38);
+            this.buttonToDevice.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.buttonToDevice, "定值文件参考值整定到设备");
+            this.buttonToDevice.UseVisualStyleBackColor = false;
+            this.buttonToDevice.Click += new System.EventHandler(this.buttonToDevice_Click);
             // 
             // textBoxParamFile
             // 
             this.textBoxParamFile.BackColor = System.Drawing.SystemColors.Window;
-            this.textBoxParamFile.Location = new System.Drawing.Point(305, 16);
+            this.textBoxParamFile.Location = new System.Drawing.Point(284, 16);
             this.textBoxParamFile.Name = "textBoxParamFile";
             this.textBoxParamFile.ReadOnly = true;
             this.textBoxParamFile.Size = new System.Drawing.Size(383, 23);
@@ -621,7 +652,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(231, 19);
+            this.label2.Location = new System.Drawing.Point(210, 19);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(68, 17);
             this.label2.TabIndex = 2;
@@ -647,43 +678,6 @@
             this.label1.Size = new System.Drawing.Size(68, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "连接状态：";
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItemAction});
-            this.menuStrip1.Location = new System.Drawing.Point(691, 14);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(102, 25);
-            this.menuStrip1.TabIndex = 6;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // ToolStripMenuItemAction
-            // 
-            this.ToolStripMenuItemAction.AutoSize = false;
-            this.ToolStripMenuItemAction.BackColor = System.Drawing.Color.Lime;
-            this.ToolStripMenuItemAction.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItemToDevice,
-            this.ToolStripMenuItemToFile});
-            this.ToolStripMenuItemAction.Enabled = false;
-            this.ToolStripMenuItemAction.Name = "ToolStripMenuItemAction";
-            this.ToolStripMenuItemAction.Size = new System.Drawing.Size(94, 21);
-            this.ToolStripMenuItemAction.Text = "操作";
-            // 
-            // ToolStripMenuItemToDevice
-            // 
-            this.ToolStripMenuItemToDevice.Name = "ToolStripMenuItemToDevice";
-            this.ToolStripMenuItemToDevice.Size = new System.Drawing.Size(220, 22);
-            this.ToolStripMenuItemToDevice.Text = "定值文件参考值整定到设备";
-            this.ToolStripMenuItemToDevice.Click += new System.EventHandler(this.ToolStripMenuItemToDevice_Click);
-            // 
-            // ToolStripMenuItemToFile
-            // 
-            this.ToolStripMenuItemToFile.Name = "ToolStripMenuItemToFile";
-            this.ToolStripMenuItemToFile.Size = new System.Drawing.Size(220, 22);
-            this.ToolStripMenuItemToFile.Text = "设备当前值更新定值文件";
-            this.ToolStripMenuItemToFile.Click += new System.EventHandler(this.ToolStripMenuItemToFile_Click);
             // 
             // buttonRefreshAll
             // 
@@ -716,16 +710,45 @@
             this.saveFileDialog.DefaultExt = "xml";
             this.saveFileDialog.Filter = "定值文件|*.xml";
             // 
+            // panelProgress
+            // 
+            this.panelProgress.BackColor = System.Drawing.Color.Azure;
+            this.panelProgress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelProgress.Controls.Add(this.progressBar);
+            this.panelProgress.Controls.Add(this.labelInfo);
+            this.panelProgress.Location = new System.Drawing.Point(4, 327);
+            this.panelProgress.Name = "panelProgress";
+            this.panelProgress.Size = new System.Drawing.Size(387, 65);
+            this.panelProgress.TabIndex = 5;
+            this.panelProgress.Visible = false;
+            // 
+            // labelInfo
+            // 
+            this.labelInfo.AutoSize = true;
+            this.labelInfo.Location = new System.Drawing.Point(11, 11);
+            this.labelInfo.Name = "labelInfo";
+            this.labelInfo.Size = new System.Drawing.Size(161, 17);
+            this.labelInfo.TabIndex = 0;
+            this.labelInfo.Text = "正在读取设备定值，请稍候...";
+            // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(14, 31);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(358, 23);
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar.TabIndex = 1;
+            // 
             // IEDCommForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(827, 515);
+            this.Controls.Add(this.panelProgress);
             this.Controls.Add(this.tabControlMain);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "IEDCommForm";
             this.Padding = new System.Windows.Forms.Padding(8);
@@ -755,8 +778,8 @@
             this.tabPageOscillo.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.panelProgress.ResumeLayout(false);
+            this.panelProgress.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -802,10 +825,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxParamFile;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemAction;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemToDevice;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemToFile;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumnRefValue;
         private System.Windows.Forms.Button buttonRefreshAll;
         private DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeel1;
@@ -818,5 +837,11 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStripGridControl;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDownload;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemUpload;
+        private System.Windows.Forms.Button buttonToDevice;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button buttonToFile;
+        private System.Windows.Forms.Panel panelProgress;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Label labelInfo;
     }
 }

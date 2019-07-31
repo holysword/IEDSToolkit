@@ -303,20 +303,24 @@ namespace IEDSToolkit
                 return;
 
             DevExpress.XtraGrid.Views.Grid.GridView gridView = (DevExpress.XtraGrid.Views.Grid.GridView)sender;
-            int childCount = gridView.GetChildRowCount(e.RowHandle);
-            for (int i = 0; i < childCount; i++)
+            if (gridView == this.gridViewCommonParam)
             {
-                int childHandle = gridView.GetChildRowHandle(e.RowHandle, i);
-                DataRow row = gridView.GetDataRow(childHandle);
-                if (row["Value"].ToString() != "" && RTDB.GetDevice().HasLoadFromFile()
-                        && row["Value"].ToString() != row["RefValue"].ToString())
+                int childCount = gridView.GetChildRowCount(e.RowHandle);
+                for (int i = 0; i < childCount; i++)
                 {
-                    e.Appearance.BackColor = Color.Blue;
-                    e.Appearance.ForeColor = Color.White;
+                    int childHandle = gridView.GetChildRowHandle(e.RowHandle, i);
+                    DataRow row = gridView.GetDataRow(childHandle);
+                    if (row["Value"].ToString() != "" && RTDB.GetDevice().HasLoadFromFile()
+                            && row["RefValue"].ToString() != ""
+                            && row["Value"].ToString() != row["RefValue"].ToString())
+                    {
+                        e.Appearance.BackColor = Color.Blue;
+                        e.Appearance.ForeColor = Color.White;
 
-                    break;
+                        break;
+                    }
                 }
-            }
+            }            
 
             if (Math.Abs(e.RowHandle) % 2 == 0 && e.Appearance.BackColor != Color.Blue)
             {
@@ -357,6 +361,9 @@ namespace IEDSToolkit
                 else if (e.Column.FieldName == "RefValue")
                 {
                     row["RefValueModify"] = true;
+
+                    RTDB.GetDevice().SetParamValue(RTDB.GetDevice().GetVar(row["Name"].ToString()), e.Value.ToString());
+                    RTDB.GetDevice().SaveParameterFile();
                 }
             }
         }
@@ -582,7 +589,8 @@ namespace IEDSToolkit
                     this.gridColumnRefValue.OptionsColumn.AllowEdit = true;
                     this.gridColumnRefValue.OptionsColumn.ReadOnly = false;
 
-                    this.ToolStripMenuItemAction.Enabled = true;
+                    this.buttonToDevice.Enabled = true;
+                    this.buttonToFile.Enabled = true;
                 }
                 else
                 {
@@ -591,7 +599,8 @@ namespace IEDSToolkit
                     this.gridColumnRefValue.OptionsColumn.AllowEdit = false;
                     this.gridColumnRefValue.OptionsColumn.ReadOnly = true;
 
-                    this.ToolStripMenuItemAction.Enabled = false;
+                    this.buttonToDevice.Enabled = false;
+                    this.buttonToFile.Enabled = false;
                 }
 
                 UpdateAllFileValue();
@@ -611,7 +620,8 @@ namespace IEDSToolkit
                     this.gridColumnRefValue.OptionsColumn.AllowEdit = true;
                     this.gridColumnRefValue.OptionsColumn.ReadOnly = false;
 
-                    this.ToolStripMenuItemAction.Enabled = true;
+                    this.buttonToDevice.Enabled = true;
+                    this.buttonToFile.Enabled = true;
                 }
                 else
                 {
@@ -620,7 +630,8 @@ namespace IEDSToolkit
                     this.gridColumnRefValue.OptionsColumn.AllowEdit = false;
                     this.gridColumnRefValue.OptionsColumn.ReadOnly = true;
 
-                    this.ToolStripMenuItemAction.Enabled = false;
+                    this.buttonToDevice.Enabled = false;
+                    this.buttonToFile.Enabled = false;
                 }
 
                 UpdateAllFileValue();
@@ -666,7 +677,7 @@ namespace IEDSToolkit
                 else if (e.Column.FieldName == "Desc")
                 {
                     if (row["Value"].ToString() != "" && RTDB.GetDevice().HasLoadFromFile()
-                        && row["Value"].ToString() != row["RefValue"].ToString())
+                        && row["RefValue"].ToString() != "" && row["Value"].ToString() != row["RefValue"].ToString())
                     {
                         e.Appearance.BackColor = Color.Blue;
                         e.Appearance.ForeColor = Color.White;
@@ -677,28 +688,211 @@ namespace IEDSToolkit
 
         private void toolStripMenuItemDownload_Click(object sender, EventArgs e)
         {
+            int messageIndex = -1;
 
+            int FocusRowHandle = this.gridViewCommonParam.FocusedRowHandle;
+            if (FocusRowHandle < 0)
+            {
+                DialogResult dr = MessageBox.Show("是否确定将本类型的所有参考值整定到设备？\n本操作将更改设备定值，请慎重操作！", "请确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.No)
+                    return;
+
+                this.timerRefresh.Stop();
+
+                int childCount = this.gridViewCommonParam.GetChildRowCount(FocusRowHandle);
+                for (int i = 0; i < childCount; i++)
+                {
+                    int childHandle = this.gridViewCommonParam.GetChildRowHandle(FocusRowHandle, i);
+                    DataRow row = this.gridViewCommonParam.GetDataRow(childHandle);
+                    if (row["Value"].ToString() != "" && RTDB.GetDevice().HasLoadFromFile()
+                            && row["RefValue"].ToString() != "" && row["Value"].ToString() != row["RefValue"].ToString())
+                    {
+                        RTDB.GetDevice().WriteVar(row["Name"].ToString(), row["RefValue"].ToString(), null);
+                        row["ValueModify"] = true;
+
+                        messageIndex = Convert.ToInt32(messageTable.Rows[Convert.ToInt32(row["Message_Id"])]["Index"]);
+
+                        //System.Threading.Thread.Sleep(100);
+                    }
+                }
+            }
+            else
+            {
+                DataRow row = this.gridViewCommonParam.GetFocusedDataRow();
+                if (row["Value"].ToString() != "" && RTDB.GetDevice().HasLoadFromFile()
+                        && row["RefValue"].ToString() != "" && row["Value"].ToString() != row["RefValue"].ToString())
+                {
+                    DialogResult dr = MessageBox.Show("是否确定将所选参考值整定到设备？\n本操作将更改设备定值，请慎重操作！", "请确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == DialogResult.No)
+                        return;
+
+                    this.timerRefresh.Stop();
+
+                    RTDB.GetDevice().WriteVar(row["Name"].ToString(), row["RefValue"].ToString(), null);
+                    row["ValueModify"] = true;
+
+                    messageIndex = Convert.ToInt32(messageTable.Rows[Convert.ToInt32(row["Message_Id"])]["Index"]);
+                }
+            }
+
+            if (messageIndex >= 0)
+            {
+                Task.Run(async delegate
+                {
+                    await Task.Delay(1000);
+                    RTDB.GetDevice().AddUpdateMessage(RTDB.GetDevice().GetMessage(messageIndex));
+
+                    await Task.Delay(1000);
+                    this.Invoke(new delegateStartTimer(StartTimer));
+                });
+            }
         }
 
         private void toolStripMenuItemUpload_Click(object sender, EventArgs e)
         {
+            int FocusRowHandle = this.gridViewCommonParam.FocusedRowHandle;
+            if (FocusRowHandle < 0)
+            {
+                DialogResult dr = MessageBox.Show("是否确定将本类型所有的定值当前值来更新定值文件？\n本操作将更改定值文件中的参考定值，请慎重操作！", "请确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.No)
+                    return;
 
+                this.timerRefresh.Stop();
+
+                int childCount = this.gridViewCommonParam.GetChildRowCount(FocusRowHandle);
+                for (int i = 0; i < childCount; i++)
+                {
+                    int childHandle = this.gridViewCommonParam.GetChildRowHandle(FocusRowHandle, i);
+                    DataRow row = this.gridViewCommonParam.GetDataRow(childHandle);
+                    if (row["Value"].ToString() != "" && RTDB.GetDevice().HasLoadFromFile()
+                            && row["RefValue"].ToString() != "" && row["Value"].ToString() != row["RefValue"].ToString())
+                    {
+                        row["RefValueModify"] = true;
+
+                        row["RefValue"] = row["Value"];
+                        RTDB.GetDevice().SetParamValue(RTDB.GetDevice().GetVar(row["Name"].ToString()), row["Value"].ToString());                        
+                    }
+                }
+
+                RTDB.GetDevice().SaveParameterFile();
+            }
+            else
+            {
+                DataRow row = this.gridViewCommonParam.GetFocusedDataRow();
+                if (row["Value"].ToString() != "" && RTDB.GetDevice().HasLoadFromFile()
+                        && row["RefValue"].ToString() != "" && row["Value"].ToString() != row["RefValue"].ToString())
+                {
+                    DialogResult dr = MessageBox.Show("是否确定将所选参考值整定到设备？\n本操作将更改设备定值，请慎重操作！", "请确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == DialogResult.No)
+                        return;
+
+                    row["RefValueModify"] = true;
+
+                    row["RefValue"] = row["Value"];
+                    RTDB.GetDevice().SetParamValue(RTDB.GetDevice().GetVar(row["Name"].ToString()), row["Value"].ToString());
+                    RTDB.GetDevice().SaveParameterFile();
+                }
+            }
         }
 
         private void contextMenuStripGridControl_Opening(object sender, CancelEventArgs e)
         {
-            //DataRow row = this.gridViewCommonParam.style();
-            
+            bool CanShow = false;
+            int FocusRowHandle = this.gridViewCommonParam.FocusedRowHandle;
+            if (FocusRowHandle < 0)
+            {
+                int childCount = this.gridViewCommonParam.GetChildRowCount(FocusRowHandle);
+                for (int i = 0; i < childCount; i++)
+                {
+                    int childHandle = this.gridViewCommonParam.GetChildRowHandle(FocusRowHandle, i);
+                    DataRow row = this.gridViewCommonParam.GetDataRow(childHandle);
+                    if (row["Value"].ToString() != "" && RTDB.GetDevice().HasLoadFromFile()
+                            && row["RefValue"].ToString() != "" && row["Value"].ToString() != row["RefValue"].ToString())
+                    {
+                        CanShow = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                DataRow row = this.gridViewCommonParam.GetFocusedDataRow();
+                if (row["Value"].ToString() != "" && RTDB.GetDevice().HasLoadFromFile()
+                        && row["RefValue"].ToString() != "" && row["Value"].ToString() != row["RefValue"].ToString())
+                {
+                    CanShow = true;
+                }
+            }
+
+            e.Cancel = !CanShow;
         }
 
-        private void ToolStripMenuItemToDevice_Click(object sender, EventArgs e)
+        private void buttonToDevice_Click(object sender, EventArgs e)
         {
+            int ConnectState = Convert.ToInt32(RTDB.GetVarValue(RTDB.GetDevice().Name, "_ConnectState_"));
+            if (ConnectState != 1)
+            {
+                MessageBox.Show("设备未连接，不能将当前定值文件下载到设备！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            DialogResult dr = MessageBox.Show("是否确定将当前定值文件的所有参考值整定到设备？\n本操作将更改所有的设备定值，请慎重操作！", "请确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr == DialogResult.No)
+                return;
+
+            this.labelInfo.Text = "正在下载定值文件，请稍候...";
+            this.progressBar.Value = 0;
+            this.panelProgress.Top = this.Height / 2;
+            this.panelProgress.Left = (this.Width - this.panelProgress.Width) / 2;
+            this.panelProgress.Visible = true;
+
+            if (RTDB.GetDevice().SaveAllToDevice(this.progressBar))
+            {
+                UpdateAllFileValue();
+
+                this.panelProgress.Visible = false;
+
+                MessageBox.Show("下载定值文件成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                this.panelProgress.Visible = false;
+                MessageBox.Show("下载定值文件失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void ToolStripMenuItemToFile_Click(object sender, EventArgs e)
+        private void buttonToFile_Click(object sender, EventArgs e)
         {
+            int ConnectState = Convert.ToInt32(RTDB.GetVarValue(RTDB.GetDevice().Name, "_ConnectState_"));
+            if (ConnectState != 1)
+            {
+                MessageBox.Show("设备未连接，不能读取所有设备定值来更新定值文件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            DialogResult dr = MessageBox.Show("是否确定读取本设备所有的定值来更新当前定值文件？\n本操作将更改定值文件中的参考定值，请慎重操作！", "请确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr == DialogResult.No)
+                return;
+
+            this.labelInfo.Text = "正在读取设备定值，请稍候...";
+            this.progressBar.Value = 0;
+            this.panelProgress.Top = this.Height / 2;
+            this.panelProgress.Left = (this.Width - this.panelProgress.Width) / 2;
+            this.panelProgress.Visible = true;
+
+            if (RTDB.GetDevice().SaveAllToFile(this.progressBar))
+            {
+                UpdateAllFileValue();
+
+                this.panelProgress.Visible = false;
+
+                MessageBox.Show("更新定值文件成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                this.panelProgress.Visible = false;
+                MessageBox.Show("更新定值文件失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }            
         }
     }
 }

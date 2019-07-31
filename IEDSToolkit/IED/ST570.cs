@@ -210,7 +210,6 @@ namespace IEDSToolkit.IED
 
         public override bool WriteVar(CVar Var, String Value, AutoResetEvent objectNotify)
         {
-
             //写变量
             int RawValue = 0;
             if (Var.Table)
@@ -237,19 +236,19 @@ namespace IEDSToolkit.IED
                 switch (Var.DataType)
                 {
                     case 1:
-                        RawValue = (int)(Convert.ToDouble(Value.ToString()) / Var.Multiple);
+                        RawValue = Convert.ToInt32(Convert.ToDouble(Value.ToString()) / Var.Multiple);
                         break;
                     case 5:
                         double DoubleValue = Convert.ToDouble(Value.ToString());
 
-                        RawValue = (int)(DoubleValue / Var.Multiple);
+                        RawValue = Convert.ToInt32(DoubleValue / Var.Multiple);
 
                         if (Var.Memo == ("最高位为1扩大100倍，为0扩大10倍"))
                         {
                             if (DoubleValue < 10)
-                                RawValue = (int)(DoubleValue * 100 + 32768);
+                                RawValue = Convert.ToInt32(DoubleValue * 100 + 32768);
                             else
-                                RawValue = (int)(DoubleValue * 10);
+                                RawValue = Convert.ToInt32(DoubleValue * 10);
                         }
                         break;
                     case 9:

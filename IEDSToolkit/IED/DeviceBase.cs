@@ -147,6 +147,7 @@ namespace IEDSToolkit.IED
         public CRTDB RTDB;
         
         private XmlDocument ParamDocument = null;
+        private String ParamFileName;
         //private Hashtable ParamValue = new Hashtable();
         public AutoResetEvent UpdateFileHandler = null;
 
@@ -303,7 +304,6 @@ namespace IEDSToolkit.IED
 
         public bool ExchangeMessage(CMessage message, AutoResetEvent objectNotify)
         {
-
             readWriteLockExchangeMsg.WaitOne();
 
             message.NotifyObj = objectNotify;
@@ -378,8 +378,10 @@ namespace IEDSToolkit.IED
         {
             try
             {
+                ParamFileName = Filepath;
+
                 ParamDocument = new XmlDocument();
-                ParamDocument.Load(Filepath);
+                ParamDocument.Load(ParamFileName);
                 XmlNode device = ParamDocument.SelectSingleNode("Device");
                 String DeviceName = device.Attributes["Name"].Value;
                 if (DeviceName != this.Name)
@@ -402,6 +404,8 @@ namespace IEDSToolkit.IED
         {
             try
             {
+                ParamFileName = Filepath;
+
                 ParamDocument = new XmlDocument();
                                 
                 XmlDeclaration declaration = ParamDocument.CreateXmlDeclaration("1.0", "utf-8", "yes");
@@ -411,7 +415,7 @@ namespace IEDSToolkit.IED
                 device.SetAttribute("Name", this.Name);
                 device.SetAttribute("UpdateTime", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                 ParamDocument.AppendChild(device);
-                ParamDocument.Save(Filepath);
+                ParamDocument.Save(ParamFileName);
             }
             catch (Exception e)
             {
@@ -458,7 +462,7 @@ namespace IEDSToolkit.IED
                 varNode.SetAttribute("Value", VarValue.ToString());
 
                 messageNode.AppendChild(varNode);
-            }
+            }           
         }
 
         public bool HasLoadFromFile()
@@ -466,111 +470,120 @@ namespace IEDSToolkit.IED
             return ParamDocument != null;
         }
 
-        //public void SaveParameterFile(Context context)
-        //{
-        //    if (ParamDocument == null)
-        //        return;
+        public void SaveParameterFile()
+        {
+            if (ParamDocument == null)
+                return;
 
-        //    try
-        //    {
-        //        TransformerFactory tf = TransformerFactory.newInstance();
-        //        Transformer transformer = tf.newTransformer();
-        //        DOMSource source = new DOMSource(ParamDocument);
-        //        transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-        //        OutputStream fos = context.getContentResolver().openOutputStream(ParamFile);
-        //        PrintWriter pw = new PrintWriter(fos);
-        //        StreamResult result = new StreamResult(pw);
-        //        transformer.transform(source, result);
-        //        pw.close();
+            try
+            {
+                ParamDocument.Save(ParamFileName);
+            }
+            catch (Exception e)
+            {
+                ParamDocument = null;
+            }
+        }
 
-        //    }
-        //    catch (DOMException e)
-        //    {
-        //        e.printStackTrace();
-        //        ParamDocument = null;
-        //    }
-        //    catch (IOException e)
-        //    {
-        //        e.printStackTrace();
-        //        ParamDocument = null;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        e.printStackTrace();
-        //        ParamDocument = null;
-        //    }
+        public bool SaveAllToFile(System.Windows.Forms.ProgressBar progressBar)
+        {
+            if (ParamDocument == null)
+                return false;
 
-        //    if (ParamDocument != null)
-        //        Toast.makeText(context, R.string.save_param_success, Toast.LENGTH_LONG).show();
-        //    else
-        //        Toast.makeText(context, R.string.save_param_error, Toast.LENGTH_LONG).show();
-        //}
+            progressBar.Maximum = 0;
+            for (int i = 0; i < this.Messages.Count; i++)
+            {
+                DeviceBase.CMessage message = this.Messages[i];
+                if (message.Type == 1)
+                {
+                    progressBar.Maximum++;
+                }
+            }
+            
+            for (int i = 0; i < this.Messages.Count; i++)
+            {
+                DeviceBase.CMessage message = this.Messages[i];
+                if (message.Type == 1)
+                {
+                    DeviceBase.CMessage msgClone = message.Clone();
+                    if (!ExchangeMessage(msgClone, new AutoResetEvent(false)))
+                        return false;
 
-        //public void SaveAllToFile(Context context)
-        //{
-        //    int MessageCount = 0;
-        //    for (int i = 0; i < this.Messages.size(); i++)
-        //    {
-        //        DeviceBase.CMessage message = this.Messages.get(i);
-        //        if (message.Type == 1)
-        //        {
-        //            this.AddUpdateMessage(message);
-        //            MessageCount++;
-        //        }
-        //    }
+                    progressBar.Value++;
+                }
+            }            
 
-        //    try
-        //    {
-        //        Thread.sleep(200 * MessageCount);
-        //    }
-        //    catch (InterruptedException e)
-        //    {
-        //        return;
-        //    }
+            for (int i = 0; i < this.Messages.Count; i++)
+            {
+                DeviceBase.CMessage message = this.Messages[i];
+                if (message.Type == 1)
+                {
+                    for (int j = 0; j < message.Vars.Count; j++)
+                    {
+                        DeviceBase.CVar Var = message.Vars[j];
+                        Object VarValue = RTDB.GetVarValue(this.Name, Var.Name);
+                        if (VarValue != null)
+                        {
+                            this.SetParamValue(Var, VarValue);
+                        }
+                    }
+                }
+            }
 
-        //    for (int i = 0; i < this.Messages.size(); i++)
-        //    {
-        //        DeviceBase.CMessage message = this.Messages.get(i);
-        //        if (message.Type == 1)
-        //        {
-        //            for (int j = 0; j < message.Vars.size(); j++)
-        //            {
-        //                DeviceBase.CVar Var = message.Vars.get(j);
-        //                Object VarValue = CRTDB.GetVarValue(this.Name, Var.Name);
-        //                if (VarValue != null)
-        //                {
-        //                    this.SetParamValue(Var, VarValue);
-        //                }
-        //            }
-        //        }
-        //    }
+            this.SaveParameterFile();
 
-        //    this.SaveParameterFile(context);
-        //}
+            return true;
+        }
 
-        //public void SaveAllToDevice(Context context)
-        //{
-        //    Handler NotifyObj = new Handler()
-        //    {
-        //            public void handleMessage(Message msg)
-        //{
-        //}
-        //        };
+        public bool SaveAllToDevice(System.Windows.Forms.ProgressBar progressBar)
+        {
+            if (ParamDocument == null)
+                return false;
 
-        //        for (Map.Entry<String, Object> entry : this.ParamValue.entrySet()) {
-        //    String VarName = entry.getKey();
-        //    Object RefValue = entry.getValue();
+            List<CMessage> readMessageList = new List<CMessage>();
 
-        //    DeviceBase.CVar Var = this.GetVar(VarName);
-        //    Object VarValue = CRTDB.GetVarValue(this.Name, VarName);
+            progressBar.Maximum = 0;
+            XmlNodeList varList = ParamDocument.SelectNodes("/Device/Message/Var");
+            foreach (XmlNode varNode in varList)
+            {
+                String VarName = varNode.Attributes["Name"].Value;
+                String RefValue = varNode.Attributes["Value"].Value;
 
-        //    if (VarValue != null && CommonUtility.FormatedString(VarValue).equals(CommonUtility.FormatedString(RefValue)))
-        //        continue;
+                DeviceBase.CVar Var = this.GetVar(VarName);
+                Object VarValue = RTDB.GetVarValue(this.Name, VarName);
 
-        //    this.WriteVar(Var, RefValue.toString(), NotifyObj);
-        //}
+                if (VarValue != null && VarValue.ToString() == RefValue)
+                    continue;
 
-        //Toast.makeText(context, R.string.saveto_device_success, Toast.LENGTH_LONG).show();
-        //}
-    }
+                if (readMessageList.IndexOf((CMessage)Var.OwnerMessage) < 0)
+                    readMessageList.Add((CMessage)Var.OwnerMessage);
+
+                progressBar.Maximum++;
+            }
+
+            foreach (XmlNode varNode in varList)
+            {
+                String VarName = varNode.Attributes["Name"].Value;
+                String RefValue = varNode.Attributes["Value"].Value;
+
+                DeviceBase.CVar Var = this.GetVar(VarName);
+                Object VarValue = RTDB.GetVarValue(this.Name, VarName);
+
+                if (VarValue != null && VarValue.ToString() == RefValue)
+                    continue;
+
+                if (!WriteVar(Var, RefValue, new AutoResetEvent(false)))
+                    return false;
+
+                progressBar.Value++;
+            }
+
+            foreach (CMessage readMessage in readMessageList)
+            {
+                this.AddUpdateMessage(readMessage);
+            }
+
+            return true;
+        }
+}
 }
