@@ -1,12 +1,15 @@
-﻿using System;
+﻿using IEDSToolkit.IED;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace IEDSToolkit
 {
@@ -33,6 +36,9 @@ namespace IEDSToolkit
         private void IEDCommForm_Load(object sender, EventArgs e)
         {
             this.TabText = IEDType + "助手";
+
+            this.comboBoxFileType.SelectedIndex = 0;
+
             iedFile.ReadXml(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\IED\\" + IEDType + ".xml");
             deviceTable = iedFile.Tables["Device"];
             messageTable = iedFile.Tables["Message"];
@@ -572,6 +578,9 @@ namespace IEDSToolkit
 
         private void ToolStripMenuItemNewFile_Click(object sender, EventArgs e)
         {
+            this.saveFileDialog.Filter = "定值文件|*.xml";
+            this.saveFileDialog.FileName = "";
+
             if (this.saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string paramFile = this.saveFileDialog.FileName;
@@ -609,6 +618,9 @@ namespace IEDSToolkit
 
         private void ToolStripMenuItemLoadFile_Click(object sender, EventArgs e)
         {
+            this.openFileDialog.Filter = "定值文件|*.xml";
+            this.openFileDialog.FileName = "";
+
             if (this.openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string paramFile = this.openFileDialog.FileName;
@@ -825,6 +837,293 @@ namespace IEDSToolkit
             }
 
             e.Cancel = !CanShow;
+        }
+
+        private void timerDock_Tick(object sender, EventArgs e)
+        {
+            timerDock.Enabled = false;
+
+            chart.BringToFront();
+            try
+            {
+                chart.Dock = DockStyle.Fill;
+            }
+            catch
+            { }
+        }
+
+        private void buttonRead_Click(object sender, EventArgs e)
+        {
+            //读取波形文件
+            int ConnectState = Convert.ToInt32(RTDB.GetVarValue(RTDB.GetDevice().Name, "_ConnectState_"));
+            if (ConnectState != 1)
+            {
+                MessageBox.Show("设备未连接，不能读取波形文件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DeviceBase device = RTDB.GetDevice();
+
+            byte FileNumber = (byte)this.comboBoxFileType.SelectedIndex;
+            System.Threading.AutoResetEvent NotifyObj = new System.Threading.AutoResetEvent(false);
+            DeviceBase.CMessage OscilloMessage = device.GetMessage(53);
+            //读取记录标识
+            DeviceBase.CMessage message = OscilloMessage.Clone();
+            message.Schema[0] = (byte)device.Address;
+            message.Schema[5] = FileNumber;
+            message.Schema[7] = 0;
+            message.Schema[9] = 8;
+            if (!device.ExchangeMessage(message, NotifyObj))
+            {
+                MessageBox.Show("读取波形文件失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (message.Response[5] == 0)
+            {
+                MessageBox.Show("波形文件数据为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            float Ratio = 1;
+            int[] FileData = new int[776 * 2 + 4];
+            System.Array.Copy(message.Response, 5, FileData, 0, 8 * 2);
+
+            if (FileNumber != 2)
+            {
+                //读取电流变比，从工程定值中读取相电流CT配置，然后除以2.5mA
+                message = device.GetMessage(33).Clone();
+                if (!device.ExchangeMessage(message, NotifyObj))
+                {
+                    MessageBox.Show("读取CT变比失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                int CT = message.Response[3] * 256 + message.Response[4];
+                switch (CT)
+                {
+                    case 1: break;
+                    case 2: CT = 5; break;
+                    case 3: CT = 25; break;
+                    case 4: CT = 2; break;
+                    case 5: CT = 100; break;
+                    case 6: CT = 160; break;
+                    case 7: CT = 250; break;
+                    default: break;
+                }
+
+                double CTOutput = Convert.ToDouble(OscilloMessage.Vars[0].Default.ToString());
+                Ratio = (float)CT * 1000 / (float)CTOutput;
+            }
+
+            this.saveFileDialog.Filter = "录波文件|Osc_*.dat";
+            this.saveFileDialog.FileName = "";
+            string saveFileName;
+            if (this.saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                saveFileName = "Osc_" + System.IO.Path.GetFileName(this.saveFileDialog.FileName);
+                saveFileName = System.IO.Path.GetDirectoryName(this.saveFileDialog.FileName) + "\\" + saveFileName;
+            }
+            else
+                return;
+
+            this.labelInfo.Text = "正在读取录波文件，请稍候...";
+            this.progressBar.Value = 0;
+            this.progressBar.Maximum = 48;
+            this.panelProgress.Top = this.Height / 2;
+            this.panelProgress.Left = (this.Width - this.panelProgress.Width) / 2;
+            this.panelProgress.Visible = true;
+
+            //读取记录标识
+            message = OscilloMessage.Clone();
+            message.Schema[0] = (byte)device.Address;
+            message.Schema[5] = FileNumber;
+            message.Schema[7] = 0;
+            message.Schema[9] = 8;
+            message.NotifyObj = NotifyObj;
+
+            for (int i = 0; i < 48; i++)
+            {
+                //if (cancelDownload)
+                //{
+                //    mDownloadDialog.dismiss();
+                //    return;
+                //}
+
+                int RecordNumber = 8 + i * 16;
+                message.Schema[6] = (byte)((RecordNumber & 0xFF00) >> 8);
+                message.Schema[7] = (byte)(RecordNumber & 0x00FF);
+                message.Schema[9] = 16;
+                if (!device.ExchangeMessage(message, NotifyObj))
+                {
+                    MessageBox.Show("读取波形文件失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.panelProgress.Visible = false;
+                    return;
+                }
+
+                System.Array.Copy(message.Response, 5, FileData, 8 * 2 + i * 16 * 2, 16 * 2);
+
+                this.progressBar.Value++;
+            }
+
+            this.panelProgress.Visible = false;
+
+            try
+            {
+                byte[] buffer = new byte[FileData.Length];
+                for (int i = 0; i < FileData.Length - 4; i++)
+                {
+                    buffer[i] = (byte)(FileData[i] & 0xFF);
+                }
+
+                //存储Ratio
+                byte[] RatioBytes = BitConverter.GetBytes(Ratio);
+                for (int i = FileData.Length - 4, j = 0; i < FileData.Length; i++, j++)
+                    buffer[i] = RatioBytes[j];
+
+                FileStream fos = new FileStream(saveFileName, FileMode.Create);
+                try
+                {
+                    fos.Write(buffer, 0, buffer.Length);
+                    MessageBox.Show("波形文件已存储到[" + saveFileName + "]！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    fos.Dispose();
+                }
+                catch (IOException ex)
+                {
+                    return;
+                }
+
+                DrawOscilloGraph(saveFileName);
+            }
+            catch (FileNotFoundException ex)
+            {
+            } 
+        }
+
+        private void DrawOscilloGraph(string FileName)
+        {
+            this.listViewFile.Items.Clear();
+            this.chart.Series.Clear();
+            this.chart.ChartAreas.Clear();
+
+            this.textBoxOscilloFile.Text = System.IO.Path.GetFileName(FileName);
+
+            int[] FileData = new int[776 * 2 + 4];
+            try
+            {
+                FileStream fs = new FileStream(FileName, FileMode.Open);
+                BinaryReader br = new BinaryReader(fs);
+                byte[] buffer = br.ReadBytes((int)fs.Length);
+
+                for (int i = 0; i < FileData.Length; i++)
+                {
+                    FileData[i] = CommonUtility.ByteToInt(buffer[i]);
+                }
+
+                float Ratio = CommonUtility.Byte2Float(buffer, FileData.Length - 4);
+                int FileType = FileData[0];
+
+                int TotalPoints = 0;
+                int RunningPoint = 0;
+                int DataIndex = 0;
+                if (FileType == 8)
+                {
+                    //读取起动录波标识
+                    DataIndex += 2;
+
+                    TotalPoints = FileData[DataIndex] * 256 + FileData[DataIndex + 1];
+                    ListViewItem itemVar = new ListViewItem();
+                    itemVar.Text = "总点数";
+                    itemVar.SubItems.Add(TotalPoints.ToString());
+                    listViewFile.Items.Add(itemVar);
+                    DataIndex += 2;
+
+                    RunningPoint = FileData[DataIndex] * 256 + FileData[DataIndex + 1];
+                    DataIndex += 2;
+
+                    itemVar = new ListViewItem();
+                    itemVar.Text = "起动时间";
+                    itemVar.SubItems.Add((RunningPoint * (FileData[DataIndex] * 256 + FileData[DataIndex + 1]) * 20).ToString() + "ms");
+                    listViewFile.Items.Add(itemVar);
+                    DataIndex += 2;
+                }
+                else
+                {
+                    //读取故障录波标识
+                    int FaultType = FileData[0] * 256 + FileData[1];
+                    DataIndex += 8;
+
+                    String FaultName = CommonUtility.GetFaultName(FaultType);
+                    ListViewItem itemVar = new ListViewItem();
+                    itemVar.Text = "故障类别";
+                    itemVar.SubItems.Add(FaultName.Substring(0, FaultName.IndexOf("_")));
+                    listViewFile.Items.Add(itemVar);
+
+                    itemVar = new ListViewItem();
+                    itemVar.Text = "故障原因";
+                    itemVar.SubItems.Add(FaultName.Substring(FaultName.IndexOf("_") + 1));
+                    listViewFile.Items.Add(itemVar);
+                }
+
+                byte[] Date = new byte[3];
+                Date[0] = (byte)(FileData[DataIndex + 1]);
+                Date[1] = (byte)(FileData[DataIndex + 2]);
+                Date[2] = (byte)(FileData[DataIndex + 3]);
+                String DateStr = CommonUtility.Bcd2Str(Date);
+                String DateValue = "20" + DateStr.Substring(0, 2) + "-" + DateStr.Substring(2, 2) + "-" + DateStr.Substring(4, 2);
+                DataIndex += 4;
+
+                Date[0] = (byte)(FileData[DataIndex + 1]);
+                Date[1] = (byte)(FileData[DataIndex + 2]);
+                Date[2] = (byte)(FileData[DataIndex + 3]);
+                DateStr = CommonUtility.Bcd2Str(Date);
+                DateValue = DateValue + " " + DateStr.Substring(0, 2) + ":" + DateStr.Substring(2, 2) + ":" + DateStr.Substring(4, 2);
+                DataIndex += 4;
+
+                ListViewItem itemDate = new ListViewItem();
+                itemDate.Text = "记录时间";
+                itemDate.SubItems.Add(DateValue);
+                listViewFile.Items.Insert(0, itemDate);
+
+                //绘制曲线
+                ((System.ComponentModel.ISupportInitialize)(chart)).BeginInit();
+
+                ChartArea chartArea1 = new ChartArea();
+                chartArea1.Name = "ChartArea1";
+                chartArea1.AxisX.MajorGrid.Enabled = false;
+                chartArea1.AxisY.MajorGrid.Enabled = false;
+                chartArea1.AxisY.Title = "电流";
+                chartArea1.AxisY.TitleFont = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                chart.ChartAreas.Add(chartArea1);
+                if (FileType == 8)
+                {
+                    float MaxStarter = OscilloForm.DrawStarterOscillogram(chart, TotalPoints, RunningPoint, FileData, DataIndex);
+
+                    ListViewItem itemVar = new ListViewItem();
+                    itemVar.Text = "起动最大电流";
+                    itemVar.SubItems.Add(MaxStarter.ToString("0.00"));
+                    listViewFile.Items.Add(itemVar);
+                }
+                else
+                    OscilloForm.DrawFaultOscillogram(chart, FileData, DataIndex, Ratio);
+
+                ((System.ComponentModel.ISupportInitialize)(chart)).EndInit();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("录波文件加载错误！\n错误信息：" + ex.Message);
+            }
+        }
+
+        private void buttonOpen_Click(object sender, EventArgs e)
+        {
+            this.openFileDialog.Filter = "录波文件|Osc_*.dat";
+            this.openFileDialog.FileName = "";
+
+            if (this.openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                DrawOscilloGraph(this.openFileDialog.FileName);
+            }
         }
 
         private void buttonToDevice_Click(object sender, EventArgs e)

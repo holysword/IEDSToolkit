@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IEDCommForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.设备ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,7 +72,17 @@
             this.tabPageEvents = new System.Windows.Forms.TabPage();
             this.tabControlEvents = new System.Windows.Forms.TabControl();
             this.tabPageOscillo = new System.Windows.Forms.TabPage();
-            this.tabControlOscillo = new System.Windows.Forms.TabControl();
+            this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.listViewFile = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.textBoxOscilloFile = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.buttonOpen = new System.Windows.Forms.Button();
+            this.buttonRead = new System.Windows.Forms.Button();
+            this.comboBoxFileType = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonToFile = new System.Windows.Forms.Button();
             this.buttonToDevice = new System.Windows.Forms.Button();
@@ -85,8 +97,9 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panelProgress = new System.Windows.Forms.Panel();
-            this.labelInfo = new System.Windows.Forms.Label();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.labelInfo = new System.Windows.Forms.Label();
+            this.timerDock = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageCommonParam.SuspendLayout();
@@ -104,6 +117,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridViewMaintenance)).BeginInit();
             this.tabPageEvents.SuspendLayout();
             this.tabPageOscillo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
+            this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelProgress.SuspendLayout();
             this.SuspendLayout();
@@ -380,7 +395,7 @@
             this.tabPageAdvancedParam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageAdvancedParam.Name = "tabPageAdvancedParam";
             this.tabPageAdvancedParam.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPageAdvancedParam.Size = new System.Drawing.Size(803, 399);
+            this.tabPageAdvancedParam.Size = new System.Drawing.Size(803, 406);
             this.tabPageAdvancedParam.TabIndex = 2;
             this.tabPageAdvancedParam.Text = "工程定值";
             this.tabPageAdvancedParam.UseVisualStyleBackColor = true;
@@ -391,7 +406,7 @@
             this.gridControlAdvancedParam.Location = new System.Drawing.Point(3, 4);
             this.gridControlAdvancedParam.MainView = this.gridViewAdvancedParam;
             this.gridControlAdvancedParam.Name = "gridControlAdvancedParam";
-            this.gridControlAdvancedParam.Size = new System.Drawing.Size(797, 391);
+            this.gridControlAdvancedParam.Size = new System.Drawing.Size(797, 398);
             this.gridControlAdvancedParam.TabIndex = 3;
             this.gridControlAdvancedParam.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewAdvancedParam});
@@ -469,7 +484,7 @@
             this.tabPageMaintenance.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageMaintenance.Name = "tabPageMaintenance";
             this.tabPageMaintenance.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPageMaintenance.Size = new System.Drawing.Size(803, 399);
+            this.tabPageMaintenance.Size = new System.Drawing.Size(803, 406);
             this.tabPageMaintenance.TabIndex = 3;
             this.tabPageMaintenance.Text = "维护信息";
             this.tabPageMaintenance.UseVisualStyleBackColor = true;
@@ -480,7 +495,7 @@
             this.gridControlMaintenance.Location = new System.Drawing.Point(3, 4);
             this.gridControlMaintenance.MainView = this.gridViewMaintenance;
             this.gridControlMaintenance.Name = "gridControlMaintenance";
-            this.gridControlMaintenance.Size = new System.Drawing.Size(797, 391);
+            this.gridControlMaintenance.Size = new System.Drawing.Size(797, 398);
             this.gridControlMaintenance.TabIndex = 4;
             this.gridControlMaintenance.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewMaintenance});
@@ -558,7 +573,7 @@
             this.tabPageEvents.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageEvents.Name = "tabPageEvents";
             this.tabPageEvents.Padding = new System.Windows.Forms.Padding(8);
-            this.tabPageEvents.Size = new System.Drawing.Size(803, 399);
+            this.tabPageEvents.Size = new System.Drawing.Size(803, 406);
             this.tabPageEvents.TabIndex = 4;
             this.tabPageEvents.Text = "事件记录";
             this.tabPageEvents.UseVisualStyleBackColor = true;
@@ -570,32 +585,143 @@
             this.tabControlEvents.Location = new System.Drawing.Point(8, 8);
             this.tabControlEvents.Name = "tabControlEvents";
             this.tabControlEvents.SelectedIndex = 0;
-            this.tabControlEvents.Size = new System.Drawing.Size(787, 383);
+            this.tabControlEvents.Size = new System.Drawing.Size(787, 390);
             this.tabControlEvents.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlEvents.TabIndex = 0;
             // 
             // tabPageOscillo
             // 
-            this.tabPageOscillo.Controls.Add(this.tabControlOscillo);
+            this.tabPageOscillo.Controls.Add(this.chart);
+            this.tabPageOscillo.Controls.Add(this.listViewFile);
+            this.tabPageOscillo.Controls.Add(this.panel2);
             this.tabPageOscillo.Location = new System.Drawing.Point(4, 36);
             this.tabPageOscillo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageOscillo.Name = "tabPageOscillo";
             this.tabPageOscillo.Padding = new System.Windows.Forms.Padding(8);
-            this.tabPageOscillo.Size = new System.Drawing.Size(803, 399);
+            this.tabPageOscillo.Size = new System.Drawing.Size(803, 406);
             this.tabPageOscillo.TabIndex = 5;
             this.tabPageOscillo.Text = "录波文件";
             this.tabPageOscillo.UseVisualStyleBackColor = true;
             // 
-            // tabControlOscillo
+            // chart
             // 
-            this.tabControlOscillo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlOscillo.ItemSize = new System.Drawing.Size(108, 25);
-            this.tabControlOscillo.Location = new System.Drawing.Point(8, 8);
-            this.tabControlOscillo.Name = "tabControlOscillo";
-            this.tabControlOscillo.SelectedIndex = 0;
-            this.tabControlOscillo.Size = new System.Drawing.Size(787, 383);
-            this.tabControlOscillo.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabControlOscillo.TabIndex = 1;
+            this.chart.Location = new System.Drawing.Point(8, 72);
+            this.chart.Name = "chart";
+            this.chart.Size = new System.Drawing.Size(478, 362);
+            this.chart.TabIndex = 3;
+            this.chart.Text = "chart1";
+            title1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            title1.Name = "TitleFile";
+            title1.Text = "故障录波0";
+            title1.Visible = false;
+            title2.Alignment = System.Drawing.ContentAlignment.MiddleLeft;
+            title2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title2.Name = "TitleParam";
+            title2.Text = "记录时间";
+            title2.Visible = false;
+            this.chart.Titles.Add(title1);
+            this.chart.Titles.Add(title2);
+            // 
+            // listViewFile
+            // 
+            this.listViewFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listViewFile.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listViewFile.Dock = System.Windows.Forms.DockStyle.Top;
+            this.listViewFile.FullRowSelect = true;
+            this.listViewFile.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.listViewFile.Location = new System.Drawing.Point(8, 50);
+            this.listViewFile.Margin = new System.Windows.Forms.Padding(3, 11, 3, 3);
+            this.listViewFile.Name = "listViewFile";
+            this.listViewFile.Scrollable = false;
+            this.listViewFile.Size = new System.Drawing.Size(787, 100);
+            this.listViewFile.TabIndex = 2;
+            this.listViewFile.UseCompatibleStateImageBehavior = false;
+            this.listViewFile.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 200;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Width = 200;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.Control;
+            this.panel2.Controls.Add(this.textBoxOscilloFile);
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Controls.Add(this.buttonOpen);
+            this.panel2.Controls.Add(this.buttonRead);
+            this.panel2.Controls.Add(this.comboBoxFileType);
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(8, 8);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(787, 42);
+            this.panel2.TabIndex = 4;
+            // 
+            // textBoxOscilloFile
+            // 
+            this.textBoxOscilloFile.BackColor = System.Drawing.SystemColors.Window;
+            this.textBoxOscilloFile.Location = new System.Drawing.Point(438, 10);
+            this.textBoxOscilloFile.Name = "textBoxOscilloFile";
+            this.textBoxOscilloFile.ReadOnly = true;
+            this.textBoxOscilloFile.Size = new System.Drawing.Size(225, 23);
+            this.textBoxOscilloFile.TabIndex = 5;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(328, 13);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(104, 17);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "已加载录波文件：";
+            // 
+            // buttonOpen
+            // 
+            this.buttonOpen.Location = new System.Drawing.Point(669, 9);
+            this.buttonOpen.Name = "buttonOpen";
+            this.buttonOpen.Size = new System.Drawing.Size(87, 23);
+            this.buttonOpen.TabIndex = 3;
+            this.buttonOpen.Text = "打开";
+            this.buttonOpen.UseVisualStyleBackColor = true;
+            this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
+            // 
+            // buttonRead
+            // 
+            this.buttonRead.Location = new System.Drawing.Point(215, 10);
+            this.buttonRead.Name = "buttonRead";
+            this.buttonRead.Size = new System.Drawing.Size(87, 23);
+            this.buttonRead.TabIndex = 2;
+            this.buttonRead.Text = "读取";
+            this.buttonRead.UseVisualStyleBackColor = true;
+            this.buttonRead.Click += new System.EventHandler(this.buttonRead_Click);
+            // 
+            // comboBoxFileType
+            // 
+            this.comboBoxFileType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxFileType.FormattingEnabled = true;
+            this.comboBoxFileType.Items.AddRange(new object[] {
+            "故障录波0",
+            "故障录波1",
+            "起动录波"});
+            this.comboBoxFileType.Location = new System.Drawing.Point(88, 9);
+            this.comboBoxFileType.Name = "comboBoxFileType";
+            this.comboBoxFileType.Size = new System.Drawing.Size(121, 25);
+            this.comboBoxFileType.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(14, 13);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(68, 17);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "录波文件：";
             // 
             // panel1
             // 
@@ -722,6 +848,14 @@
             this.panelProgress.TabIndex = 5;
             this.panelProgress.Visible = false;
             // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(14, 31);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(358, 23);
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar.TabIndex = 1;
+            // 
             // labelInfo
             // 
             this.labelInfo.AutoSize = true;
@@ -731,13 +865,10 @@
             this.labelInfo.TabIndex = 0;
             this.labelInfo.Text = "正在读取设备定值，请稍候...";
             // 
-            // progressBar
+            // timerDock
             // 
-            this.progressBar.Location = new System.Drawing.Point(14, 31);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(358, 23);
-            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar.TabIndex = 1;
+            this.timerDock.Enabled = true;
+            this.timerDock.Tick += new System.EventHandler(this.timerDock_Tick);
             // 
             // IEDCommForm
             // 
@@ -776,6 +907,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridViewMaintenance)).EndInit();
             this.tabPageEvents.ResumeLayout(false);
             this.tabPageOscillo.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panelProgress.ResumeLayout(false);
@@ -819,7 +953,6 @@
         private System.Windows.Forms.TabPage tabPageEvents;
         private System.Windows.Forms.TabControl tabControlEvents;
         private System.Windows.Forms.TabPage tabPageOscillo;
-        private System.Windows.Forms.TabControl tabControlOscillo;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox textBoxConnectState;
         private System.Windows.Forms.Label label1;
@@ -843,5 +976,17 @@
         private System.Windows.Forms.Panel panelProgress;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label labelInfo;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart;
+        private System.Windows.Forms.ListView listViewFile;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TextBox textBoxOscilloFile;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button buttonOpen;
+        private System.Windows.Forms.Button buttonRead;
+        private System.Windows.Forms.ComboBox comboBoxFileType;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Timer timerDock;
     }
 }

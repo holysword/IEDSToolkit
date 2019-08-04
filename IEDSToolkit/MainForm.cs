@@ -31,6 +31,7 @@ namespace IEDSToolkit
 
         private void ParameterToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.openFileDialogParam.FileName = "";
             if (this.openFileDialogParam.ShowDialog() == DialogResult.OK)
             {
                 ParameterForm parameterForm = new ParameterForm();
@@ -42,6 +43,7 @@ namespace IEDSToolkit
 
         private void PackageToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.openFileDialogPackage.FileName = "";
             if (this.openFileDialogPackage.ShowDialog() == DialogResult.OK)
             {
                 PackageForm packageForm = new PackageForm();
@@ -63,6 +65,7 @@ namespace IEDSToolkit
 
         private void OscilloToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.openFileDialogOscillo.FileName = "";
             if (this.openFileDialogOscillo.ShowDialog() == DialogResult.OK)
             {
                 OscilloForm oscilloForm = new OscilloForm();
