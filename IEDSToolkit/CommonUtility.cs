@@ -9,6 +9,21 @@ namespace IEDSToolkit
 {
     class CommonUtility
     {
+        public static String FormatedString(Object Value)
+        {
+            if (Value == null)
+                return "";
+
+            if (Value.GetType().Name == "Double")
+            {                
+                return Convert.ToDouble(Value).ToString("0.##");
+            }
+            else
+            {
+                return Value.ToString();
+            }
+        }
+
         public static int ByteToInt(byte Value)
         {
             int IntValue = Value;

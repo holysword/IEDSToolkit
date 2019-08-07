@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Xml;
 
 namespace IEDSToolkit
 {
@@ -292,12 +293,7 @@ namespace IEDSToolkit
 
             return gridControlEvent;
         }
-
-        private void ToolStripMenuItemClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
+        
         private void buttonRefreshAll_Click(object sender, EventArgs e)
         {
 
@@ -427,6 +423,17 @@ namespace IEDSToolkit
 
         private void IEDCommForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            int ConnectState = Convert.ToInt32(RTDB.GetVarValue(RTDB.GetDevice().Name, "_ConnectState_"));
+            if (ConnectState == 1)
+            {
+                DialogResult dr = MessageBox.Show("是否确定关闭本窗口？\n本操作将断开与设备的连接！", "请确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.No)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
             commTCPServerThread.Terminate();
         }
 
@@ -660,9 +667,349 @@ namespace IEDSToolkit
 
         }
 
+        private bool ExportData(int MessageType, String TypeName, XmlDocument ExpDocument)
+        {
+            this.progressBar.Value = 0;
+
+            DeviceBase device = RTDB.GetDevice();
+            List<DeviceBase.CMessage> messages = new List<DeviceBase.CMessage>();
+            foreach (DeviceBase.CMessage message in device.Messages)
+            {
+                if (message.Type == MessageType)
+                    messages.Add(message);
+            }
+
+            progressBar.Maximum = messages.Count;
+
+            XmlElement root = (XmlElement)ExpDocument.SelectSingleNode("Data");
+            XmlElement dataNode = ExpDocument.CreateElement(TypeName);
+            root.AppendChild(dataNode);
+
+            System.Threading.AutoResetEvent NotifyObj = new System.Threading.AutoResetEvent(false);
+            foreach (DeviceBase.CMessage message in messages)
+            {
+                DeviceBase.CMessage messageClone = message.Clone();           
+                if (!device.ExchangeMessage(messageClone, NotifyObj))
+                {
+                    MessageBox.Show("从设备读取数据失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.panelProgress.Visible = false;
+                    return false;
+                }
+
+                //存储变量值
+                XmlElement MessageNode = ExpDocument.CreateElement("Message");
+                MessageNode.SetAttribute("Name", message.Name);
+                dataNode.AppendChild(MessageNode);
+
+                foreach (DeviceBase.CVar var in message.Vars)
+                {
+                    XmlElement VarNode = ExpDocument.CreateElement("Var");
+                    VarNode.SetAttribute("Name", var.Desc);
+                    VarNode.SetAttribute("Value", CommonUtility.FormatedString(RTDB.GetVarValue(device.Name, var.Name)));
+
+                    MessageNode.AppendChild(VarNode);
+                }
+
+                this.progressBar.Value++;
+            }
+
+            return true;
+        }
+
+        private bool ExportEvents(XmlDocument ExpDocument)
+        {
+            this.progressBar.Value = 0;
+
+            DeviceBase device = RTDB.GetDevice();
+
+            int MessageCount = 0;
+
+            List<DeviceBase.CMessage> messages = new List<DeviceBase.CMessage>();
+            foreach (DeviceBase.CMessage message in device.Messages)
+            {
+                if (message.Type == 2)
+                {
+                    messages.Add(message);
+                    MessageCount += message.Count;
+                }                    
+            }
+
+            progressBar.Maximum = MessageCount;
+
+            XmlElement root = (XmlElement)ExpDocument.SelectSingleNode("Data");
+            XmlElement dataNode = ExpDocument.CreateElement("Events");
+            root.AppendChild(dataNode);
+
+            System.Threading.AutoResetEvent NotifyObj = new System.Threading.AutoResetEvent(false);
+            foreach (DeviceBase.CMessage message in messages)
+            {
+                for (int j = 0; j < message.Count; j++)
+                {
+                    DeviceBase.CMessage messageClone = device.GetRecordMessage(message, j);
+                    if (!device.ExchangeMessage(messageClone, NotifyObj))
+                    {
+                        MessageBox.Show("从设备读取数据失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.panelProgress.Visible = false;
+                        return false;
+                    }
+
+                    //存储变量值
+                    XmlElement MessageNode = ExpDocument.CreateElement("Message");
+                    MessageNode.SetAttribute("Name", message.Name + j.ToString());
+                    dataNode.AppendChild(MessageNode);
+
+                    foreach (DeviceBase.CVar var in message.Vars)
+                    {
+                        XmlElement VarNode = ExpDocument.CreateElement("Var");
+                        VarNode.SetAttribute("Name", var.Desc + j.ToString());
+                        VarNode.SetAttribute("Value", CommonUtility.FormatedString(RTDB.GetVarValue(device.Name, var.Name + j.ToString())));
+
+                        MessageNode.AppendChild(VarNode);
+                    }
+
+                    this.progressBar.Value++;
+                }                
+            }
+
+            return true;
+        }
+
+        private bool ExportOscillo(XmlDocument ExpDocument)
+        {
+            this.progressBar.Value = 0;
+
+            XmlElement root = (XmlElement)ExpDocument.SelectSingleNode("Data");
+            XmlElement dataNode = ExpDocument.CreateElement("Oscillo");
+            root.AppendChild(dataNode);
+
+            DeviceBase device = RTDB.GetDevice();
+            System.Threading.AutoResetEvent NotifyObj = new System.Threading.AutoResetEvent(false);
+            DeviceBase.CMessage OscilloMessage = device.GetMessage(53);
+            int[] FileData = new int[776 * 2 + 4];
+
+            for (byte FileNumber = 0; FileNumber < 3; FileNumber++)
+            {
+                //读取记录标识
+                DeviceBase.CMessage message = OscilloMessage.Clone();
+                message.Schema[0] = (byte)device.Address;
+                message.Schema[5] = FileNumber;
+                message.Schema[7] = 0;
+                message.Schema[9] = 8;
+                if (!device.ExchangeMessage(message, NotifyObj))
+                {
+                    MessageBox.Show("读取波形文件失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+                if (message.Response[5] == 0)
+                {
+                    //MessageBox.Show("波形文件数据为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    continue;
+                }
+
+                float Ratio = 1;
+                System.Array.Copy(message.Response, 5, FileData, 0, 8 * 2);
+
+                if (FileNumber != 2)
+                {
+                    //读取电流变比，从工程定值中读取相电流CT配置，然后除以2.5mA
+                    message = device.GetMessage(33).Clone();
+                    if (!device.ExchangeMessage(message, NotifyObj))
+                    {
+                        MessageBox.Show("读取CT变比失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+
+                    int CT = message.Response[3] * 256 + message.Response[4];
+                    switch (CT)
+                    {
+                        case 1: break;
+                        case 2: CT = 5; break;
+                        case 3: CT = 25; break;
+                        case 4: CT = 2; break;
+                        case 5: CT = 100; break;
+                        case 6: CT = 160; break;
+                        case 7: CT = 250; break;
+                        default: break;
+                    }
+
+                    double CTOutput = Convert.ToDouble(OscilloMessage.Vars[0].Default.ToString());
+                    Ratio = (float)CT * 1000 / (float)CTOutput;
+                }
+
+                this.labelInfo.Text = "正在打包数据，请稍候... [录波文件" + FileNumber + "]";
+                this.progressBar.Value = 0;
+                this.progressBar.Maximum = 48;                
+
+                //读取记录标识
+                message = OscilloMessage.Clone();
+                message.Schema[0] = (byte)device.Address;
+                message.Schema[5] = FileNumber;
+                message.Schema[7] = 0;
+                message.Schema[9] = 8;
+                message.NotifyObj = NotifyObj;
+
+                for (int i = 0; i < 48; i++)
+                {
+                    int RecordNumber = 8 + i * 16;
+                    message.Schema[6] = (byte)((RecordNumber & 0xFF00) >> 8);
+                    message.Schema[7] = (byte)(RecordNumber & 0x00FF);
+                    message.Schema[9] = 16;
+                    if (!device.ExchangeMessage(message, NotifyObj))
+                    {
+                        MessageBox.Show("读取波形文件失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.panelProgress.Visible = false;
+                        return false;
+                    }
+
+                    System.Array.Copy(message.Response, 5, FileData, 8 * 2 + i * 16 * 2, 16 * 2);
+
+                    this.progressBar.Value++;
+                }                
+
+                byte[] buffer = new byte[FileData.Length];
+                for (int i = 0; i < FileData.Length - 4; i++)
+                {
+                    buffer[i] = (byte)(FileData[i] & 0xFF);
+                }
+
+                //存储Ratio
+                byte[] RatioBytes = BitConverter.GetBytes(Ratio);
+                for (int i = FileData.Length - 4, j = 0; i < FileData.Length; i++, j++)
+                    buffer[i] = RatioBytes[j];
+
+                XmlElement OscilloNode = ExpDocument.CreateElement("File");
+                OscilloNode.SetAttribute("Name", "Oscillo" + FileNumber);
+                OscilloNode.InnerText = Convert.ToBase64String(buffer);
+                dataNode.AppendChild(OscilloNode);
+            }
+
+            return true;
+        }
+
         private void ToolStripMenuItemPackage_Click(object sender, EventArgs e)
         {
+            int ConnectState = Convert.ToInt32(RTDB.GetVarValue(RTDB.GetDevice().Name, "_ConnectState_"));
+            if (ConnectState != 1)
+            {
+                MessageBox.Show("设备未连接，不能打包数据！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            using (CreatePackageForm createPackageForm = new CreatePackageForm())
+            {
+                if (createPackageForm.ShowDialog() == DialogResult.OK)
+                {
+                    this.saveFileDialog.Filter = "打包数据文件|Exp_*.dat";
+                    this.saveFileDialog.FileName = "";
+                    string saveFileName;
+                    if (this.saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        saveFileName = "Exp_" + System.IO.Path.GetFileName(this.saveFileDialog.FileName).Substring(4);
+                        saveFileName = System.IO.Path.GetDirectoryName(this.saveFileDialog.FileName) + "\\" + saveFileName;
+                    }
+                    else
+                        return;
+
+                    XmlDocument ExpDocument;
+                    try
+                    {
+                        ExpDocument = new XmlDocument();
+
+                        XmlDeclaration declaration = ExpDocument.CreateXmlDeclaration("1.0", "utf-8", "yes");
+                        ExpDocument.AppendChild(declaration);
+
+                        XmlElement root = ExpDocument.CreateElement("Data");
+                        root.SetAttribute("Name", RTDB.GetDevice().Name);
+                        root.SetAttribute("CreateTime", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                        ExpDocument.AppendChild(root);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("新建数据文件失败！错误信息：" + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    this.labelInfo.Text = "正在打包数据，请稍候...";
+                    this.progressBar.Value = 0;
+                    this.panelProgress.Top = this.Height / 2;
+                    this.panelProgress.Left = (this.Width - this.panelProgress.Width) / 2;
+                    this.panelProgress.Visible = true;
+
+                    bool HasError = false;
+                    foreach (String selectObj in createPackageForm.checkedListBoxType.CheckedItems)
+                    {
+                        if (selectObj == "实时数据")
+                        {
+                            this.labelInfo.Text = "正在打包数据，请稍候... [" + selectObj + "]";
+                            if (!ExportData(0, "RealTime", ExpDocument))
+                            {
+                                HasError = false;
+                                break;
+                            }                                
+                        }
+                        else if (selectObj == "普通定值")
+                        {
+                            this.labelInfo.Text = "正在打包数据，请稍候... [" + selectObj + "]";
+                            if (!ExportData(1, "CommonParam", ExpDocument))
+                            {
+                                HasError = false;
+                                break;
+                            }
+                        }
+                        else if (selectObj == "工程定值")
+                        {
+                            this.labelInfo.Text = "正在打包数据，请稍候... [" + selectObj + "]";
+                            if (!ExportData(6, "AdvancedParam", ExpDocument))
+                            {
+                                HasError = false;
+                                break;
+                            }
+                        }
+                        else if (selectObj == "维护信息")
+                        {
+                            this.labelInfo.Text = "正在打包数据，请稍候... [" + selectObj + "]";
+                            if (!ExportData(4, "Maintenance", ExpDocument))
+                            {
+                                HasError = false;
+                                break;
+                            }
+                        }
+                        else if (selectObj == "事件记录")
+                        {
+                            this.labelInfo.Text = "正在打包数据，请稍候... [" + selectObj + "]";
+                            if (!ExportEvents(ExpDocument))
+                            {
+                                HasError = false;
+                                break;
+                            }
+                        }
+                        else if (selectObj == "录波文件")
+                        {
+                            this.labelInfo.Text = "正在打包数据，请稍候... [" + selectObj + "]";
+                            if (!ExportOscillo(ExpDocument))
+                            {
+                                HasError = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    this.panelProgress.Visible = false;
+                    try
+                    {
+                        if (!HasError)
+                        {
+                            ExpDocument.Save(saveFileName);
+                            MessageBox.Show("所选数据已打包到文件[" + saveFileName + "]！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }                            
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("保存数据文件失败！错误信息：" + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
 
         private void gridViewCommonParam_CustomDrawCell(object sender, DevExpress.XtraGrid.Views.Base.RowCellCustomDrawEventArgs e)
@@ -787,6 +1134,8 @@ namespace IEDSToolkit
                 }
 
                 RTDB.GetDevice().SaveParameterFile();
+
+                this.timerRefresh.Start();
             }
             else
             {
@@ -794,15 +1143,19 @@ namespace IEDSToolkit
                 if (row["Value"].ToString() != "" && RTDB.GetDevice().HasLoadFromFile()
                         && row["RefValue"].ToString() != "" && row["Value"].ToString() != row["RefValue"].ToString())
                 {
-                    DialogResult dr = MessageBox.Show("是否确定将所选参考值整定到设备？\n本操作将更改设备定值，请慎重操作！", "请确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult dr = MessageBox.Show("是否确定将所选定值当前值来更新定值文件？\n本操作将更改定值文件中的参考定值，请慎重操作！", "请确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (dr == DialogResult.No)
                         return;
+
+                    this.timerRefresh.Stop();
 
                     row["RefValueModify"] = true;
 
                     row["RefValue"] = row["Value"];
                     RTDB.GetDevice().SetParamValue(RTDB.GetDevice().GetVar(row["Name"].ToString()), row["Value"].ToString());
                     RTDB.GetDevice().SaveParameterFile();
+
+                    this.timerRefresh.Start();
                 }
             }
         }
@@ -921,7 +1274,7 @@ namespace IEDSToolkit
             string saveFileName;
             if (this.saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                saveFileName = "Osc_" + System.IO.Path.GetFileName(this.saveFileDialog.FileName);
+                saveFileName = "Osc_" + System.IO.Path.GetFileName(this.saveFileDialog.FileName).Substring(4);
                 saveFileName = System.IO.Path.GetDirectoryName(this.saveFileDialog.FileName) + "\\" + saveFileName;
             }
             else
@@ -944,12 +1297,6 @@ namespace IEDSToolkit
 
             for (int i = 0; i < 48; i++)
             {
-                //if (cancelDownload)
-                //{
-                //    mDownloadDialog.dismiss();
-                //    return;
-                //}
-
                 int RecordNumber = 8 + i * 16;
                 message.Schema[6] = (byte)((RecordNumber & 0xFF00) >> 8);
                 message.Schema[7] = (byte)(RecordNumber & 0x00FF);
@@ -967,37 +1314,32 @@ namespace IEDSToolkit
             }
 
             this.panelProgress.Visible = false;
+            
+            byte[] buffer = new byte[FileData.Length];
+            for (int i = 0; i < FileData.Length - 4; i++)
+            {
+                buffer[i] = (byte)(FileData[i] & 0xFF);
+            }
 
+            //存储Ratio
+            byte[] RatioBytes = BitConverter.GetBytes(Ratio);
+            for (int i = FileData.Length - 4, j = 0; i < FileData.Length; i++, j++)
+                buffer[i] = RatioBytes[j];
+
+            FileStream fos = new FileStream(saveFileName, FileMode.Create);
             try
             {
-                byte[] buffer = new byte[FileData.Length];
-                for (int i = 0; i < FileData.Length - 4; i++)
-                {
-                    buffer[i] = (byte)(FileData[i] & 0xFF);
-                }
-
-                //存储Ratio
-                byte[] RatioBytes = BitConverter.GetBytes(Ratio);
-                for (int i = FileData.Length - 4, j = 0; i < FileData.Length; i++, j++)
-                    buffer[i] = RatioBytes[j];
-
-                FileStream fos = new FileStream(saveFileName, FileMode.Create);
-                try
-                {
-                    fos.Write(buffer, 0, buffer.Length);
-                    MessageBox.Show("波形文件已存储到[" + saveFileName + "]！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    fos.Dispose();
-                }
-                catch (IOException ex)
-                {
-                    return;
-                }
-
-                DrawOscilloGraph(saveFileName);
+                fos.Write(buffer, 0, buffer.Length);
+                MessageBox.Show("波形文件已存储到[" + saveFileName + "]！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                fos.Dispose();
             }
-            catch (FileNotFoundException ex)
+            catch (IOException ex)
             {
-            } 
+                MessageBox.Show("波形文件保存失败！\n错误信息：" + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            DrawOscilloGraph(saveFileName);
         }
 
         private void DrawOscilloGraph(string FileName)
@@ -1014,6 +1356,7 @@ namespace IEDSToolkit
                 FileStream fs = new FileStream(FileName, FileMode.Open);
                 BinaryReader br = new BinaryReader(fs);
                 byte[] buffer = br.ReadBytes((int)fs.Length);
+                fs.Dispose();
 
                 for (int i = 0; i < FileData.Length; i++)
                 {
@@ -1123,6 +1466,50 @@ namespace IEDSToolkit
             if (this.openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 DrawOscilloGraph(this.openFileDialog.FileName);
+            }
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            string keyword = this.textBoxKeyword.Text.Trim();
+            if (keyword == "")
+            {
+                MessageBox.Show("请输入搜索关键字！");
+                return;
+            }
+
+            int FocusedRowHandle = this.gridViewCommonParam.FocusedRowHandle;
+
+            DataTable dataTable = (DataTable)gridControlCommonParam.DataSource;
+            DataRow[] rows = dataTable.Select("(Message_Name LIKE '%" + keyword + "%') OR (Desc LIKE '%" + keyword + "%') OR (Value LIKE '%" + keyword + "%') OR (RefValue LIKE '%" + keyword + "%')");
+
+            if (rows.Length > 0)
+            {
+                int LastRowIndex = this.gridViewCommonParam.GetRowHandle(dataTable.Rows.IndexOf(rows[rows.Length - 1]));
+                if (LastRowIndex <= FocusedRowHandle)
+                    FocusedRowHandle = -1;
+            }            
+
+            foreach (DataRow row in rows)
+            {
+                int RowIndex = this.gridViewCommonParam.GetRowHandle(dataTable.Rows.IndexOf(row));
+                if (RowIndex >= FocusedRowHandle + 1)
+                {
+                    this.gridViewCommonParam.SelectRow(RowIndex);
+                    this.gridViewCommonParam.FocusedRowHandle = RowIndex;
+                    this.gridViewCommonParam.FocusedColumn = this.gridViewCommonParam.Columns["Value"];
+
+                    //this.gridViewCommonParam.Focus();
+                    break;
+                }
+            }            
+        }
+
+        private void textBoxKeyword_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(System.Windows.Forms.Keys.Enter))
+            {
+                buttonSearch_Click(null, null);
             }
         }
 

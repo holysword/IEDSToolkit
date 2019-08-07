@@ -107,33 +107,46 @@ namespace IEDSToolkit
 
         private void SaveParameterFile()
         {
-            deviceTable.Rows[0]["UpdateTime"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            this.textBoxCreateTime.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-
-            DataSet saveData = paramFile.Copy();
-            saveData.Tables["Var"].Columns.Remove("Message_Name");
-            saveData.Tables["Var"].Columns.Remove("Var_Desc");
-            saveData.Tables["Var"].Columns.Remove("Var_Obj");
-            saveData.Tables["Var"].Columns.Remove("Tables");
-            saveData.Tables["Var"].Columns.Remove("Modify");         
-
-            using (MemoryStream ms = new MemoryStream())
+            string NowTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            
+            try
             {
-                saveData.WriteXml(ms);
-                ms.Position = 0;
-                XmlDocument doc = new System.Xml.XmlDocument();
-                doc.Load(ms);
+                DataSet saveData = paramFile.Copy();
 
-                XmlNode root = doc.SelectSingleNode("NewDataSet");
-                XmlNode device = root.SelectSingleNode("Device");
-                doc.RemoveChild(root);
+                saveData.Tables["Device"].Rows[0]["UpdateTime"] = NowTime;
 
-                XmlDeclaration declaration = doc.CreateXmlDeclaration("1.0", "utf-8", "yes");
-                doc.AppendChild(declaration);
+                saveData.Tables["Var"].Columns.Remove("Message_Name");
+                saveData.Tables["Var"].Columns.Remove("Var_Desc");
+                saveData.Tables["Var"].Columns.Remove("Var_Obj");
+                saveData.Tables["Var"].Columns.Remove("Tables");
+                saveData.Tables["Var"].Columns.Remove("Modify");
 
-                doc.AppendChild(device);
-                doc.Save(FileName);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    saveData.WriteXml(ms);
+                    ms.Position = 0;
+                    XmlDocument doc = new System.Xml.XmlDocument();
+                    doc.Load(ms);
+
+                    XmlNode root = doc.SelectSingleNode("NewDataSet");
+                    XmlNode device = root.SelectSingleNode("Device");
+                    doc.RemoveChild(root);
+
+                    XmlDeclaration declaration = doc.CreateXmlDeclaration("1.0", "utf-8", "yes");
+                    doc.AppendChild(declaration);
+
+                    doc.AppendChild(device);
+                    doc.Save(FileName);
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("保存定值文件失败！\n错误信息：" + ex.Message);
+                return;
+            }            
+
+            deviceTable.Rows[0]["UpdateTime"] = NowTime;
+            this.textBoxCreateTime.Text = NowTime;
 
             foreach (DataRow var in varTable.Rows)
                 var["Modify"] = false;
@@ -220,6 +233,48 @@ namespace IEDSToolkit
             }
         }
 
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            string keyword = this.textBoxKeyword.Text.Trim();
+            if (keyword == "")
+            {
+                MessageBox.Show("请输入搜索关键字！");
+                return;
+            }
+
+            int FocusedRowHandle = this.gridViewMain.FocusedRowHandle;
+
+            DataTable dataTable = (DataTable)this.gridControl.DataSource;
+            DataRow[] rows = dataTable.Select("(Message_Name LIKE '%" + keyword + "%') OR (Var_Desc LIKE '%" + keyword + "%') OR (Value LIKE '%" + keyword + "%')");
+
+            if (rows.Length > 0)
+            {
+                int LastRowIndex = this.gridViewMain.GetRowHandle(dataTable.Rows.IndexOf(rows[rows.Length - 1]));
+                if (LastRowIndex <= FocusedRowHandle)
+                    FocusedRowHandle = -1;
+            }
+
+            foreach (DataRow row in rows)
+            {
+                int RowIndex = this.gridViewMain.GetRowHandle(dataTable.Rows.IndexOf(row));
+                if (RowIndex >= FocusedRowHandle + 1)
+                {
+                    this.gridViewMain.SelectRow(RowIndex);
+                    this.gridViewMain.FocusedRowHandle = RowIndex;
+                    this.gridViewMain.FocusedColumn = this.gridViewMain.Columns["Value"];
+                    break;
+                }
+            }
+        }
+
+        private void textBoxKeyword_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(System.Windows.Forms.Keys.Enter))
+            {
+                buttonSearch_Click(null, null);
+            }
+        }
+
         private void gridViewMain_CustomRowCellEditForEditing(object sender, DevExpress.XtraGrid.Views.Grid.CustomRowCellEditEventArgs e)
         {
             if (e.RowHandle >= 0 && e.Column.FieldName == "Value")
@@ -271,7 +326,7 @@ namespace IEDSToolkit
             }
         }
 
-        private void 还原所有更改ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ReloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.gridControl.DataSource = null;
             LoadParameterFile();

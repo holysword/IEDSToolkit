@@ -81,7 +81,15 @@ namespace IEDSToolkit
             IEDCommForm iedCommForm = new IEDCommForm();
             iedCommForm.MdiParent = this;
             iedCommForm.IEDType = ((ToolStripMenuItem)sender).Text;
-            iedCommForm.Show(dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);                        
+            iedCommForm.Show(dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
+
+            this.DeviceToolStripMenuItem.Visible = false;                        
+        }
+
+        private void dockPanel_ContentRemoved(object sender, WeifenLuo.WinFormsUI.Docking.DockContentEventArgs e)
+        {
+            if (e.Content.GetType().Name == "IEDCommForm")
+                this.DeviceToolStripMenuItem.Visible = true;
         }
     }
 }

@@ -48,6 +48,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxIEDType = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.buttonSearch = new System.Windows.Forms.Button();
+            this.textBoxKeyword = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit)).BeginInit();
@@ -55,13 +58,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // gridControl
             // 
             this.gridControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridControl.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.gridControl.Location = new System.Drawing.Point(9, 66);
+            this.gridControl.Location = new System.Drawing.Point(9, 104);
             this.gridControl.MainView = this.gridViewMain;
             this.gridControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gridControl.Name = "gridControl";
@@ -69,7 +73,7 @@
             this.repositoryItemSpinEdit,
             this.repositoryItemComboBox,
             this.repositoryItemCheckEdit});
-            this.gridControl.Size = new System.Drawing.Size(838, 655);
+            this.gridControl.Size = new System.Drawing.Size(866, 226);
             this.gridControl.TabIndex = 0;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewMain});
@@ -197,7 +201,7 @@
             this.ReloadToolStripMenuItem.Name = "ReloadToolStripMenuItem";
             this.ReloadToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.ReloadToolStripMenuItem.Text = "还原所有更改";
-            this.ReloadToolStripMenuItem.Click += new System.EventHandler(this.还原所有更改ToolStripMenuItem_Click);
+            this.ReloadToolStripMenuItem.Click += new System.EventHandler(this.ReloadToolStripMenuItem_Click);
             // 
             // defaultLookAndFeel1
             // 
@@ -213,7 +217,7 @@
             this.panel1.Location = new System.Drawing.Point(9, 11);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(838, 55);
+            this.panel1.Size = new System.Drawing.Size(866, 48);
             this.panel1.TabIndex = 2;
             // 
             // textBoxCreateTime
@@ -252,12 +256,44 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "设备类型：";
             // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.SystemColors.Window;
+            this.panel3.Controls.Add(this.buttonSearch);
+            this.panel3.Controls.Add(this.textBoxKeyword);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(9, 59);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(866, 45);
+            this.panel3.TabIndex = 4;
+            // 
+            // buttonSearch
+            // 
+            this.buttonSearch.AutoSize = true;
+            this.buttonSearch.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonSearch.Image = global::IEDSToolkit.Properties.Resources.Search;
+            this.buttonSearch.Location = new System.Drawing.Point(307, 7);
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.Size = new System.Drawing.Size(30, 30);
+            this.buttonSearch.TabIndex = 1;
+            this.buttonSearch.UseVisualStyleBackColor = true;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
+            // 
+            // textBoxKeyword
+            // 
+            this.textBoxKeyword.Location = new System.Drawing.Point(16, 11);
+            this.textBoxKeyword.Name = "textBoxKeyword";
+            this.textBoxKeyword.Size = new System.Drawing.Size(285, 23);
+            this.textBoxKeyword.TabIndex = 0;
+            this.textBoxKeyword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxKeyword_KeyPress);
+            // 
             // ParameterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(856, 732);
+            this.ClientSize = new System.Drawing.Size(884, 341);
             this.Controls.Add(this.gridControl);
+            this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -279,6 +315,8 @@
             this.menuStrip.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -304,5 +342,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxIEDType;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button buttonSearch;
+        private System.Windows.Forms.TextBox textBoxKeyword;
     }
 }

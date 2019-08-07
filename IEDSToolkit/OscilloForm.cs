@@ -69,6 +69,7 @@ namespace IEDSToolkit
                 FileStream fs = new FileStream(FileName, FileMode.Open);           
                 BinaryReader br = new BinaryReader(fs);                            
                 byte[] buffer = br.ReadBytes((int)fs.Length);
+                fs.Dispose();
 
                 for (int i = 0; i < FileData.Length; i++)
                 {

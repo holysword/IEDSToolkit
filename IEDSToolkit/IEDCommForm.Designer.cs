@@ -41,8 +41,6 @@
             this.ToolStripMenuItemWizard = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemCheck = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemPackage = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.ToolStripMenuItemClose = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageCommonParam = new System.Windows.Forms.TabPage();
             this.gridControlCommonParam = new DevExpress.XtraGrid.GridControl();
@@ -57,6 +55,9 @@
             this.repositoryItemSpinEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
             this.repositoryItemComboBox = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             this.repositoryItemCheckEdit = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.buttonSearch = new System.Windows.Forms.Button();
+            this.textBoxKeyword = new System.Windows.Forms.TextBox();
             this.tabPageAdvancedParam = new System.Windows.Forms.TabPage();
             this.gridControlAdvancedParam = new DevExpress.XtraGrid.GridControl();
             this.gridViewAdvancedParam = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -109,6 +110,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit)).BeginInit();
+            this.panel3.SuspendLayout();
             this.tabPageAdvancedParam.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlAdvancedParam)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewAdvancedParam)).BeginInit();
@@ -128,11 +130,11 @@
             this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.设备ToolStripMenuItem});
-            this.menuStrip.Location = new System.Drawing.Point(12, 258);
+            this.menuStrip.Location = new System.Drawing.Point(4, 44);
             this.menuStrip.MdiWindowListItem = this.设备ToolStripMenuItem;
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
-            this.menuStrip.Size = new System.Drawing.Size(70, 27);
+            this.menuStrip.Size = new System.Drawing.Size(162, 27);
             this.menuStrip.TabIndex = 2;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -140,9 +142,7 @@
             // 
             this.设备ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItemParamMng,
-            this.ToolStripMenuItemPackage,
-            this.toolStripMenuItem1,
-            this.ToolStripMenuItemClose});
+            this.ToolStripMenuItemPackage});
             this.设备ToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Replace;
             this.设备ToolStripMenuItem.MergeIndex = 0;
             this.设备ToolStripMenuItem.Name = "设备ToolStripMenuItem";
@@ -158,60 +158,48 @@
             this.ToolStripMenuItemWizard,
             this.ToolStripMenuItemCheck});
             this.ToolStripMenuItemParamMng.Name = "ToolStripMenuItemParamMng";
-            this.ToolStripMenuItemParamMng.Size = new System.Drawing.Size(139, 22);
+            this.ToolStripMenuItemParamMng.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemParamMng.Text = "定值管理";
             // 
             // ToolStripMenuItemNewFile
             // 
             this.ToolStripMenuItemNewFile.Name = "ToolStripMenuItemNewFile";
-            this.ToolStripMenuItemNewFile.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItemNewFile.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemNewFile.Text = "新建定值文件";
             this.ToolStripMenuItemNewFile.Click += new System.EventHandler(this.ToolStripMenuItemNewFile_Click);
             // 
             // ToolStripMenuItemLoadFile
             // 
             this.ToolStripMenuItemLoadFile.Name = "ToolStripMenuItemLoadFile";
-            this.ToolStripMenuItemLoadFile.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItemLoadFile.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemLoadFile.Text = "加载定值文件";
             this.ToolStripMenuItemLoadFile.Click += new System.EventHandler(this.ToolStripMenuItemLoadFile_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(145, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(149, 6);
             // 
             // ToolStripMenuItemWizard
             // 
             this.ToolStripMenuItemWizard.Name = "ToolStripMenuItemWizard";
-            this.ToolStripMenuItemWizard.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItemWizard.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemWizard.Text = "定值整定向导";
             this.ToolStripMenuItemWizard.Click += new System.EventHandler(this.ToolStripMenuItemWizard_Click);
             // 
             // ToolStripMenuItemCheck
             // 
             this.ToolStripMenuItemCheck.Name = "ToolStripMenuItemCheck";
-            this.ToolStripMenuItemCheck.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItemCheck.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemCheck.Text = "安全性检查";
             this.ToolStripMenuItemCheck.Click += new System.EventHandler(this.ToolStripMenuItemCheck_Click);
             // 
             // ToolStripMenuItemPackage
             // 
             this.ToolStripMenuItemPackage.Name = "ToolStripMenuItemPackage";
-            this.ToolStripMenuItemPackage.Size = new System.Drawing.Size(139, 22);
+            this.ToolStripMenuItemPackage.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemPackage.Text = "数据打包(&P)";
             this.ToolStripMenuItemPackage.Click += new System.EventHandler(this.ToolStripMenuItemPackage_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(136, 6);
-            // 
-            // ToolStripMenuItemClose
-            // 
-            this.ToolStripMenuItemClose.Name = "ToolStripMenuItemClose";
-            this.ToolStripMenuItemClose.Size = new System.Drawing.Size(139, 22);
-            this.ToolStripMenuItemClose.Text = "关闭连接";
-            this.ToolStripMenuItemClose.Click += new System.EventHandler(this.ToolStripMenuItemClose_Click);
             // 
             // tabControlMain
             // 
@@ -236,7 +224,7 @@
             // tabPageCommonParam
             // 
             this.tabPageCommonParam.Controls.Add(this.gridControlCommonParam);
-            this.tabPageCommonParam.Controls.Add(this.menuStrip);
+            this.tabPageCommonParam.Controls.Add(this.panel3);
             this.tabPageCommonParam.Location = new System.Drawing.Point(4, 36);
             this.tabPageCommonParam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPageCommonParam.Name = "tabPageCommonParam";
@@ -250,14 +238,14 @@
             // 
             this.gridControlCommonParam.ContextMenuStrip = this.contextMenuStripGridControl;
             this.gridControlCommonParam.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControlCommonParam.Location = new System.Drawing.Point(3, 4);
+            this.gridControlCommonParam.Location = new System.Drawing.Point(3, 49);
             this.gridControlCommonParam.MainView = this.gridViewCommonParam;
             this.gridControlCommonParam.Name = "gridControlCommonParam";
             this.gridControlCommonParam.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemSpinEdit,
             this.repositoryItemComboBox,
             this.repositoryItemCheckEdit});
-            this.gridControlCommonParam.Size = new System.Drawing.Size(797, 398);
+            this.gridControlCommonParam.Size = new System.Drawing.Size(797, 353);
             this.gridControlCommonParam.TabIndex = 2;
             this.gridControlCommonParam.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewCommonParam});
@@ -387,6 +375,37 @@
             // 
             this.repositoryItemCheckEdit.AutoHeight = false;
             this.repositoryItemCheckEdit.Name = "repositoryItemCheckEdit";
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.buttonSearch);
+            this.panel3.Controls.Add(this.textBoxKeyword);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(3, 4);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(797, 45);
+            this.panel3.TabIndex = 3;
+            // 
+            // buttonSearch
+            // 
+            this.buttonSearch.AutoSize = true;
+            this.buttonSearch.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonSearch.Image = global::IEDSToolkit.Properties.Resources.Search;
+            this.buttonSearch.Location = new System.Drawing.Point(301, 7);
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.Size = new System.Drawing.Size(30, 30);
+            this.buttonSearch.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.buttonSearch, "搜索定值");
+            this.buttonSearch.UseVisualStyleBackColor = true;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
+            // 
+            // textBoxKeyword
+            // 
+            this.textBoxKeyword.Location = new System.Drawing.Point(9, 11);
+            this.textBoxKeyword.Name = "textBoxKeyword";
+            this.textBoxKeyword.Size = new System.Drawing.Size(285, 23);
+            this.textBoxKeyword.TabIndex = 0;
+            this.textBoxKeyword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxKeyword_KeyPress);
             // 
             // tabPageAdvancedParam
             // 
@@ -741,6 +760,7 @@
             // buttonToFile
             // 
             this.buttonToFile.AutoSize = true;
+            this.buttonToFile.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.buttonToFile.BackColor = System.Drawing.Color.Transparent;
             this.buttonToFile.Enabled = false;
             this.buttonToFile.Image = global::IEDSToolkit.Properties.Resources.upload_31_466666666667px_1122580_easyicon_net;
@@ -755,6 +775,7 @@
             // buttonToDevice
             // 
             this.buttonToDevice.AutoSize = true;
+            this.buttonToDevice.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.buttonToDevice.BackColor = System.Drawing.Color.Transparent;
             this.buttonToDevice.Enabled = false;
             this.buttonToDevice.Image = global::IEDSToolkit.Properties.Resources.download_31_466666666667px_1122612_easyicon_net;
@@ -878,6 +899,7 @@
             this.Controls.Add(this.panelProgress);
             this.Controls.Add(this.tabControlMain);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.menuStrip);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -892,13 +914,14 @@
             this.menuStrip.PerformLayout();
             this.tabControlMain.ResumeLayout(false);
             this.tabPageCommonParam.ResumeLayout(false);
-            this.tabPageCommonParam.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlCommonParam)).EndInit();
             this.contextMenuStripGridControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridViewCommonParam)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.tabPageAdvancedParam.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridControlAdvancedParam)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewAdvancedParam)).EndInit();
@@ -915,6 +938,7 @@
             this.panelProgress.ResumeLayout(false);
             this.panelProgress.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -929,8 +953,6 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemWizard;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCheck;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemPackage;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemClose;
         private System.Windows.Forms.TabControl tabControlMain;
         private System.Windows.Forms.TabPage tabPageCommonParam;
         private DevExpress.XtraGrid.GridControl gridControlCommonParam;
@@ -988,5 +1010,8 @@
         private System.Windows.Forms.ComboBox comboBoxFileType;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Timer timerDock;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button buttonSearch;
+        private System.Windows.Forms.TextBox textBoxKeyword;
     }
 }

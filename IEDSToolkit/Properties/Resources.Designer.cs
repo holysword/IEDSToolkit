@@ -73,6 +73,16 @@ namespace IEDSToolkit.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap Search {
+            get {
+                object obj = ResourceManager.GetObject("Search", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap upload_31_466666666667px_1122580_easyicon_net {
             get {
                 object obj = ResourceManager.GetObject("upload_31.466666666667px_1122580_easyicon.net", resourceCulture);
