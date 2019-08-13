@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,72 @@ namespace IEDSToolkit
 
         public void PrintContent()
         {
+            switch (this.tabControlMain.SelectedTab.Name)
+            {                
+                case "tabPageCommonParam":
+                    {
+                        DevGridReport devGridReport = new DevGridReport(this.gridControlCommonParam
+                                        , this.tabControlMain.SelectedTab.Text
+                                        , "设备类型：" + this.IEDType);
+                        devGridReport.Preview();
+                        break;
+                    }
+                case "tabPageAdvancedParam":
+                    {
+                        DevGridReport devGridReport = new DevGridReport(this.gridControlAdvancedParam
+                                        , this.tabControlMain.SelectedTab.Text
+                                        , "设备类型：" + this.IEDType);
+                        devGridReport.Preview();
+                        break;
+                    }
+                case "tabPageMaintenance":
+                    {
+                        DevGridReport devGridReport = new DevGridReport(this.gridControlMaintenance
+                                        , this.tabControlMain.SelectedTab.Text
+                                        , "设备类型：" + this.IEDType);
+                        devGridReport.Preview();
+                        break;
+                    }
+                case "tabPageEvents":
+                    {
+                        DevGridReport devGridReport = new DevGridReport(((DevExpress.XtraGrid.GridControl)(this.tabControlEvents.SelectedTab.Controls[0]))
+                                        , this.tabControlEvents.SelectedTab.Text
+                                        , "设备类型：" + this.IEDType);
+                        devGridReport.Preview();
+                        break;
+                    }
+                case "tabPageOscillo":
+                    {
+                        this.chart.Titles[0].Text = this.textBoxOscilloFile.Text;
+
+                        this.chart.Titles[1].Text = "设备类型：" + this.IEDType + "     ";
+                        foreach (ListViewItem item in listViewFile.Items)
+                        {
+                            this.chart.Titles[1].Text += item.SubItems[0].Text + "：" + item.SubItems[1].Text + "     ";
+                        }
+
+                        this.chart.Printing.PrintDocument.PrintPage += PrintDocument_PrintPage;
+                        this.chart.Printing.PrintDocument.DefaultPageSettings.Landscape = true;
+                        this.chart.Printing.PageSetup();
+
+                        this.chart.Titles[0].Visible = true;
+                        this.chart.Titles[1].Visible = true;
+
+                        PrintPreviewDialog ppd = new PrintPreviewDialog();
+                        ppd.Document = this.chart.Printing.PrintDocument;
+                        (ppd as Form).WindowState = FormWindowState.Maximized;
+                        ppd.ShowDialog();
+
+                        break;
+                    }
+                default: break;
+            }
+        }
+        
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            this.chart.Titles[0].Visible = false;
+            this.chart.Titles[1].Visible = false;
         }
 
         private void IEDCommForm_Load(object sender, EventArgs e)
