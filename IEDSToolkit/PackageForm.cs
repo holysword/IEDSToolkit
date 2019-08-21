@@ -58,7 +58,7 @@ namespace IEDSToolkit
                         DataRow varRow = varTable.NewRow();
                         varRow["Message_Name"] = messageIndex.ToString("00") + ". " + message.Attributes["Name"].Value;
                         varRow["Var_Desc"] = var.Attributes["Name"].Value;
-                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(var.Attributes["Name"].Value);
+                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(message.Attributes["Name"].Value, var.Attributes["Name"].Value);
 
                         varTable.Rows.Add(varRow);
                     }
@@ -95,7 +95,7 @@ namespace IEDSToolkit
                         DataRow varRow = varTable.NewRow();
                         varRow["Message_Name"] = messageIndex.ToString("00") + ". " + message.Attributes["Name"].Value;
                         varRow["Var_Desc"] = var.Attributes["Name"].Value;
-                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(var.Attributes["Name"].Value);
+                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(message.Attributes["Name"].Value, var.Attributes["Name"].Value);
 
                         varTable.Rows.Add(varRow);
                     }
@@ -132,7 +132,7 @@ namespace IEDSToolkit
                         DataRow varRow = varTable.NewRow();
                         varRow["Message_Name"] = messageIndex.ToString("00") + ". " + message.Attributes["Name"].Value;
                         varRow["Var_Desc"] = var.Attributes["Name"].Value;
-                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(var.Attributes["Name"].Value);
+                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(message.Attributes["Name"].Value, var.Attributes["Name"].Value);
 
                         varTable.Rows.Add(varRow);
                     }
@@ -169,7 +169,7 @@ namespace IEDSToolkit
                         DataRow varRow = varTable.NewRow();
                         varRow["Message_Name"] = messageIndex.ToString("00") + ". " + message.Attributes["Name"].Value;
                         varRow["Var_Desc"] = var.Attributes["Name"].Value;
-                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(var.Attributes["Name"].Value);
+                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(message.Attributes["Name"].Value, var.Attributes["Name"].Value);
 
                         varTable.Rows.Add(varRow);
                     }
@@ -227,7 +227,7 @@ namespace IEDSToolkit
                         DataRow varRow = varTable.NewRow();
                         varRow["Message_Name"] = "记录" + (Convert.ToInt32(message.Attributes["Name"].Value.Replace(EventType, "")) + 1).ToString("00");
                         varRow["Var_Desc"] = var.Attributes["Name"].Value.TrimEnd(digits);
-                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(var.Attributes["Name"].Value.TrimEnd(digits));
+                        varRow["Var_Value"] = var.Attributes["Value"].Value + GetVarUnit(EventType, var.Attributes["Name"].Value.TrimEnd(digits));
 
                         varTable.Rows.Add(varRow);                        
                     }
@@ -415,10 +415,14 @@ namespace IEDSToolkit
             this.ResumeLayout(false);            
         }
 
-        private string GetVarUnit(string VarDesc)
+        private string GetVarUnit(string MessageName, string VarDesc)
         {
             String unit = "";
-            DataRow[] rows = iedFile.Tables["Var"].Select("Desc = '" + VarDesc + "'");
+            DataRow[] rows = iedFile.Tables["Message"].Select("Name = '" + MessageName + "'");
+            if (rows.Length == 0)
+                return unit;
+            String messageId = rows[0]["Message_Id"].ToString();
+            rows = iedFile.Tables["Var"].Select("Message_Id = " + messageId + " AND Desc = '" + VarDesc + "'");
             if (rows.Length > 0)
                 unit = rows[0]["Unit"].ToString();
             return unit;

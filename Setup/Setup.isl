@@ -1896,6 +1896,7 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
+		<row><td>File.dat</td><td>ISX_DEFAULTCOMPONENT2</td><td>EXP_催~1.DAT|Exp_催化变频电机不平衡.dat</td><td>0</td><td/><td/><td/><td>1</td><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\Exp_催化变频电机不平衡.dat</td><td>1</td><td/></row>
 		<row><td>File.xml</td><td>ISX_DEFAULTCOMPONENT2</td><td>万华.xml</td><td>0</td><td/><td/><td/><td>1</td><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\万华.xml</td><td>1</td><td/></row>
 		<row><td>File1</td><td>Component1</td><td>IEDSToolkit.主输出</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;IEDSToolkit&gt;|Built</td><td>3</td><td/></row>
 		<row><td>exp_2019_07_15_10_01_13.dat</td><td>ISX_DEFAULTCOMPONENT2</td><td>EXP_20~1.DAT|Exp_2019-07-15 10_01_13.dat</td><td>0</td><td/><td/><td/><td>1</td><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\Exp_2019-07-15 10_01_13.dat</td><td>1</td><td/></row>
@@ -3750,12 +3751,16 @@
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>2052</td><td>对于运行 [ProductName] 内存量不足。</td><td>0</td><td/><td>-1951982136</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>2052</td><td>对于运行 [ProductName] 屏幕分辨率不足。</td><td>0</td><td/><td>-1951982136</td></row>
 		<row><td>ID_STRING1</td><td>2052</td><td/><td>0</td><td/><td>-1951982136</td></row>
-		<row><td>ID_STRING2</td><td>2052</td><td>http://www.苏州万龙电气集团股份有限公司.com</td><td>0</td><td/><td>-341356882</td></row>
+		<row><td>ID_STRING2</td><td>2052</td><td>http://www.wanlongjituan.com</td><td>0</td><td/><td>-1406693777</td></row>
 		<row><td>ID_STRING3</td><td>2052</td><td>苏州万龙电气集团股份有限公司</td><td>0</td><td/><td>-341356882</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>IEDSToolkit</td><td>0</td><td/><td>-1951952887</td></row>
 		<row><td>ID_STRING4</td><td>2052</td><td>IEDSToolkit</td><td>0</td><td/><td>-1951952887</td></row>
 		<row><td>ID_STRING5</td><td>1033</td><td>智秀工具箱</td><td>0</td><td/><td>-1951983543</td></row>
 		<row><td>ID_STRING5</td><td>2052</td><td>智秀工具箱</td><td>0</td><td/><td>-1951983543</td></row>
+		<row><td>ID_STRING6</td><td>1033</td><td>http://www.wanlongjituan.com</td><td>0</td><td/><td>-1406691729</td></row>
+		<row><td>ID_STRING6</td><td>2052</td><td>http://www.wanlongjituan.com</td><td>0</td><td/><td>-1406691729</td></row>
+		<row><td>ID_STRING7</td><td>1033</td><td>+86-0512-62605121</td><td>0</td><td/><td>-1406687601</td></row>
+		<row><td>ID_STRING7</td><td>2052</td><td>+86-0512-62605121</td><td>0</td><td/><td>-1406687601</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>2052</td><td>系统将不安装此功能。</td><td>0</td><td/><td>-1951982136</td></row>
 	</table>
 
@@ -3873,12 +3878,15 @@
 		<row><td>UNINST_Uninstall_I_9F1616163D6040799575BD3257FB4FC3.exe</td><td/><td>C:\Program Files (x86)\InstallShield\2015LE\Redist\Language Independent\OS Independent\uninstall.ico</td><td>0</td></row>
 		<row><td>_06F199F312944E9C9A1D89B2C6A20729.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_123D7AA725124E969D39DF4AC2AAB648.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
+		<row><td>_2B303941DC9141D1A3A918D9D1D9D911.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_2FF264F5541948BB8357DBB60DBA2574.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_3EE6547A0D8F4C8AAE03A43E6D33B23B.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_4648E687216845FC9F5BAAB0F145480D.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_6399E47C97CF49D596F93566D39D230D.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_76B4B35885DE4DC48C355CE8D90F5FDD.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_7B27EF185A8D4A1AA8483A3343848E03.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
+		<row><td>_80C14C59387540A3B601155300262B01.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
+		<row><td>_82EFE870BBAB4D70B6A6DF037E8256F0.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_850923142E4846A1AA8DF0E9279A777C.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_8ECD4DBFA7A34F1B820D4D590A21D817.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_9204313265344FC2906CB9143E46F6E6.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
@@ -3887,6 +3895,7 @@
 		<row><td>_B84B26A77804439D91659EB75AEACA45.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_D86AB88383DA42B2ADE00CA2A99CA603.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_DEBADF2AE3004865BB2562C4C04A6281.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
+		<row><td>_E0DBBA45C0574D5184E101C2ABB04CDA.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_E5328848B3C1425FAB7A15E4FFC00563.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_F1A1EA928893459E959645D4F9FE1DCD.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Release\IEDSToolkit.exe</td><td>0</td></row>
 		<row><td>_F62ED38C0A1B4E8C93B2390CF392C2BD.exe</td><td/><td>D:\IEDSToolkit\IEDSToolkit\bin\Debug\IEDSToolkit.exe</td><td>0</td></row>
@@ -4330,6 +4339,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="L0">Value</col>
 		<col def="S255">ISComments</col>
 		<row><td>ALLUSERS</td><td>1</td><td/></row>
+		<row><td>ARPHELPLINK</td><td>##ID_STRING6##</td><td/></row>
+		<row><td>ARPHELPTELEPHONE</td><td>##ID_STRING7##</td><td/></row>
 		<row><td>ARPINSTALLLOCATION</td><td/><td/></row>
 		<row><td>ARPPRODUCTICON</td><td>ARPPRODUCTICON.exe</td><td/></row>
 		<row><td>ARPSIZE</td><td/><td/></row>
@@ -4593,7 +4604,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ArialBlueStrike10</td><td>Arial</td><td>10</td><td>16711680</td><td>8</td></row>
 		<row><td>CourierNew8</td><td>Courier New</td><td>8</td><td/><td/></row>
 		<row><td>CourierNew9</td><td>Courier New</td><td>9</td><td/><td/></row>
-		<row><td>ExpressDefault</td><td>Tahoma</td><td>8</td><td/><td/></row>
+		<row><td>ExpressDefault</td><td>微软雅黑</td><td>8</td><td>0</td><td>0</td></row>
 		<row><td>MSGothic9</td><td>MS Gothic</td><td>9</td><td/><td/></row>
 		<row><td>MSSGreySerif8</td><td>MS Sans Serif</td><td>8</td><td>8421504</td><td/></row>
 		<row><td>MSSWhiteSerif8</td><td>Tahoma</td><td>8</td><td>16777215</td><td/></row>
