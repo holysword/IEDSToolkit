@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IEDCommForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.设备ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,10 +71,6 @@
             this.tabPageEvents = new System.Windows.Forms.TabPage();
             this.tabControlEvents = new System.Windows.Forms.TabControl();
             this.tabPageOscillo = new System.Windows.Forms.TabPage();
-            this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.listViewFile = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel2 = new System.Windows.Forms.Panel();
             this.textBoxOscilloFile = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -101,6 +95,7 @@
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.labelInfo = new System.Windows.Forms.Label();
             this.timerDock = new System.Windows.Forms.Timer(this.components);
+            this.oscilloControl = new IEDSToolkit.OscilloControl();
             this.menuStrip.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageCommonParam.SuspendLayout();
@@ -119,7 +114,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridViewMaintenance)).BeginInit();
             this.tabPageEvents.SuspendLayout();
             this.tabPageOscillo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelProgress.SuspendLayout();
@@ -134,7 +128,7 @@
             this.menuStrip.MdiWindowListItem = this.设备ToolStripMenuItem;
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
-            this.menuStrip.Size = new System.Drawing.Size(162, 27);
+            this.menuStrip.Size = new System.Drawing.Size(70, 27);
             this.menuStrip.TabIndex = 2;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -158,46 +152,46 @@
             this.ToolStripMenuItemWizard,
             this.ToolStripMenuItemCheck});
             this.ToolStripMenuItemParamMng.Name = "ToolStripMenuItemParamMng";
-            this.ToolStripMenuItemParamMng.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemParamMng.Size = new System.Drawing.Size(139, 22);
             this.ToolStripMenuItemParamMng.Text = "定值管理";
             // 
             // ToolStripMenuItemNewFile
             // 
             this.ToolStripMenuItemNewFile.Name = "ToolStripMenuItemNewFile";
-            this.ToolStripMenuItemNewFile.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemNewFile.Size = new System.Drawing.Size(148, 22);
             this.ToolStripMenuItemNewFile.Text = "新建定值文件";
             this.ToolStripMenuItemNewFile.Click += new System.EventHandler(this.ToolStripMenuItemNewFile_Click);
             // 
             // ToolStripMenuItemLoadFile
             // 
             this.ToolStripMenuItemLoadFile.Name = "ToolStripMenuItemLoadFile";
-            this.ToolStripMenuItemLoadFile.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemLoadFile.Size = new System.Drawing.Size(148, 22);
             this.ToolStripMenuItemLoadFile.Text = "加载定值文件";
             this.ToolStripMenuItemLoadFile.Click += new System.EventHandler(this.ToolStripMenuItemLoadFile_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(145, 6);
             // 
             // ToolStripMenuItemWizard
             // 
             this.ToolStripMenuItemWizard.Name = "ToolStripMenuItemWizard";
-            this.ToolStripMenuItemWizard.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemWizard.Size = new System.Drawing.Size(148, 22);
             this.ToolStripMenuItemWizard.Text = "定值整定向导";
             this.ToolStripMenuItemWizard.Click += new System.EventHandler(this.ToolStripMenuItemWizard_Click);
             // 
             // ToolStripMenuItemCheck
             // 
             this.ToolStripMenuItemCheck.Name = "ToolStripMenuItemCheck";
-            this.ToolStripMenuItemCheck.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemCheck.Size = new System.Drawing.Size(148, 22);
             this.ToolStripMenuItemCheck.Text = "安全性检查";
             this.ToolStripMenuItemCheck.Click += new System.EventHandler(this.ToolStripMenuItemCheck_Click);
             // 
             // ToolStripMenuItemPackage
             // 
             this.ToolStripMenuItemPackage.Name = "ToolStripMenuItemPackage";
-            this.ToolStripMenuItemPackage.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemPackage.Size = new System.Drawing.Size(139, 22);
             this.ToolStripMenuItemPackage.Text = "数据打包(&P)";
             this.ToolStripMenuItemPackage.Click += new System.EventHandler(this.ToolStripMenuItemPackage_Click);
             // 
@@ -610,8 +604,7 @@
             // 
             // tabPageOscillo
             // 
-            this.tabPageOscillo.Controls.Add(this.chart);
-            this.tabPageOscillo.Controls.Add(this.listViewFile);
+            this.tabPageOscillo.Controls.Add(this.oscilloControl);
             this.tabPageOscillo.Controls.Add(this.panel2);
             this.tabPageOscillo.Location = new System.Drawing.Point(4, 36);
             this.tabPageOscillo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -621,51 +614,6 @@
             this.tabPageOscillo.TabIndex = 5;
             this.tabPageOscillo.Text = "录波文件";
             this.tabPageOscillo.UseVisualStyleBackColor = true;
-            // 
-            // chart
-            // 
-            this.chart.Location = new System.Drawing.Point(8, 72);
-            this.chart.Name = "chart";
-            this.chart.Size = new System.Drawing.Size(478, 362);
-            this.chart.TabIndex = 3;
-            this.chart.Text = "chart1";
-            title1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            title1.Name = "TitleFile";
-            title1.Text = "故障录波0";
-            title1.Visible = false;
-            title2.Alignment = System.Drawing.ContentAlignment.MiddleLeft;
-            title2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title2.Name = "TitleParam";
-            title2.Text = "记录时间";
-            title2.Visible = false;
-            this.chart.Titles.Add(title1);
-            this.chart.Titles.Add(title2);
-            // 
-            // listViewFile
-            // 
-            this.listViewFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listViewFile.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listViewFile.Dock = System.Windows.Forms.DockStyle.Top;
-            this.listViewFile.FullRowSelect = true;
-            this.listViewFile.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.listViewFile.Location = new System.Drawing.Point(8, 50);
-            this.listViewFile.Margin = new System.Windows.Forms.Padding(3, 11, 3, 3);
-            this.listViewFile.Name = "listViewFile";
-            this.listViewFile.Scrollable = false;
-            this.listViewFile.Size = new System.Drawing.Size(787, 100);
-            this.listViewFile.TabIndex = 2;
-            this.listViewFile.UseCompatibleStateImageBehavior = false;
-            this.listViewFile.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Width = 200;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Width = 200;
             // 
             // panel2
             // 
@@ -891,6 +839,15 @@
             this.timerDock.Enabled = true;
             this.timerDock.Tick += new System.EventHandler(this.timerDock_Tick);
             // 
+            // oscilloControl
+            // 
+            this.oscilloControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.oscilloControl.Location = new System.Drawing.Point(8, 50);
+            this.oscilloControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.oscilloControl.Name = "oscilloControl";
+            this.oscilloControl.Size = new System.Drawing.Size(787, 348);
+            this.oscilloControl.TabIndex = 5;
+            // 
             // IEDCommForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -930,7 +887,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridViewMaintenance)).EndInit();
             this.tabPageEvents.ResumeLayout(false);
             this.tabPageOscillo.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -998,10 +954,6 @@
         private System.Windows.Forms.Panel panelProgress;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label labelInfo;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart;
-        private System.Windows.Forms.ListView listViewFile;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TextBox textBoxOscilloFile;
         private System.Windows.Forms.Label label4;
@@ -1013,5 +965,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button buttonSearch;
         private System.Windows.Forms.TextBox textBoxKeyword;
+        private OscilloControl oscilloControl;
     }
 }

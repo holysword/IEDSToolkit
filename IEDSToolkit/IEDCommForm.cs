@@ -69,37 +69,14 @@ namespace IEDSToolkit
                     }
                 case "tabPageOscillo":
                     {
-                        this.chart.Titles[0].Text = this.textBoxOscilloFile.Text;
-
-                        this.chart.Titles[1].Text = "设备类型：" + this.IEDType + "     ";
-                        foreach (ListViewItem item in listViewFile.Items)
-                        {
-                            this.chart.Titles[1].Text += item.SubItems[0].Text + "：" + item.SubItems[1].Text + "     ";
-                        }
-
-                        this.chart.Printing.PrintDocument.PrintPage += PrintDocument_PrintPage;
-                        this.chart.Printing.PrintDocument.DefaultPageSettings.Landscape = true;
-                        this.chart.Printing.PageSetup();
-
-                        this.chart.Titles[0].Visible = true;
-                        this.chart.Titles[1].Visible = true;
-
-                        PrintPreviewDialog ppd = new PrintPreviewDialog();
-                        ppd.Document = this.chart.Printing.PrintDocument;
-                        (ppd as Form).WindowState = FormWindowState.Maximized;
-                        ppd.ShowDialog();
+                        this.oscilloControl.SetChartPreTitle("", "设备类型：" + this.IEDType + "     ");
+                        this.oscilloControl.PrintContent();
 
                         break;
                     }
                 default: break;
             }
-        }
-        
-        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
-        {
-            this.chart.Titles[0].Visible = false;
-            this.chart.Titles[1].Visible = false;
-        }
+        }        
 
         private void IEDCommForm_Load(object sender, EventArgs e)
         {
@@ -1263,13 +1240,7 @@ namespace IEDSToolkit
         {
             timerDock.Enabled = false;
 
-            chart.BringToFront();
-            try
-            {
-                chart.Dock = DockStyle.Fill;
-            }
-            catch
-            { }
+            this.oscilloControl.DockChart();
         }
 
         private void buttonRead_Click(object sender, EventArgs e)
@@ -1411,118 +1382,8 @@ namespace IEDSToolkit
 
         private void DrawOscilloGraph(string FileName)
         {
-            this.listViewFile.Items.Clear();
-            this.chart.Series.Clear();
-            this.chart.ChartAreas.Clear();
-
             this.textBoxOscilloFile.Text = System.IO.Path.GetFileName(FileName);
-
-            int[] FileData = new int[776 * 2 + 4];
-            try
-            {
-                FileStream fs = new FileStream(FileName, FileMode.Open);
-                BinaryReader br = new BinaryReader(fs);
-                byte[] buffer = br.ReadBytes((int)fs.Length);
-                fs.Dispose();
-
-                for (int i = 0; i < FileData.Length; i++)
-                {
-                    FileData[i] = CommonUtility.ByteToInt(buffer[i]);
-                }
-
-                float Ratio = CommonUtility.Byte2Float(buffer, FileData.Length - 4);
-                int FileType = FileData[0];
-
-                int TotalPoints = 0;
-                int RunningPoint = 0;
-                int DataIndex = 0;
-                if (FileType == 8)
-                {
-                    //读取起动录波标识
-                    DataIndex += 2;
-
-                    TotalPoints = FileData[DataIndex] * 256 + FileData[DataIndex + 1];
-                    ListViewItem itemVar = new ListViewItem();
-                    itemVar.Text = "总点数";
-                    itemVar.SubItems.Add(TotalPoints.ToString());
-                    listViewFile.Items.Add(itemVar);
-                    DataIndex += 2;
-
-                    RunningPoint = FileData[DataIndex] * 256 + FileData[DataIndex + 1];
-                    DataIndex += 2;
-
-                    itemVar = new ListViewItem();
-                    itemVar.Text = "起动时间";
-                    itemVar.SubItems.Add((RunningPoint * (FileData[DataIndex] * 256 + FileData[DataIndex + 1]) * 20).ToString() + "ms");
-                    listViewFile.Items.Add(itemVar);
-                    DataIndex += 2;
-                }
-                else
-                {
-                    //读取故障录波标识
-                    int FaultType = FileData[0] * 256 + FileData[1];
-                    DataIndex += 8;
-
-                    String FaultName = CommonUtility.GetFaultName(FaultType);
-                    ListViewItem itemVar = new ListViewItem();
-                    itemVar.Text = "故障类别";
-                    itemVar.SubItems.Add(FaultName.Substring(0, FaultName.IndexOf("_")));
-                    listViewFile.Items.Add(itemVar);
-
-                    itemVar = new ListViewItem();
-                    itemVar.Text = "故障原因";
-                    itemVar.SubItems.Add(FaultName.Substring(FaultName.IndexOf("_") + 1));
-                    listViewFile.Items.Add(itemVar);
-                }
-
-                byte[] Date = new byte[3];
-                Date[0] = (byte)(FileData[DataIndex + 1]);
-                Date[1] = (byte)(FileData[DataIndex + 2]);
-                Date[2] = (byte)(FileData[DataIndex + 3]);
-                String DateStr = CommonUtility.Bcd2Str(Date);
-                String DateValue = "20" + DateStr.Substring(0, 2) + "-" + DateStr.Substring(2, 2) + "-" + DateStr.Substring(4, 2);
-                DataIndex += 4;
-
-                Date[0] = (byte)(FileData[DataIndex + 1]);
-                Date[1] = (byte)(FileData[DataIndex + 2]);
-                Date[2] = (byte)(FileData[DataIndex + 3]);
-                DateStr = CommonUtility.Bcd2Str(Date);
-                DateValue = DateValue + " " + DateStr.Substring(0, 2) + ":" + DateStr.Substring(2, 2) + ":" + DateStr.Substring(4, 2);
-                DataIndex += 4;
-
-                ListViewItem itemDate = new ListViewItem();
-                itemDate.Text = "记录时间";
-                itemDate.SubItems.Add(DateValue);
-                listViewFile.Items.Insert(0, itemDate);
-
-                //绘制曲线
-                ((System.ComponentModel.ISupportInitialize)(chart)).BeginInit();
-
-                ChartArea chartArea1 = new ChartArea();
-                chartArea1.Name = "ChartArea1";
-                chartArea1.AxisX.MajorGrid.Enabled = false;
-                chartArea1.AxisY.MajorGrid.Enabled = false;
-                chartArea1.AxisY.Title = "电流";
-                chartArea1.AxisY.TitleFont = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                chart.ChartAreas.Add(chartArea1);
-                if (FileType == 8)
-                {
-                    float MaxStarter = OscilloForm.DrawStarterOscillogram(chart, TotalPoints, RunningPoint, FileData, DataIndex);
-
-                    ListViewItem itemVar = new ListViewItem();
-                    itemVar.Text = "起动最大电流";
-                    itemVar.SubItems.Add(MaxStarter.ToString("0.00"));
-                    listViewFile.Items.Add(itemVar);
-                }
-                else
-                    OscilloForm.DrawFaultOscillogram(chart, FileData, DataIndex, Ratio);
-
-                ((System.ComponentModel.ISupportInitialize)(chart)).EndInit();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("录波文件加载错误！\n错误信息：" + ex.Message);
-            }
+            this.oscilloControl.LoadOscilloFile(FileName);
         }
 
         private void buttonOpen_Click(object sender, EventArgs e)
