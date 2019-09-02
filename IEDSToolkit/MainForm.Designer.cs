@@ -45,6 +45,8 @@
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.openFileDialogParam = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogOscillo = new System.Windows.Forms.OpenFileDialog();
+            this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +55,8 @@
             this.menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.文件FToolStripMenuItem,
             this.工具TToolStripMenuItem,
-            this.DeviceToolStripMenuItem});
+            this.DeviceToolStripMenuItem,
+            this.HelpToolStripMenuItem});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
             this.menuStripMain.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
@@ -126,27 +129,27 @@
             this.OscilloToolStripMenuItem.Text = "录波文件(&O)";
             this.OscilloToolStripMenuItem.Click += new System.EventHandler(this.OscilloToolStripMenuItem_Click);
             // 
-            // 设备ToolStripMenuItem
+            // DeviceToolStripMenuItem
             // 
             this.DeviceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ST570LToolStripMenuItem,
             this.ST570ToolStripMenuItem});
             this.DeviceToolStripMenuItem.MergeIndex = 0;
-            this.DeviceToolStripMenuItem.Name = "设备ToolStripMenuItem";
+            this.DeviceToolStripMenuItem.Name = "DeviceToolStripMenuItem";
             this.DeviceToolStripMenuItem.Size = new System.Drawing.Size(61, 21);
             this.DeviceToolStripMenuItem.Text = "设备(&D)";
             // 
             // ST570LToolStripMenuItem
             // 
             this.ST570LToolStripMenuItem.Name = "ST570LToolStripMenuItem";
-            this.ST570LToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.ST570LToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ST570LToolStripMenuItem.Text = "ST570L";
             this.ST570LToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItemConnect_Click);
             // 
             // ST570ToolStripMenuItem
             // 
             this.ST570ToolStripMenuItem.Name = "ST570ToolStripMenuItem";
-            this.ST570ToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.ST570ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ST570ToolStripMenuItem.Text = "ST570";
             this.ST570ToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItemConnect_Click);
             // 
@@ -177,6 +180,21 @@
             // 
             this.openFileDialogOscillo.DefaultExt = "dat";
             this.openFileDialogOscillo.Filter = "录波文件|Osc_*.dat";
+            // 
+            // HelpToolStripMenuItem
+            // 
+            this.HelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AboutToolStripMenuItem});
+            this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
+            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(61, 21);
+            this.HelpToolStripMenuItem.Text = "帮助(&H)";
+            // 
+            // AboutToolStripMenuItem
+            // 
+            this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.AboutToolStripMenuItem.Text = "关于(&A)";
+            this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -220,6 +238,8 @@
         private System.Windows.Forms.ToolStripMenuItem DeviceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ST570LToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ST570ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem HelpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
     }
 }
 

@@ -91,5 +91,10 @@ namespace IEDSToolkit
             if (e.Content.GetType().Name == "IEDCommForm")
                 this.DeviceToolStripMenuItem.Visible = true;
         }
+
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            (new AboutForm()).ShowDialog();
+        }
     }
 }

@@ -283,7 +283,7 @@ namespace IEDSToolkit
             this.ResumeLayout(false);            
         }
 
-        public static void AnalyzeIOChangeEvent(DataRow varRow)
+        public void AnalyzeIOChangeEvent(DataRow varRow)
         {
             if (!varRow["Var_Desc"].ToString().Contains("变位"))
                 return;

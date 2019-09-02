@@ -29,6 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IEDCommForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.设备ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,6 +81,7 @@
             this.tabPageEvents = new System.Windows.Forms.TabPage();
             this.tabControlEvents = new System.Windows.Forms.TabControl();
             this.tabPageOscillo = new System.Windows.Forms.TabPage();
+            this.oscilloControl = new IEDSToolkit.OscilloControl();
             this.panel2 = new System.Windows.Forms.Panel();
             this.textBoxOscilloFile = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -78,6 +89,8 @@
             this.buttonRead = new System.Windows.Forms.Button();
             this.comboBoxFileType = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.tabPageHarmonics = new System.Windows.Forms.TabPage();
+            this.chartHarmonics = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonToFile = new System.Windows.Forms.Button();
             this.buttonToDevice = new System.Windows.Forms.Button();
@@ -95,7 +108,7 @@
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.labelInfo = new System.Windows.Forms.Label();
             this.timerDock = new System.Windows.Forms.Timer(this.components);
-            this.oscilloControl = new IEDSToolkit.OscilloControl();
+            this.timerUpdateHarmonics = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageCommonParam.SuspendLayout();
@@ -115,6 +128,8 @@
             this.tabPageEvents.SuspendLayout();
             this.tabPageOscillo.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tabPageHarmonics.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartHarmonics)).BeginInit();
             this.panel1.SuspendLayout();
             this.panelProgress.SuspendLayout();
             this.SuspendLayout();
@@ -202,9 +217,10 @@
             this.tabControlMain.Controls.Add(this.tabPageMaintenance);
             this.tabControlMain.Controls.Add(this.tabPageEvents);
             this.tabControlMain.Controls.Add(this.tabPageOscillo);
+            this.tabControlMain.Controls.Add(this.tabPageHarmonics);
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.HotTrack = true;
-            this.tabControlMain.ItemSize = new System.Drawing.Size(80, 32);
+            this.tabControlMain.ItemSize = new System.Drawing.Size(100, 32);
             this.tabControlMain.Location = new System.Drawing.Point(8, 61);
             this.tabControlMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabControlMain.Multiline = true;
@@ -615,6 +631,15 @@
             this.tabPageOscillo.Text = "录波文件";
             this.tabPageOscillo.UseVisualStyleBackColor = true;
             // 
+            // oscilloControl
+            // 
+            this.oscilloControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.oscilloControl.Location = new System.Drawing.Point(8, 50);
+            this.oscilloControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.oscilloControl.Name = "oscilloControl";
+            this.oscilloControl.Size = new System.Drawing.Size(787, 348);
+            this.oscilloControl.TabIndex = 5;
+            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.Control;
@@ -689,6 +714,98 @@
             this.label3.Size = new System.Drawing.Size(68, 17);
             this.label3.TabIndex = 0;
             this.label3.Text = "录波文件：";
+            // 
+            // tabPageHarmonics
+            // 
+            this.tabPageHarmonics.Controls.Add(this.chartHarmonics);
+            this.tabPageHarmonics.Location = new System.Drawing.Point(4, 36);
+            this.tabPageHarmonics.Name = "tabPageHarmonics";
+            this.tabPageHarmonics.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageHarmonics.Size = new System.Drawing.Size(803, 406);
+            this.tabPageHarmonics.TabIndex = 6;
+            this.tabPageHarmonics.Text = "电流电压谐波";
+            this.tabPageHarmonics.UseVisualStyleBackColor = true;
+            // 
+            // chartHarmonics
+            // 
+            chartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea1.AxisX.IsLabelAutoFit = false;
+            chartArea1.AxisX.LabelStyle.Font = new System.Drawing.Font("微软雅黑", 9F);
+            chartArea1.AxisX.MajorGrid.Enabled = false;
+            chartArea1.AxisX.Title = "三相电流谐波";
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea1.AxisY.IsLabelAutoFit = false;
+            chartArea1.AxisY.LabelStyle.Font = new System.Drawing.Font("微软雅黑", 9F);
+            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea1.AxisY.Title = "电流 (A)";
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("微软雅黑", 9F);
+            chartArea1.Name = "ChartArea1";
+            chartArea2.AlignWithChartArea = "ChartArea1";
+            chartArea2.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea2.AxisX.IsLabelAutoFit = false;
+            chartArea2.AxisX.LabelStyle.Font = new System.Drawing.Font("微软雅黑", 9F);
+            chartArea2.AxisX.MajorGrid.Enabled = false;
+            chartArea2.AxisX.Title = "三相电压谐波";
+            chartArea2.AxisX.TitleFont = new System.Drawing.Font("微软雅黑", 9F);
+            chartArea2.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea2.AxisY.IsLabelAutoFit = false;
+            chartArea2.AxisY.LabelStyle.Font = new System.Drawing.Font("微软雅黑", 9F);
+            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea2.AxisY.Title = "电压 (V)";
+            chartArea2.AxisY.TitleFont = new System.Drawing.Font("微软雅黑", 9F);
+            chartArea2.Name = "ChartArea2";
+            this.chartHarmonics.ChartAreas.Add(chartArea1);
+            this.chartHarmonics.ChartAreas.Add(chartArea2);
+            this.chartHarmonics.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.chartHarmonics.Location = new System.Drawing.Point(83, 17);
+            this.chartHarmonics.Name = "chartHarmonics";
+            series1.ChartArea = "ChartArea1";
+            series1.Color = System.Drawing.Color.Yellow;
+            series1.Name = "Ia";
+            series1.ToolTip = "Ia: #VAL{0.##}";
+            series2.ChartArea = "ChartArea1";
+            series2.Color = System.Drawing.Color.Green;
+            series2.Name = "Ib";
+            series2.ToolTip = "Ib: #VAL{0.##}";
+            series3.ChartArea = "ChartArea1";
+            series3.Color = System.Drawing.Color.Red;
+            series3.Name = "Ic";
+            series3.ToolTip = "Ic: #VAL{0.##}";
+            series4.ChartArea = "ChartArea2";
+            series4.Color = System.Drawing.Color.Yellow;
+            series4.Name = "Uab";
+            series4.ToolTip = "Uab: #VAL{0.##}";
+            series5.ChartArea = "ChartArea2";
+            series5.Color = System.Drawing.Color.Green;
+            series5.Name = "Ubc";
+            series5.ToolTip = "Ubc: #VAL{0.##}";
+            series6.ChartArea = "ChartArea2";
+            series6.Color = System.Drawing.Color.Red;
+            series6.Name = "Uca";
+            series6.ToolTip = "Uca: #VAL{0.##}";
+            this.chartHarmonics.Series.Add(series1);
+            this.chartHarmonics.Series.Add(series2);
+            this.chartHarmonics.Series.Add(series3);
+            this.chartHarmonics.Series.Add(series4);
+            this.chartHarmonics.Series.Add(series5);
+            this.chartHarmonics.Series.Add(series6);
+            this.chartHarmonics.Size = new System.Drawing.Size(649, 343);
+            this.chartHarmonics.TabIndex = 4;
+            this.chartHarmonics.Text = "chart1";
+            title1.DockingOffset = -15;
+            title1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            title1.Name = "TitleFile";
+            title1.Text = "故障录波0";
+            title1.Visible = false;
+            title2.Alignment = System.Drawing.ContentAlignment.MiddleLeft;
+            title2.DockingOffset = -15;
+            title2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title2.Name = "TitleParam";
+            title2.Text = "记录时间";
+            title2.Visible = false;
+            this.chartHarmonics.Titles.Add(title1);
+            this.chartHarmonics.Titles.Add(title2);
             // 
             // panel1
             // 
@@ -839,14 +956,10 @@
             this.timerDock.Enabled = true;
             this.timerDock.Tick += new System.EventHandler(this.timerDock_Tick);
             // 
-            // oscilloControl
+            // timerUpdateHarmonics
             // 
-            this.oscilloControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.oscilloControl.Location = new System.Drawing.Point(8, 50);
-            this.oscilloControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.oscilloControl.Name = "oscilloControl";
-            this.oscilloControl.Size = new System.Drawing.Size(787, 348);
-            this.oscilloControl.TabIndex = 5;
+            this.timerUpdateHarmonics.Interval = 2000;
+            this.timerUpdateHarmonics.Tick += new System.EventHandler(this.timerUpdateHarmonics_Tick);
             // 
             // IEDCommForm
             // 
@@ -889,6 +1002,8 @@
             this.tabPageOscillo.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.tabPageHarmonics.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartHarmonics)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panelProgress.ResumeLayout(false);
@@ -966,5 +1081,8 @@
         private System.Windows.Forms.Button buttonSearch;
         private System.Windows.Forms.TextBox textBoxKeyword;
         private OscilloControl oscilloControl;
+        private System.Windows.Forms.TabPage tabPageHarmonics;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartHarmonics;
+        private System.Windows.Forms.Timer timerUpdateHarmonics;
     }
 }

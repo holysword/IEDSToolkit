@@ -26,9 +26,22 @@ namespace IEDSToolkit
         private DataTable deviceTable, messageTable, varTable;
 
         private bool PasswordHasVerified = false;
+
+        private const int HarmonicsMax = 7;
         public IEDCommForm()
         {
             InitializeComponent();
+
+            foreach (Series series in this.chartHarmonics.Series)
+            {
+                for (int i = 1;i <= HarmonicsMax; i++)
+                {
+                    if (i == 1)
+                        series.Points.AddXY("基波", 0);
+                    else
+                        series.Points.AddXY(i + "次", 0);
+                }                    
+            }
         }
 
         public void PrintContent()
@@ -536,12 +549,27 @@ namespace IEDSToolkit
                 foreach (DataRow row in dataTable.Rows)
                 {
                     row["Value"] = RTDB.GetVarValue(RTDB.GetDevice().Name, row["Name"].ToString());
+
+                    if (tabControlMain.SelectedIndex == 3 && this.tabControlEvents.SelectedTab.Text == "IO变位记录")
+                        AnalyzeIOChangeEvent(row);
                 }
             }            
 
             timerRefresh.Start();
         }
+        public void AnalyzeIOChangeEvent(DataRow varRow)
+        {
+            if (!varRow["Desc"].ToString().Contains("变位"))
+                return;
 
+            try
+            {
+                short value = Convert.ToInt16(varRow["Value"]);
+                varRow["Value"] = String.Join(" ", Convert.ToString(value, 2).PadLeft(16, '0').ToCharArray().Reverse().ToArray());
+            }
+            catch (Exception)
+            { }
+        }
         private void gridViewCommonParam_GroupRowExpanding(object sender, DevExpress.XtraGrid.Views.Base.RowAllowEventArgs e)
         {
             if (e.RowHandle >= 0)
@@ -581,6 +609,7 @@ namespace IEDSToolkit
                                 RTDB.GetDevice().AddUpdateMessage(RTDB.GetDevice().GetMessage(Convert.ToInt32(row["Index"])));
                             }
                         }
+                        timerUpdateHarmonics.Stop();
                         break;
                     }
                 case 2:
@@ -592,9 +621,19 @@ namespace IEDSToolkit
                                 RTDB.GetDevice().AddUpdateMessage(RTDB.GetDevice().GetMessage(Convert.ToInt32(row["Index"])));
                             }
                         }
+                        timerUpdateHarmonics.Stop();
                         break;
                     }
-                default: break;
+                case 5:
+                    {
+                        timerUpdateHarmonics.Start();
+                        break;
+                    }
+                default:
+                    {
+                        timerUpdateHarmonics.Stop();
+                        break;
+                    }
             }
         }
 
@@ -1241,6 +1280,14 @@ namespace IEDSToolkit
             timerDock.Enabled = false;
 
             this.oscilloControl.DockChart();
+
+            this.chartHarmonics.BringToFront();
+            try
+            {
+                this.chartHarmonics.Dock = DockStyle.Fill;
+            }
+            catch
+            { }
         }
 
         private void buttonRead_Click(object sender, EventArgs e)
@@ -1439,6 +1486,48 @@ namespace IEDSToolkit
             {
                 buttonSearch_Click(null, null);
             }
+        }
+
+        private void timerUpdateHarmonics_Tick(object sender, EventArgs e)
+        {
+            int ConnectState = Convert.ToInt32(RTDB.GetVarValue(RTDB.GetDevice().Name, "_ConnectState_"));
+            if (ConnectState != 1)
+                return;
+
+            timerUpdateHarmonics.Stop();
+
+            RTDB.GetDevice().AddUpdateMessage(RTDB.GetDevice().GetMessage(47));
+            RTDB.GetDevice().AddUpdateMessage(RTDB.GetDevice().GetMessage(48));
+            RTDB.GetDevice().AddUpdateMessage(RTDB.GetDevice().GetMessage(49));
+            RTDB.GetDevice().AddUpdateMessage(RTDB.GetDevice().GetMessage(50));
+            RTDB.GetDevice().AddUpdateMessage(RTDB.GetDevice().GetMessage(51));
+            RTDB.GetDevice().AddUpdateMessage(RTDB.GetDevice().GetMessage(52));
+
+            System.Threading.Thread.Sleep(600);
+
+            foreach (Series series in this.chartHarmonics.Series)
+            {
+                series.Points.Clear();
+                for (int i = 1; i <= HarmonicsMax; i++)
+                {
+                    String varName = series.Name + "_" + i;
+                    Object varValue = RTDB.GetVarValue(RTDB.GetDevice().Name, varName);
+                    if (varValue != null)
+                    {
+                        try
+                        {
+                            if (i == 1)
+                                series.Points.AddXY("基波", Convert.ToDouble(varValue));
+                            else
+                                series.Points.AddXY(i + "次", Convert.ToDouble(varValue));
+                        }
+                        catch (Exception)
+                        { }                        
+                    }                    
+                }                    
+            }
+
+            timerUpdateHarmonics.Start();
         }
 
         private void buttonToDevice_Click(object sender, EventArgs e)
