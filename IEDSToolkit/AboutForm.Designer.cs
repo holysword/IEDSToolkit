@@ -30,7 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelCopyright = new System.Windows.Forms.Label();
             this.buttonOK = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -54,19 +54,20 @@
             this.labelVersion.TabIndex = 2;
             this.labelVersion.Text = "V1.0";
             // 
-            // label3
+            // labelCopyright
             // 
-            this.label3.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(139, 93);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(241, 45);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "版权版权所有 (C) 2016-2019\r\n苏州万龙电气集团股份有限公司";
+            this.labelCopyright.AutoSize = true;
+            this.labelCopyright.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelCopyright.Location = new System.Drawing.Point(139, 93);
+            this.labelCopyright.Name = "labelCopyright";
+            this.labelCopyright.Size = new System.Drawing.Size(362, 20);
+            this.labelCopyright.TabIndex = 1;
+            this.labelCopyright.Text = "版权所有 (C) 2016-2019 苏州万龙电气集团股份有限公司";
             // 
             // buttonOK
             // 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonOK.Location = new System.Drawing.Point(144, 166);
+            this.buttonOK.Location = new System.Drawing.Point(217, 145);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(97, 35);
             this.buttonOK.TabIndex = 0;
@@ -89,9 +90,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonOK;
-            this.ClientSize = new System.Drawing.Size(384, 213);
+            this.ClientSize = new System.Drawing.Size(530, 190);
             this.Controls.Add(this.buttonOK);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.labelCopyright);
             this.Controls.Add(this.labelVersion);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
@@ -105,6 +106,7 @@
             this.Load += new System.EventHandler(this.AboutForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -113,7 +115,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelVersion;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelCopyright;
         private System.Windows.Forms.Button buttonOK;
     }
 }

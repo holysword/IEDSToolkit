@@ -126,7 +126,6 @@ namespace IEDSToolkit
             this.chart.Series.Clear();
             this.chart.ChartAreas.Clear();
 
-
             int[] FileData = new int[776 * 2 + 4];
 
             for (int i = 0; i < FileData.Length; i++)
@@ -295,6 +294,9 @@ namespace IEDSToolkit
         
         private void chart_Paint(object sender, PaintEventArgs e)
         {
+            if (FileType == 8)
+                return;
+
             Chart chart = (Chart)sender;
             //游标X最大值
             int iMaxCursorX = 0;
@@ -599,6 +601,9 @@ namespace IEDSToolkit
 
         private void chart_MouseDown(object sender, MouseEventArgs e)
         {
+            if (FileType == 8)
+                return;
+
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 if ((e.X >= m_X) && (e.Y >= m_Y) && (e.X <= (m_X + m_Width)) && (e.Y <= (m_Y + m_Height))
@@ -638,6 +643,9 @@ namespace IEDSToolkit
 
         private void chart_MouseUp(object sender, MouseEventArgs e)
         {
+            if (FileType == 8)
+                return;
+
             chart.Invalidate();
             //chart.Cursor = System.Windows.Forms.Cursors.Cross;
             cursorAction = CursorAction.Unknown;
@@ -645,6 +653,9 @@ namespace IEDSToolkit
 
         private void chart_MouseMove(object sender, MouseEventArgs e)
         {
+            if (FileType == 8)
+                return;
+
             if (e.Button == MouseButtons.None)
             {
                 if ((e.X >= m_X) && (e.Y >= m_Y) && (e.X <= (m_X + m_Width)) && (e.Y <= (m_Y + m_Height))

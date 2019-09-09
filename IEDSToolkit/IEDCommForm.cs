@@ -87,10 +87,33 @@ namespace IEDSToolkit
 
                         break;
                     }
+                case "tabPageHarmonics":
+                    {
+                        this.chartHarmonics.Titles[0].Text = "三相电流电压谐波";
+                        this.chartHarmonics.Titles[1].Text = "设备类型：" + this.IEDType;
+
+                        this.chartHarmonics.Printing.PrintDocument.PrintPage += PrintDocument_PrintPage;
+                        this.chartHarmonics.Printing.PrintDocument.DefaultPageSettings.Landscape = true;
+                        this.chartHarmonics.Printing.PageSetup();
+
+                        this.chartHarmonics.Titles[0].Visible = true;
+                        this.chartHarmonics.Titles[1].Visible = true;
+
+                        PrintPreviewDialog ppd = new PrintPreviewDialog();
+                        ppd.Document = this.chartHarmonics.Printing.PrintDocument;
+                        (ppd as Form).WindowState = FormWindowState.Maximized;
+                        ppd.ShowDialog();
+
+                        break;
+                    }
                 default: break;
             }
-        }        
-
+        }
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            this.chartHarmonics.Titles[0].Visible = false;
+            this.chartHarmonics.Titles[1].Visible = false;
+        }
         private void IEDCommForm_Load(object sender, EventArgs e)
         {
             this.TabText = IEDType + "助手";

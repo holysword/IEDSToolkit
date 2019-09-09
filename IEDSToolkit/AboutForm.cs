@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -18,7 +19,11 @@ namespace IEDSToolkit
 
         private void AboutForm_Load(object sender, EventArgs e)
         {
-            this.labelVersion.Text = "V" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Assembly asm = Assembly.GetExecutingAssembly();
+            AssemblyCopyrightAttribute asmcpr = (AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(asm, typeof(AssemblyCopyrightAttribute));
+
+            this.labelVersion.Text = "V" + asm.GetName().Version.ToString();
+            this.labelCopyright.Text = asmcpr.Copyright;
         }
     }
 }

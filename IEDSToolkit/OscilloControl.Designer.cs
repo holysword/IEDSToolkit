@@ -87,7 +87,7 @@
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Width = 400;
+            this.columnHeader2.Width = 500;
             // 
             // OscilloControl
             // 
