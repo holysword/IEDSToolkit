@@ -1562,6 +1562,17 @@ namespace IEDSToolkit
                 return;
             }
 
+            if (!PasswordHasVerified)
+            {
+                String PM = Microsoft.VisualBasic.Interaction.InputBox("请输入密码...", "输入密码", "");
+                if (PM != "111111")
+                {
+                    MessageBox.Show("请输入正确的密码！", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                PasswordHasVerified = true;
+            }
+
             DialogResult dr = MessageBox.Show("是否确定将当前定值文件的所有参考值整定到设备？\n本操作将更改所有的设备定值，请慎重操作！", "请确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dr == DialogResult.No)
                 return;

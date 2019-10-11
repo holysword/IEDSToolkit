@@ -190,12 +190,14 @@
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(145, 6);
+            this.toolStripMenuItem3.Visible = false;
             // 
             // ToolStripMenuItemWizard
             // 
             this.ToolStripMenuItemWizard.Name = "ToolStripMenuItemWizard";
             this.ToolStripMenuItemWizard.Size = new System.Drawing.Size(148, 22);
             this.ToolStripMenuItemWizard.Text = "定值整定向导";
+            this.ToolStripMenuItemWizard.Visible = false;
             this.ToolStripMenuItemWizard.Click += new System.EventHandler(this.ToolStripMenuItemWizard_Click);
             // 
             // ToolStripMenuItemCheck
@@ -203,6 +205,7 @@
             this.ToolStripMenuItemCheck.Name = "ToolStripMenuItemCheck";
             this.ToolStripMenuItemCheck.Size = new System.Drawing.Size(148, 22);
             this.ToolStripMenuItemCheck.Text = "安全性检查";
+            this.ToolStripMenuItemCheck.Visible = false;
             this.ToolStripMenuItemCheck.Click += new System.EventHandler(this.ToolStripMenuItemCheck_Click);
             // 
             // ToolStripMenuItemPackage
